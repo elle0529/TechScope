@@ -1,0 +1,78 @@
+{
+  "expected": 9,
+  "registered": 9,
+  "items": [
+    {
+      "namespace": "Microsoft.Resources",
+      "before": "Registered",
+      "action": "REUSE",
+      "register_exit": 0,
+      "after": "Registered"
+    },
+    {
+      "namespace": "Microsoft.Storage",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.DataFactory",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.Databricks",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.Sql",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.Search",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.CognitiveServices",
+      "before": "Registered",
+      "action": "REUSE",
+      "register_exit": 0,
+      "after": "Registered"
+    },
+    {
+      "namespace": "Microsoft.DocumentDB",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    },
+    {
+      "namespace": "Microsoft.AnalysisServices",
+      "before": "NotRegistered",
+      "action": "REGISTER",
+      "register_exit": 0,
+      "after": "Registered",
+      "error": null
+    }
+  ],
+  "cloud_resource_created": false,
+  "subscription_configuration_mutated": true
+}

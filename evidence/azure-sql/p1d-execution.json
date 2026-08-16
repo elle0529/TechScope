@@ -1,0 +1,9 @@
+{
+  "component": "CMP_AZURE_SQL",
+  "status": "PASS",
+  "server": "sql-techscope-dev-239bd206",
+  "database": "sqldb-techscope-dev",
+  "timestamp": "2026-08-16T10:23:45+00:00",
+  "secret_material": "NOT_STORED",
+  "error": null
+}

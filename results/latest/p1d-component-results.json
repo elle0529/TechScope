@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-08-16T10:23:45+00:00",
+  "components": {
+    "CMP_ADLS": "PASS",
+    "CMP_ADF": "PASS",
+    "CMP_DATABRICKS": "PASS",
+    "CMP_AZURE_SQL": "PASS"
+  },
+  "blockers": []
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "10000000000000000001",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 1000,
+    "height": 150,
+    "width": 1240,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Technology Count"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Technology Count",
+              "nativeQueryRef": "Technology Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Category Count"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Category Count",
+              "nativeQueryRef": "Category Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Company Count"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Company Count",
+              "nativeQueryRef": "Company Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Direct Claims"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Direct Claims",
+              "nativeQueryRef": "Direct Claims"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Indirect Claims"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Indirect Claims",
+              "nativeQueryRef": "Indirect Claims"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Architecture Layers"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Architecture Layers",
+              "nativeQueryRef": "Architecture Layers"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

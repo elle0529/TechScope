@@ -1,0 +1,54 @@
+{
+  "environment": "dev",
+  "allow_cloud_mutation": false,
+  "steps": [
+    {
+      "step": "preflight",
+      "action": "run-local"
+    },
+    {
+      "step": "lint",
+      "action": "run-local"
+    },
+    {
+      "step": "plan",
+      "action": "run-local"
+    },
+    {
+      "step": "provision",
+      "action": "blocked-by-cloud-mutation-gate"
+    },
+    {
+      "step": "deploy",
+      "action": "blocked-by-cloud-mutation-gate"
+    },
+    {
+      "step": "seed",
+      "action": "blocked-by-cloud-mutation-gate"
+    },
+    {
+      "step": "run-main",
+      "action": "blocked-by-cloud-mutation-gate"
+    },
+    {
+      "step": "run-skill-proof",
+      "action": "blocked-by-cloud-mutation-gate"
+    },
+    {
+      "step": "verify",
+      "action": "implementation-pending"
+    },
+    {
+      "step": "collect-evidence",
+      "action": "implementation-pending"
+    },
+    {
+      "step": "sync-docs",
+      "action": "implementation-pending"
+    },
+    {
+      "step": "report",
+      "action": "implementation-pending"
+    }
+  ]
+}

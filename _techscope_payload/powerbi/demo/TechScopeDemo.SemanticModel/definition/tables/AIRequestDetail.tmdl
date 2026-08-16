@@ -1,0 +1,52 @@
+table AIRequestDetail
+
+	column RequestKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: RequestKey
+
+	column RequestTimestamp
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: RequestTimestamp
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+	column LatencyMs
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: LatencyMs
+
+	column RetrievedChunkCount
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: RetrievedChunkCount
+
+	column CitationFlag
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: CitationFlag
+
+	column FeedbackScore
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: FeedbackScore
+
+	column ModelName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ModelName
+
+	partition AIRequestDetail = m
+		mode: directQuery
+		source =
+			let
+				Source = Sql.Database("sql-techscope-dev-239bd206.database.windows.net", "sqldb-techscope-dev"),
+				Data = Source{[Schema="techscope", Item="vwPbiAIRequestDetail"]}[Data]
+			in
+				Data
+

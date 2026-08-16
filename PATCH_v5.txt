@@ -1,0 +1,15 @@
+﻿P1D v5
+
+Observed Azure Databricks error:
+BAD_REQUEST: Standard_D4as_v5 is not an ARM instance and is not compatible with
+runtime 18.x-aarch64-scala2.13.
+
+Fix:
+- Exclude aarch64 / ARM64 Databricks runtimes.
+- Select newest available x64-compatible non-ML LTS runtime.
+- Print x64 runtime candidate keys.
+- Hard-fail if an ARM runtime slips through.
+
+Resume scope remains:
+Databricks -> Azure SQL only.
+No resource-group provisioning, ADLS seed, or ADF rerun.

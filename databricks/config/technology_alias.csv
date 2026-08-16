@@ -1,0 +1,32 @@
+alias,canonical_name
+adf,Azure Data Factory
+azure data factory,Azure Data Factory
+adls,Azure Data Lake Storage Gen2
+adls gen2,Azure Data Lake Storage Gen2
+azure data lake gen2,Azure Data Lake Storage Gen2
+azure data lake storage gen2,Azure Data Lake Storage Gen2
+databricks,Azure Databricks
+azure databricks,Azure Databricks
+powerbi,Power BI
+power bi,Power BI
+microsoft power bi,Power BI
+azure sql,Azure SQL
+azure sql database,Azure SQL
+azure ai search,Azure AI Search
+cognitive search,Azure AI Search
+azure openai,Azure OpenAI
+openai,Azure OpenAI
+fastapi,FastAPI
+cosmos db,Cosmos DB
+azure cosmos db,Cosmos DB
+teams,Microsoft Teams
+microsoft teams,Microsoft Teams
+ssis,SSIS
+sql server integration services,SSIS
+synapse,Azure Synapse Analytics
+azure synapse,Azure Synapse Analytics
+ssas,SSAS
+sql server analysis services,SSAS
+azure analysis services,Azure Analysis Services
+aas,Azure Analysis Services
+mlflow,MLflow

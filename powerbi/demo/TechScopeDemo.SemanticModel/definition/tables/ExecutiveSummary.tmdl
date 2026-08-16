@@ -1,0 +1,91 @@
+table ExecutiveSummary
+
+	measure 'Technology Count' = MAX(ExecutiveSummary[TotalTechnologies])
+		formatString: #,0
+
+	measure 'Category Count' = MAX(ExecutiveSummary[Categories])
+		formatString: #,0
+
+	measure 'Company Count' = MAX(ExecutiveSummary[Companies])
+		formatString: #,0
+
+	measure 'Direct Claims' = MAX(ExecutiveSummary[DirectClaims])
+		formatString: #,0
+
+	measure 'Indirect Claims' = MAX(ExecutiveSummary[IndirectClaims])
+		formatString: #,0
+
+	measure 'Architecture Layers' = MAX(ExecutiveSummary[ArchitectureLayers])
+		formatString: #,0
+
+	measure 'AI Requests' = MAX(ExecutiveSummary[AIRequests])
+		formatString: #,0
+
+	measure 'Success Rate' = DIVIDE(MAX(ExecutiveSummary[SuccessfulRequests]), MAX(ExecutiveSummary[AIRequests]))
+		formatString: 0.0%
+
+	measure 'Citation Rate' = DIVIDE(MAX(ExecutiveSummary[CitationRequests]), MAX(ExecutiveSummary[AIRequests]))
+		formatString: 0.0%
+
+	measure 'Average AI Latency (ms)' = MAX(ExecutiveSummary[AvgLatencyMs])
+		formatString: #,0
+
+	column TotalTechnologies
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: TotalTechnologies
+
+	column Categories
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Categories
+
+	column Companies
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Companies
+
+	column DirectClaims
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: DirectClaims
+
+	column IndirectClaims
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: IndirectClaims
+
+	column ArchitectureLayers
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: ArchitectureLayers
+
+	column AIRequests
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: AIRequests
+
+	column SuccessfulRequests
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: SuccessfulRequests
+
+	column CitationRequests
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: CitationRequests
+
+	column AvgLatencyMs
+		dataType: decimal
+		summarizeBy: none
+		sourceColumn: AvgLatencyMs
+
+	partition ExecutiveSummary = m
+		mode: directQuery
+		source =
+			let
+				Source = Sql.Database("sql-techscope-dev-239bd206.database.windows.net", "sqldb-techscope-dev"),
+				Data = Source{[Schema="techscope", Item="PbiExecutiveSummary"]}[Data]
+			in
+				Data
+

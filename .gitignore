@@ -1,0 +1,52 @@
+﻿# Secrets / authentication
+.env
+.env.*
+!.env.example
+*.pem
+*.pfx
+*.p12
+*.key
+.azure/
+**/.azure/
+.databrickscfg
+**/.databrickscfg
+secrets/
+.credentials/
+
+# Local auth/runtime state
+results/bootstrap-state.json
+results/**/bootstrap-state.json
+**/TokenCache.dat
+**/msal_token_cache*
+**/.identity/
+**/.ssh/
+
+# Caches / dependencies
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+node_modules/
+.vscode/
+.idea/
+.cache/
+tmp/
+temp/
+*.log
+*.tmp
+*.bak
+
+# Power BI binary/cache
+*.pbix
+*.pbit
+**/.pbi/
+**/LocalCache/
+**/DataMashup/
+**/DataModel/
+
+# Archives
+*.zip
+*.7z
+*.rar

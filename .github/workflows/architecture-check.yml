@@ -1,0 +1,13 @@
+﻿name: Architecture Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  architecture-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder
+        run: echo "P0 workflow scaffold"

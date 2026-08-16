@@ -1,0 +1,29 @@
+table GroundedTechnology
+
+	measure 'Grounded Requests' = SUM(GroundedTechnology[GroundedRequestCount])
+		formatString: #,0
+
+	column TechnologyId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyId
+
+	column TechnologyName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyName
+
+	column GroundedRequestCount
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: GroundedRequestCount
+
+	partition GroundedTechnology = m
+		mode: directQuery
+		source =
+			let
+				Source = Sql.Database("sql-techscope-dev-239bd206.database.windows.net", "sqldb-techscope-dev"),
+				Data = Source{[Schema="techscope", Item="vwPbiGroundedTechnology"]}[Data]
+			in
+				Data
+

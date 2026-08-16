@@ -1,0 +1,39 @@
+table GroundedTechnology
+
+	measure 'Grounded Requests' = SUM(GroundedTechnology[GroundedRequestCount])
+		formatString: #,0
+
+	column TechnologyId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyId
+
+	column TechnologyName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyName
+
+	column GroundedRequestCount
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: GroundedRequestCount
+
+	partition GroundedTechnology = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents("C:\TechScope\powerbi\demo_snapshot\data\GroundedTechnology.csv"),
+					[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				Types = Table.TransformColumnTypes(
+					Headers,
+					{
+						{"TechnologyId", type text},
+						{"TechnologyName", type text},
+						{"GroundedRequestCount", Int64.Type}
+					}
+				)
+			in
+				Types

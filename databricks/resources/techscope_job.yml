@@ -1,0 +1,15 @@
+resources:
+  jobs:
+    techscope_build:
+      name: techscope-build-${bundle.target}
+      max_concurrent_runs: 1
+      tasks:
+        - task_key: build_techscope
+          existing_cluster_id: ${var.existing_cluster_id}
+          notebook_task:
+            notebook_path: ../src/01_build_techscope.py
+            base_parameters:
+              bronze_base: ${var.bronze_base}
+              silver_base: ${var.silver_base}
+              gold_base: ${var.gold_base}
+              rag_base: ${var.rag_base}

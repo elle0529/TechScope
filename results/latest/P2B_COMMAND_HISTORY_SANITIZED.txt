@@ -1,0 +1,271 @@
+﻿Write-Host "AI_SEARCH_CREATE=START"`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az search service create ``
+  --resource-group $Rg --name $Search --location $Loc --sku free ``
+  --only-show-errors -o none`
+`
+Write-Host "AZURE_OPENAI_CREATE=START"`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az cognitiveservices account create ``
+  --resource-group $Rg --name $Aoai --location $Loc ``
+  --kind OpenAI --sku S0 --custom-domain $Aoai ``
+  --yes --only-show-errors -o none`
+`
+Write-Host "=== CREATED RESOURCES ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az resource list --resource-group $Rg ``
+  --query "[?type=='Microsoft.Search/searchServices' || type=='Microsoft.CognitiveServices/accounts'].[name,type,location]" ``
+  -o table`
+`
+Write-Host "=== RELEVANT MODELS ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az cognitiveservices account list-models ``
+  --resource-group $Rg --name $Aoai ``
+  --query "[?contains(name,'gpt') || contains(name,'embedding')].[name,version]" ``
+  -o table
+$Rg = "rg-techscope-dev-239bd206"`
+$Aoai = "aoai-techscope-dev-239bd206"`
+`
+Write-Host "GENERATION_DEPLOYMENT=START"`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az cognitiveservices account deployment create ``
+  --resource-group $Rg --name $Aoai ``
+  --deployment-name techscope-gpt-4-1-mini ``
+  --model-format OpenAI ``
+  --model-name gpt-4.1-mini ``
+  --model-version 2025-04-14 ``
+  --sku-name GlobalStandard ``
+  --sku-capacity 1 ``
+  --only-show-errors -o none`
+`
+Write-Host "EMBEDDING_DEPLOYMENT=START"`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az cognitiveservices account deployment create ``
+  --resource-group $Rg --name $Aoai ``
+  --deployment-name techscope-embedding-3-small ``
+  --model-format OpenAI ``
+  --model-name text-embedding-3-small ``
+  --model-version 1 ``
+  --sku-name GlobalStandard ``
+  --sku-capacity 1 ``
+  --only-show-errors -o none`
+`
+Write-Host "=== DEPLOYMENTS ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  az cognitiveservices account deployment list ``
+  --resource-group $Rg --name $Aoai ``
+  --query "[].{Deployment:name,Model:properties.model.name,Version:properties.model.version,Sku:sku.name,Capacity:sku.capacity}" ``
+  -o table
+Write-Host "=== RAG README ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  sed -n 1,220p /workspaces/TechScope/rag/README.md`
+`
+Write-Host "=== JSONL FILES ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  find /workspaces/TechScope -type f -name "*.jsonl" -print
+Write-Host "=== INDEXER CONTRACT ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  sed -n 1,220p /workspaces/TechScope/rag/index_documents.py`
+`
+Write-Host "=== SEARCH SCHEMA ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  sed -n 1,260p /workspaces/TechScope/rag/search-index.template.json`
+`
+Write-Host "=== POSSIBLE UPSTREAM DATA ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  find /workspaces/TechScope -maxdepth 5 -type f -print |`
+  Select-String -Pattern "rag|chunk|extract|json|csv|parquet|rawdata"
+Write-Host "=== REQUIRED FIELDS ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e chunk_id -e technology_id -e source_id ``
+  -e title -e content -e source_path ``
+  -e content_vector ``
+  /workspaces/TechScope/rag/index_documents.py ``
+  /workspaces/TechScope/rag/search-index.template.json`
+`
+Write-Host "=== UPSTREAM FILES ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  find ``
+  /workspaces/TechScope/generated ``
+  /workspaces/TechScope/results/latest ``
+  /workspaces/TechScope/source ``
+  -maxdepth 4 -type f -print
+$SearchEndpoint = "https://srch-techscope-dev-239bd206-b1.search.windows.net"`
+$OpenAiEndpoint = "https://aoai-techscope-dev-239bd206.openai.azure.com"`
+$Index = "techscope-chunks"`
+`
+$VerifyCode = "import os; from azure.identity import DefaultAzureCredential; from azure.search.documents import SearchClient; c=SearchClient(os.environ['TECHSCOPE_SEARCH_ENDPOINT'],os.environ['TECHSCOPE_SEARCH_INDEX'],DefaultAzureCredential()); print('SEARCH_DOCUMENT_COUNT='+str(c.get_document_count())); hits=list(c.search(search_text='Databricks',top=3,select=['chunk_id','source_id','technology_ids'])); print('SEARCH_HITS='+str(len(hits))); [print(dict(x)) for x in hits]"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -e "TECHSCOPE_SEARCH_ENDPOINT=$SearchEndpoint" ``
+  -e "TECHSCOPE_SEARCH_INDEX=$Index" ``
+  techscope-dev python -c $VerifyCode`
+`
+if ($LASTEXITCODE -ne 0) { throw "P2B_SEARCH_VERIFY=FAIL" }`
+Write-Host "P2B_SEARCH_VERIFY=PASS"`
+`
+$RouteCode = "from backend.app.main import app; print('API_ROUTES='+str([(sorted(r.methods or []),r.path) for r in app.routes]))"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope ``
+  -e "TECHSCOPE_SEARCH_ENDPOINT=$SearchEndpoint" ``
+  -e "TECHSCOPE_SEARCH_INDEX=$Index" ``
+  -e "TECHSCOPE_AZURE_OPENAI_ENDPOINT=$OpenAiEndpoint" ``
+  -e "TECHSCOPE_GENERATION_DEPLOYMENT=techscope-gpt-4-1-mini" ``
+  -e "TECHSCOPE_EMBEDDING_DEPLOYMENT=techscope-embedding-3-small" ``
+  techscope-dev python -c $RouteCode
+$SearchEndpoint = "https://srch-techscope-dev-239bd206-b1.search.windows.net"`
+$OpenAiEndpoint = "https://aoai-techscope-dev-239bd206.openai.azure.com"`
+`
+$E2ECode = "import json; from datetime import datetime,timezone; from pathlib import Path; from fastapi.testclient import TestClient; from backend.app.main import app; c=TestClient(app); h=c.get('/health'); r=c.post('/ask',json={'question':'What role does Azure Databricks play in TechScope? Include authoritative technology IDs.'}); body=r.json(); payload={'timestamp':datetime.now(timezone.utc).isoformat(),'health_status':h.status_code,'ask_status':r.status_code,'health':h.json(),'ask':body}; p=Path('evidence/rag/p2b-cloud-e2e.json'); p.parent.mkdir(parents=True,exist_ok=True); p.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8'); print('HEALTH_STATUS='+str(h.status_code)); print('ASK_STATUS='+str(r.status_code)); print(json.dumps(body,ensure_ascii=False,indent=2)); print('EVIDENCE_PATH='+str(p)); assert h.status_code==200; assert r.status_code==200; assert body.get('grounded') is True; assert body.get('citations'); print('P2B_FASTAPI_RAG_E2E=PASS')"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope ``
+  -e "TECHSCOPE_SEARCH_ENDPOINT=$SearchEndpoint" ``
+  -e "TECHSCOPE_SEARCH_INDEX=techscope-chunks" ``
+  -e "TECHSCOPE_AZURE_OPENAI_ENDPOINT=$OpenAiEndpoint" ``
+  -e "TECHSCOPE_GENERATION_DEPLOYMENT=techscope-gpt-4-1-mini" ``
+  -e "TECHSCOPE_EMBEDDING_DEPLOYMENT=techscope-embedding-3-small" ``
+  techscope-dev python -c $E2ECode`
+`
+if ($LASTEXITCODE -ne 0) { throw "P2B_FASTAPI_RAG_E2E=FAIL" }`
+`
+Write-Host "P2B_FASTAPI_RAG_E2E=PASS"`
+Write-Host "EVIDENCE=evidence\rag\p2b-cloud-e2e.json"
+Write-Host "=== P2 COMPONENT STATUS ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e CMP_AI_SEARCH ``
+  -e CMP_AZURE_OPENAI ``
+  -e CMP_FASTAPI ``
+  /workspaces/TechScope/status.md ``
+  /workspaces/TechScope/evidence.md`
+`
+Write-Host "=== EVIDENCE TABLE FORMAT ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n -m 8 -e EVD- /workspaces/TechScope/evidence.md`
+`
+Write-Host "=== P2A SYNC CONTRACT ==="`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e CMP_AI_SEARCH ``
+  -e CMP_AZURE_OPENAI ``
+  -e CMP_FASTAPI ``
+  -e In_Progress ``
+  -e EVD- ``
+  -e status.md ``
+  -e evidence.md ``
+  /workspaces/TechScope/tools/sync_p2a_docs.py
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e CMP_AI_SEARCH ``
+  -e CMP_AZURE_OPENAI ``
+  -e CMP_FASTAPI ``
+  -e EVD-AI-SEARCH ``
+  -e EVD-AZURE-OPENAI ``
+  -e EVD-FASTAPI ``
+  /workspaces/TechScope/docs/status.md ``
+  /workspaces/TechScope/docs/evidence.md
+Write-Host "P2B_REPOSITORY_FINALIZE=START"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  cp -n docs/status.md results/latest/docs_status.md.pre-p2b-v1.bak`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  cp -n docs/evidence.md results/latest/docs_evidence.md.pre-p2b-v1.bak`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  sed -i ``
+  "s#| CMP_AI_SEARCH | Azure AI Search | MAIN | REQUIRED | In Progress |#| CMP_AI_SEARCH | Azure AI Search | MAIN | REQUIRED | Prototype |#" ``
+  docs/status.md`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  sed -i ``
+  "s#| CMP_AZURE_OPENAI | Azure OpenAI | MAIN | REQUIRED | In Progress |#| CMP_AZURE_OPENAI | Azure OpenAI | MAIN | REQUIRED | Prototype |#" ``
+  docs/status.md`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  sed -i ``
+  "s#| CMP_FASTAPI | FastAPI | MAIN | REQUIRED | In Progress |#| CMP_FASTAPI | FastAPI | MAIN | REQUIRED | Prototype |#" ``
+  docs/status.md`
+`
+$EvidenceCode = "from pathlib import Path; p=Path('docs/evidence.md'); lines=p.read_text(encoding='utf-8').splitlines(); rows=['| EVD-AI-SEARCH-002 | CMP_AI_SEARCH | RUNTIME | evidence/rag/p2b-cloud-e2e.json |','| EVD-AZURE-OPENAI-002 | CMP_AZURE_OPENAI | RUNTIME | evidence/rag/p2b-cloud-e2e.json |','| EVD-FASTAPI-002 | CMP_FASTAPI | RUNTIME | evidence/rag/p2b-cloud-e2e.json |']; current='\n'.join(lines); new=[r for r in rows if r.split('|')[1].strip() not in current]; pos=max(i for i,x in enumerate(lines) if x.startswith('| EVD-'))+1; lines[pos:pos]=new; p.write_text('\n'.join(lines)+'\n',encoding='utf-8'); print('P2B_EVIDENCE_ROWS_ADDED='+str(len(new)))"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python -c $EvidenceCode`
+`
+$SummaryCode = "import json; from datetime import datetime,timezone; from pathlib import Path; d={'timestamp':datetime.now(timezone.utc).isoformat(),'status':'PASS','components':{'CMP_AI_SEARCH':'PASS','CMP_AZURE_OPENAI':'PASS','CMP_FASTAPI':'PASS'},'runtime':{'search_service':'srch-techscope-dev-239bd206-b1','search_index':'techscope-chunks','search_documents':515,'azure_openai':'aoai-techscope-dev-239bd206','generation_deployment':'techscope-gpt-4-1-mini','embedding_deployment':'techscope-embedding-3-small','fastapi_route':'/ask'},'evidence':'evidence/rag/p2b-cloud-e2e.json','cloud_mutation_performed':True}; p=Path('results/latest/p2b-summary.json'); p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); print('P2B_SUMMARY_WRITE=PASS')"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python -c $SummaryCode`
+`
+$ValidateCode = "import json; from pathlib import Path; p=Path('evidence/rag/p2b-cloud-e2e.json'); d=json.loads(p.read_text(encoding='utf-8')); assert d['health_status']==200; assert d['ask_status']==200; assert d['ask'].get('grounded') is True; assert d['ask'].get('citations'); print('P2B_RUNTIME_EVIDENCE=PASS')"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python -c $ValidateCode`
+`
+if ($LASTEXITCODE -ne 0) { throw "P2B_RUNTIME_EVIDENCE=FAIL" }`
+`
+Write-Host "P2A_SOURCE_VALIDATION=START"`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python tools/validate_p2a_artifacts.py`
+`
+if ($LASTEXITCODE -ne 0) { throw "P2A_SOURCE_VALIDATION=FAIL" }`
+`
+Write-Host "ARCHITECTURE_LINT_AFTER_P2B=START"`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python tools/architecture_lint.py`
+`
+if ($LASTEXITCODE -ne 0) { throw "ARCHITECTURE_LINT_AFTER_P2B=FAIL" }`
+`
+Write-Host "P2B_AI_CLOUD_E2E=PASS"`
+Write-Host "CMP_AI_SEARCH_STATUS=Prototype"`
+Write-Host "CMP_AZURE_OPENAI_STATUS=Prototype"`
+Write-Host "CMP_FASTAPI_STATUS=Prototype"`
+Write-Host "SUMMARY=results\latest\p2b-summary.json"
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e CMP_DATABRICKS ``
+  -e CMP_AZURE_SQL ``
+  -e CMP_ADLS ``
+  -e CMP_ADF ``
+  /workspaces/TechScope/docs/evidence.md`
+`
+docker --context desktop-linux exec --user vscode techscope-dev ``
+  grep -n ``
+  -e EVIDENCE_TYPES ``
+  -e VALID_EVIDENCE ``
+  -e "SOURCE" ``
+  -e "TEST" ``
+  -e "EXECUTION" ``
+  /workspaces/TechScope/tools/architecture_lint.py
+Write-Host "P2B_EVIDENCE_TYPE_FIX=START"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  sed -i "s/| RUNTIME |/| EXECUTION |/g" docs/evidence.md`
+`
+Write-Host "P2B_EVIDENCE_TYPE_FIX=PASS"`
+Write-Host "ARCHITECTURE_LINT_AFTER_P2B=START"`
+`
+docker --context desktop-linux exec --user vscode ``
+  -w /workspaces/TechScope techscope-dev ``
+  python tools/architecture_lint.py`
+`
+if ($LASTEXITCODE -ne 0) {`
+    throw "ARCHITECTURE_LINT_AFTER_P2B=FAIL"`
+}`
+`
+Write-Host "P2B_AI_CLOUD_E2E=PASS"`
+Write-Host "P2B_REPOSITORY_FINALIZE=PASS"`

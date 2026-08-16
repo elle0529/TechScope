@@ -1,0 +1,35 @@
+{
+  "environment": "dev",
+  "project": "techscope",
+  "location_preferences": [
+    "koreacentral",
+    "eastus2",
+    "swedencentral"
+  ],
+  "generation_model_candidates": [
+    "gpt-4.1-mini",
+    "gpt-4o-mini",
+    "gpt-5-mini",
+    "gpt-4.1"
+  ],
+  "embedding_model_candidates": [
+    "text-embedding-3-small",
+    "text-embedding-3-large"
+  ],
+  "required_resource_providers": [
+    "Microsoft.Resources",
+    "Microsoft.Storage",
+    "Microsoft.DataFactory",
+    "Microsoft.Databricks",
+    "Microsoft.Sql",
+    "Microsoft.Search",
+    "Microsoft.CognitiveServices",
+    "Microsoft.DocumentDB",
+    "Microsoft.AnalysisServices"
+  ],
+  "notes": {
+    "cloud_mutation": "disabled in readiness probe",
+    "model_selection": "discovery candidates only; actual deployment remains gated",
+    "secrets": "never stored"
+  }
+}

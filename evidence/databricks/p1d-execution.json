@@ -1,0 +1,102 @@
+{
+  "component": "CMP_DATABRICKS",
+  "status": "PASS",
+  "workspace": "dbw-techscope-dev-239bd206",
+  "spark_version": "18.x-photon-scala2.13",
+  "node_type_id": "Standard_D4as_v5",
+  "job_result": {
+    "cleanup_duration": 0,
+    "creator_user_name": "joe971008@naver.com",
+    "end_time": 1786875810312,
+    "execution_duration": 86000,
+    "job_id": 345203154080055,
+    "job_run_id": 828106570427660,
+    "number_in_job": 828106570427660,
+    "run_duration": 408307,
+    "run_id": 828106570427660,
+    "run_name": "techscope-p1d-cloud-data-e2e",
+    "run_page_url": "https://adb-7405611393729074.14.azuredatabricks.net/?o=7405611393729074#job/345203154080055/run/828106570427660",
+    "run_type": "SUBMIT_RUN",
+    "setup_duration": 321000,
+    "start_time": 1786875402005,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "SUCCESS",
+        "message": "",
+        "type": "SUCCESS"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "cluster_instance": {
+          "cluster_id": "0816-101643-pqnjhew5",
+          "spark_context_id": "4955529460694743810"
+        },
+        "end_time": 1786875810040,
+        "execution_duration": 86000,
+        "new_cluster": {
+          "azure_attributes": {
+            "availability": "ON_DEMAND_AZURE"
+          },
+          "custom_tags": {
+            "Project": "TechScope",
+            "ResourceClass": "SingleNode"
+          },
+          "enable_elastic_disk": true,
+          "node_type_id": "Standard_D4as_v5",
+          "num_workers": 0,
+          "spark_conf": {
+            "spark.databricks.cluster.profile": "singleNode",
+            "spark.master": "local[*]"
+          },
+          "spark_version": "18.x-photon-scala2.13"
+        },
+        "notebook_task": {
+          "base_parameters": {
+            "adls_key_secret": "adls-key",
+            "file_system": "techscope",
+            "secret_scope": "techscope",
+            "sql_database": "sqldb-techscope-dev",
+            "sql_password_secret": "sql-password",
+            "sql_server_fqdn": "sql-techscope-dev-239bd206.database.windows.net",
+            "sql_user_secret": "sql-user",
+            "storage_account": "sttechscopedev239bd206"
+          },
+          "notebook_path": "/Shared/TechScope/02_cloud_data_e2e",
+          "source": "WORKSPACE"
+        },
+        "run_id": 600127788470141,
+        "run_if": "ALL_SUCCESS",
+        "run_page_url": "https://adb-7405611393729074.14.azuredatabricks.net/?o=7405611393729074#job/345203154080055/run/600127788470141",
+        "setup_duration": 321000,
+        "start_time": 1786875402030,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "SUCCESS",
+            "message": "",
+            "type": "SUCCESS"
+          }
+        },
+        "task_key": "build_techscope"
+      }
+    ]
+  },
+  "timestamp": "2026-08-16T10:23:38+00:00",
+  "secret_values": "NOT_STORED"
+}

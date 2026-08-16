@@ -1,0 +1,17 @@
+﻿RequestKey,RequestTimestamp,Status,LatencyMs,RetrievedChunkCount,CitationFlag,FeedbackScore,ModelName
+1,2026-08-16 13:09:09.663000,success,8150,5,True,,techscope-gpt-4-1-mini
+2,2026-08-16 13:22:04.455000,success,6668,5,True,,techscope-gpt-4-1-mini
+3,2026-08-16 13:22:09.377000,success,4419,5,True,,techscope-gpt-4-1-mini
+4,2026-08-16 14:04:36.071000,success,7259,5,True,,techscope-gpt-4-1-mini
+5,2026-08-16 17:53:49.429000,success,7073,5,True,,techscope-gpt-4-1-mini
+6,2026-08-16 17:56:35.844000,success,2544,5,True,,techscope-gpt-4-1-mini
+7,2026-08-16 18:20:23.312000,success,4780,5,True,,techscope-gpt-4-1-mini
+8,2026-08-16 18:21:31.370000,success,1938,5,True,,techscope-gpt-4-1-mini
+9,2026-08-16 18:22:57.863000,success,2481,5,True,,techscope-gpt-4-1-mini
+10,2026-08-16 18:29:51.841000,success,2784,5,True,,techscope-gpt-4-1-mini
+11,2026-08-16 18:40:50.586000,success,6270,5,True,,techscope-gpt-4-1-mini
+12,2026-08-16 18:41:17.276000,success,2197,5,True,,techscope-gpt-4-1-mini
+13,2026-08-16 19:01:59.933000,success,3884,5,True,,techscope-gpt-4-1-mini
+14,2026-08-16 19:07:05.393000,success,4887,5,True,,techscope-gpt-4-1-mini
+15,2026-08-16 19:07:32.224000,success,1918,5,True,,techscope-gpt-4-1-mini
+16,2026-08-16 19:08:04.506000,success,13028,5,True,,techscope-gpt-4-1-mini

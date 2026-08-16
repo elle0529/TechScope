@@ -1,0 +1,160 @@
+{
+  "name": "PL_Ingest_TechScope",
+  "properties": {
+    "activities": [
+      {
+        "name": "Get Structured Metadata",
+        "type": "GetMetadata",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.00:05:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 15,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "dataset": {
+            "referenceName": "DS_CSV_Landing",
+            "type": "DatasetReference",
+            "parameters": {
+              "folder_name": {
+                "value": "@pipeline().parameters.structured_folder",
+                "type": "Expression"
+              },
+              "file_name": "technology.csv"
+            }
+          },
+          "fieldList": [
+            "exists",
+            "size",
+            "lastModified"
+          ]
+        }
+      },
+      {
+        "name": "ForEach Structured File",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "Get Structured Metadata",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "userProperties": [],
+        "typeProperties": {
+          "items": {
+            "value": "@pipeline().parameters.file_list",
+            "type": "Expression"
+          },
+          "isSequential": false,
+          "batchCount": 5,
+          "activities": [
+            {
+              "name": "Copy Structured CSV To Bronze",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.00:10:00",
+                "retry": 2,
+                "retryIntervalInSeconds": 15,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "DelimitedTextSource",
+                  "storeSettings": {
+                    "type": "AzureBlobFSReadSettings",
+                    "recursive": false,
+                    "enablePartitionDiscovery": false
+                  },
+                  "formatSettings": {
+                    "type": "DelimitedTextReadSettings"
+                  }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "storeSettings": {
+                    "type": "AzureBlobFSWriteSettings",
+                    "copyBehavior": "PreserveHierarchy"
+                  },
+                  "formatSettings": {
+                    "type": "DelimitedTextWriteSettings",
+                    "quoteAllText": true,
+                    "fileExtension": ".csv"
+                  }
+                },
+                "enableStaging": false,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": false,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              },
+              "inputs": [
+                {
+                  "referenceName": "DS_CSV_Landing",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "folder_name": {
+                      "value": "@pipeline().parameters.structured_folder",
+                      "type": "Expression"
+                    },
+                    "file_name": {
+                      "value": "@item()",
+                      "type": "Expression"
+                    }
+                  }
+                }
+              ],
+              "outputs": [
+                {
+                  "referenceName": "DS_CSV_Bronze",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "folder_name": {
+                      "value": "@concat('bronze/', replace(item(), '.csv', ''), '/', formatDateTime(utcnow(),'yyyy/MM/dd'))",
+                      "type": "Expression"
+                    },
+                    "file_name": {
+                      "value": "@item()",
+                      "type": "Expression"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "parameters": {
+      "structured_folder": {
+        "type": "string",
+        "defaultValue": "landing/structured"
+      },
+      "file_list": {
+        "type": "array",
+        "defaultValue": [
+          "technology.csv",
+          "category.csv",
+          "relation.csv",
+          "company_usecase.csv",
+          "architecture_mapping.csv"
+        ]
+      }
+    },
+    "annotations": [
+      "TechScope",
+      "CMP_ADF",
+      "P1"
+    ],
+    "lastPublishTime": null
+  }
+}

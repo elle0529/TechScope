@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-08-16T11:04:45.696920+00:00",
+  "status": "PASS",
+  "components": {
+    "CMP_AI_SEARCH": "PASS",
+    "CMP_AZURE_OPENAI": "PASS",
+    "CMP_FASTAPI": "PASS"
+  },
+  "runtime": {
+    "search_service": "srch-techscope-dev-239bd206-b1",
+    "search_index": "techscope-chunks",
+    "search_documents": 515,
+    "azure_openai": "aoai-techscope-dev-239bd206",
+    "generation_deployment": "techscope-gpt-4-1-mini",
+    "embedding_deployment": "techscope-embedding-3-small",
+    "fastapi_route": "/ask"
+  },
+  "evidence": "evidence/rag/p2b-cloud-e2e.json",
+  "cloud_mutation_performed": true
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "30000000000000000002",
+  "position": {
+    "x": 20,
+    "y": 180,
+    "z": 2000,
+    "height": 510,
+    "width": 610,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GroundedTechnology"
+                    }
+                  },
+                  "Property": "TechnologyId"
+                }
+              },
+              "queryRef": "GroundedTechnology.TechnologyId",
+              "nativeQueryRef": "TechnologyId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GroundedTechnology"
+                    }
+                  },
+                  "Property": "TechnologyName"
+                }
+              },
+              "queryRef": "GroundedTechnology.TechnologyName",
+              "nativeQueryRef": "TechnologyName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GroundedTechnology"
+                    }
+                  },
+                  "Property": "GroundedRequestCount"
+                }
+              },
+              "queryRef": "GroundedTechnology.GroundedRequestCount",
+              "nativeQueryRef": "GroundedRequestCount"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

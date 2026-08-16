@@ -1,0 +1,24 @@
+// Apply in Power BI Desktop TMDL View after Azure SQL views are connected.
+// ref table changes only the listed measures and preserves existing table descendants.
+createOrReplace
+
+    ref table TechnologyOverview
+        measure 'Technology Count' = DISTINCTCOUNT(TechnologyOverview[TechnologyId])
+            formatString: #,0
+        measure 'Total Relations' = SUM(TechnologyOverview[OutgoingRelationCount])
+            formatString: #,0
+        measure 'Companies Using Technology' = SUM(TechnologyOverview[CompanyCount])
+            formatString: #,0
+
+    ref table CategorySummary
+        measure 'Category Technology Count' = SUM(CategorySummary[TechnologyCount])
+            formatString: #,0
+
+    ref table AIInteractionSummary
+        measure 'Grounding Rate' =
+                DIVIDE(SUM(AIInteractionSummary[GroundedCount]),SUM(AIInteractionSummary[InteractionCount]))
+            formatString: 0.0%
+        measure 'Average AI Latency (ms)' = AVERAGE(AIInteractionSummary[AvgLatencyMs])
+            formatString: #,0
+        measure 'Average Feedback' = AVERAGE(AIInteractionSummary[AvgFeedbackScore])
+            formatString: 0.00

@@ -1,0 +1,14 @@
+﻿P1D v3
+
+Root cause:
+Azure returned DatabricksStandardSkuNotSupported.
+The Standard workspace tier is retired/deprecated for this new deployment path.
+
+Fix:
+- Microsoft.Databricks/workspaces SKU = premium
+- Regression guard forbids standard
+- Python unbuffered output
+- 30-second Azure provision heartbeat
+
+Partial deployment:
+Do not delete the resource group. v3 reuses the same deterministic names and ARM deployment.

@@ -1,0 +1,206 @@
+{
+  "timestamp": "2026-08-15T15:16:46+00:00",
+  "mode": "READ_ONLY",
+  "cloud_mutation_performed": false,
+  "config_contract": {
+    "provider_key": "required_resource_providers",
+    "generation_key": "generation_model_candidates",
+    "embedding_key": "embedding_model_candidates",
+    "provider_count": 9,
+    "generation_candidates": [
+      "gpt-4.1-mini",
+      "gpt-4o-mini",
+      "gpt-5-mini",
+      "gpt-4.1"
+    ],
+    "embedding_candidates": [
+      "text-embedding-3-small",
+      "text-embedding-3-large"
+    ],
+    "locations": [
+      "koreacentral",
+      "eastus2",
+      "swedencentral"
+    ]
+  },
+  "checks": {
+    "azure_auth": {
+      "status": "PASS",
+      "subscription": "Azure subscription 1",
+      "subscription_id": "20c99d23-dcad-42e2-bca2-b511133f4140",
+      "tenant_id": "8f2f3d4b-6bd8-4630-bcc7-4e889b92bdb2"
+    },
+    "resource_providers": {
+      "status": "PASS",
+      "expected": 9,
+      "registered": 9,
+      "items": [
+        {
+          "namespace": "Microsoft.Resources",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.Storage",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.DataFactory",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.Databricks",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.Sql",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.Search",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.CognitiveServices",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.DocumentDB",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        },
+        {
+          "namespace": "Microsoft.AnalysisServices",
+          "registrationState": "Registered",
+          "query_status": "PASS"
+        }
+      ]
+    },
+    "arm_provider_validation": {
+      "status": "PASS",
+      "error": null
+    },
+    "azure_openai_discovery": {
+      "status": "PASS",
+      "candidate_region": "koreacentral",
+      "quota_visibility": "PASS",
+      "regions": [
+        {
+          "location": "koreacentral",
+          "model_query": "PASS",
+          "generation_models_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_models_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "quota_query": "PASS",
+          "model_error": null,
+          "quota_error": null
+        },
+        {
+          "location": "eastus2",
+          "model_query": "PASS",
+          "generation_models_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_models_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "quota_query": "PASS",
+          "model_error": null,
+          "quota_error": null
+        },
+        {
+          "location": "swedencentral",
+          "model_query": "PASS",
+          "generation_models_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_models_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "quota_query": "PASS",
+          "model_error": null,
+          "quota_error": null
+        }
+      ],
+      "minimum_api_call": "NOT_PROVEN"
+    },
+    "databricks": {
+      "status": "PENDING",
+      "workspace_count": 0,
+      "workspaces": [],
+      "workspace_access_probe": "NOT_PROVEN"
+    },
+    "github_oidc": {
+      "status": "PENDING",
+      "origin": null,
+      "detail": "No GitHub origin detected"
+    },
+    "power_bi_desktop_fallback": {
+      "status": "PASS",
+      "host_detail": {
+        "timestamp": "2026-08-16T00:16:45.5903143+09:00",
+        "power_bi_desktop": "PASS",
+        "power_bi_sources": [
+          "C:\\Program Files\\Microsoft Power BI Desktop\\bin\\PBIDesktop.exe",
+          "REGISTRY:Microsoft Power BI Desktop (x64)"
+        ],
+        "visual_studio_present": true,
+        "windows_skill_proof_toolchain": "PENDING",
+        "mutation_performed": false
+      }
+    },
+    "windows_skill_proof_toolchain": {
+      "status": "PENDING",
+      "host_detail": {
+        "timestamp": "2026-08-16T00:16:45.5903143+09:00",
+        "power_bi_desktop": "PASS",
+        "power_bi_sources": [
+          "C:\\Program Files\\Microsoft Power BI Desktop\\bin\\PBIDesktop.exe",
+          "REGISTRY:Microsoft Power BI Desktop (x64)"
+        ],
+        "visual_studio_present": true,
+        "windows_skill_proof_toolchain": "PENDING",
+        "mutation_performed": false
+      }
+    },
+    "teams": {
+      "status": "PENDING",
+      "detail": "Agents Toolkit is installed, but tenant/custom-app deployment capability is not yet proven"
+    },
+    "azure_analysis_services": {
+      "status": "PENDING",
+      "detail": "Deploy/admin capability not yet proven"
+    }
+  },
+  "blockers": [
+    "Azure OpenAI minimum API call not yet proven",
+    "Databricks workspace access/minimum execution capability",
+    "GitHub → Azure OIDC actual workflow proof",
+    "Power BI publish/API or Desktop publish actual capability",
+    "Windows SSIS/SSAS build/run capability",
+    "Teams tenant/custom-app deployment capability",
+    "Azure Analysis Services deploy/admin capability"
+  ],
+  "zero_intervention_ready": "PENDING_CAPABILITY"
+}

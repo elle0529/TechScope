@@ -1,0 +1,72 @@
+{
+    "schema_version":  2,
+    "timestamp":  "2026-08-15T18:54:07.2866586+09:00",
+    "repository":  {
+                       "root":  "C:\\TechScope",
+                       "repository_contract_ready":  true,
+                       "missing_files":  [
+
+                                         ],
+                       "is_git_repository":  false,
+                       "origin_url":  null,
+                       "github_repo":  null
+                   },
+    "fingerprints":  {
+                         "baseline":  "39504a912613b4ba88e88ad58ca77fa3f48320696d9115db3690745133f9c13b",
+                         "rawdata":  "e2b2870467d88824f0e41a458426f5bb5a7d58abbbef545a30d0ea5175dbafaa",
+                         "implementation_plan":  "52240ddab1cab2fae1f655c09c218dd56c8d70006417c3dafa6b0507bbeef651",
+                         "devcontainer_json":  "87146dc2b6891ded40198dc265b4fa86a2c42b0d1ac1c737b6f34b405d287977",
+                         "devcontainer_dockerfile":  "ed76fa15f95fc7b4cc1045e424c5ca786a55df5785653adcd65f79bf7e314bcd"
+                     },
+    "host":  {
+                 "os_version":  "Microsoft Windows NT 10.0.26200.0",
+                 "powershell_version":  "5.1.26100.9168"
+             },
+    "tools":  {
+                  "winget":  {
+                                 "found":  true,
+                                 "path":  "C:\\Users\\joe97\\AppData\\Local\\Microsoft\\WindowsApps\\winget.exe",
+                                 "version":  "v1.29.280"
+                             },
+                  "git":  {
+                              "found":  true,
+                              "path":  "C:\\Program Files\\Git\\cmd\\git.exe",
+                              "version":  "git version 2.55.0.windows.3"
+                          },
+                  "github_cli":  {
+                                     "found":  false,
+                                     "path":  null,
+                                     "version":  null
+                                 },
+                  "docker":  {
+                                 "found":  true,
+                                 "path":  "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe",
+                                 "version":  "Docker version 27.3.1, build ce12230"
+                             },
+                  "vscode":  {
+                                 "found":  true,
+                                 "path":  "C:\\Users\\joe97\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code.cmd",
+                                 "version":  "1.124.0"
+                             },
+                  "wsl":  {
+                              "found":  true,
+                              "path":  "C:\\WINDOWS\\system32\\wsl.exe",
+                              "version":  "W\u0000S\u0000L\u0000 \u0000꽱\u0004?\u0000 \u00002\u0000.\u00003\u0000.\u00002\u00004\u0000.\u00000\u0000"
+                          }
+              },
+    "capabilities":  {
+                         "wsl_ready":  true,
+                         "docker_daemon_ready":  true,
+                         "docker_server_version":  "27.3.1",
+                         "github_authenticated":  false,
+                         "github_codespace_count":  0,
+                         "existing_techscope_container":  null,
+                         "existing_local_container_main_toolchain_probe":  false
+                     },
+    "environment_selection":  {
+                                  "selected":  "LOCAL_DEV_CONTAINER_CREATE",
+                                  "reason":  "Docker is ready, so the MAIN toolchain can remain off the Windows host and a local Dev Container can be created.",
+                                  "ENVIRONMENT_READY":  "PENDING",
+                                  "ZERO_INTERVENTION_READY":  "NOT_EVALUATED"
+                              }
+}

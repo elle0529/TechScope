@@ -1,0 +1,118 @@
+{
+  "timestamp": "2026-08-15T14:26:43+00:00",
+  "mode": "READ_ONLY",
+  "cloud_mutation_performed": false,
+  "providers": {},
+  "openai_regions": [
+    {
+      "location": "koreacentral",
+      "model_query": "PASS",
+      "model_error": null,
+      "generation_models_found": [
+        "gpt-4.1-mini",
+        "gpt-4o-mini"
+      ],
+      "embedding_models_found": [
+        "text-embedding-3-small"
+      ],
+      "usage_query": "PASS",
+      "usage_error": null,
+      "usage_count": 138
+    },
+    {
+      "location": "eastus2",
+      "model_query": "PASS",
+      "model_error": null,
+      "generation_models_found": [
+        "gpt-4.1-mini",
+        "gpt-4o-mini"
+      ],
+      "embedding_models_found": [
+        "text-embedding-3-small"
+      ],
+      "usage_query": "PASS",
+      "usage_error": null,
+      "usage_count": 265
+    },
+    {
+      "location": "swedencentral",
+      "model_query": "PASS",
+      "model_error": null,
+      "generation_models_found": [
+        "gpt-4.1-mini",
+        "gpt-4o-mini"
+      ],
+      "embedding_models_found": [
+        "text-embedding-3-small"
+      ],
+      "usage_query": "PASS",
+      "usage_error": null,
+      "usage_count": 254
+    }
+  ],
+  "existing_resources": {
+    "resource_groups": {
+      "status": "PASS",
+      "count": 1,
+      "names": [
+        "rg-joe971008-4086"
+      ],
+      "error": null
+    },
+    "storage_accounts": {
+      "status": "PASS",
+      "count": 0,
+      "names": [],
+      "error": null
+    },
+    "data_factories": {
+      "status": "PASS",
+      "count": 0,
+      "names": [],
+      "error": null
+    },
+    "databricks_workspaces": {
+      "status": "PASS",
+      "count": 0,
+      "names": [],
+      "error": null
+    },
+    "sql_servers": {
+      "status": "PASS",
+      "count": 0,
+      "names": [],
+      "error": null
+    },
+    "search_services": {
+      "status": "PENDING",
+      "count": null,
+      "names": [],
+      "error": "ERROR: the following arguments are required: --resource-group/-g\n\nhttps://aka.ms/cli_ref\nRead more about the command in reference docs"
+    },
+    "cognitive_accounts": {
+      "status": "PASS",
+      "count": 1,
+      "names": [
+        "joe971008-2615-resource"
+      ],
+      "error": null
+    },
+    "cosmos_accounts": {
+      "status": "PASS",
+      "count": 0,
+      "names": [],
+      "error": null
+    }
+  },
+  "next_blockers": [],
+  "azure_auth": "PASS",
+  "subscription": {
+    "id": "20c99d23-dcad-42e2-bca2-b511133f4140",
+    "name": "Azure subscription 1",
+    "tenantId": "8f2f3d4b-6bd8-4630-bcc7-4e889b92bdb2"
+  },
+  "quota_visibility": "PASS",
+  "azure_openai_candidate": "DISCOVERY_PASS",
+  "candidate_region": "koreacentral",
+  "zero_intervention_ready": "PENDING_CAPABILITY"
+}

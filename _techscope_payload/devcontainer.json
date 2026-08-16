@@ -1,0 +1,17 @@
+﻿{
+  "name": "TechScope",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/TechScope",
+  "runArgs": [
+    "--label",
+    "techscope.project=TechScope"
+  ],
+  "containerEnv": {
+    "AZURE_BICEP_USE_BINARY_FROM_PATH": "true",
+    "UV_NO_UPDATE_CHECK": "1"
+  }
+}

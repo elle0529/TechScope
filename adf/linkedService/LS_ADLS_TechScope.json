@@ -1,0 +1,11 @@
+{
+  "name": "LS_ADLS_TechScope",
+  "properties": {
+    "annotations": [],
+    "type": "AzureBlobFS",
+    "typeProperties": {
+      "url": "${ADLS_DFS_ENDPOINT}",
+      "authentication": "MSI"
+    }
+  }
+}

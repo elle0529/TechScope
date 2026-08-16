@@ -1,0 +1,7 @@
+﻿P1D v2
+Root cause fixed:
+Bicep strings use backslash escaping for embedded single quotes.
+The v1 ADF expression incorrectly used doubled SQL-style single quotes.
+
+Only pre-provision source/diagnostic logic changed.
+No Azure resource cleanup is required from the failed v1 run because provisioning never started.

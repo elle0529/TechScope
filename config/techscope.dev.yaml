@@ -1,0 +1,28 @@
+﻿environment: dev
+project:
+  name: techscope
+  source_id: SRC001
+
+paths:
+  source: source/rawdata.md
+  generated_runtime_config: generated/runtime-config.json
+  results: results
+  evidence: evidence
+
+azure:
+  subscription_id: null
+  tenant_id: null
+  location: null
+  resource_group: null
+
+databricks:
+  workspace_url: null
+
+powerbi:
+  workspace_id: null
+
+teams:
+  tenant_id: null
+
+runtime:
+  allow_cloud_mutation: false

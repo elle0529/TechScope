@@ -1,0 +1,65 @@
+table TechnologyExplorer
+
+	measure 'Technology Rows' = DISTINCTCOUNT(TechnologyExplorer[TechnologyId])
+		formatString: #,0
+
+	column TechnologyKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: TechnologyKey
+
+	column TechnologyId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyId
+
+	column TechnologyName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyName
+
+	column CategoryName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CategoryName
+
+	column ArchitectureLayer
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ArchitectureLayer
+
+	column LayerOrder
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: LayerOrder
+
+	column EvidenceType
+		dataType: string
+		summarizeBy: none
+		sourceColumn: EvidenceType
+
+	column SourceId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: SourceId
+
+	hierarchy 'Technology Hierarchy'
+		level Category
+			column: CategoryName
+
+		level 'Architecture Layer'
+			column: ArchitectureLayer
+
+		level Technology
+			column: TechnologyName
+
+	partition TechnologyExplorer = m
+		mode: directQuery
+		source =
+			let
+				Source = Sql.Database("sql-techscope-dev-239bd206.database.windows.net", "sqldb-techscope-dev"),
+				Data = Source{[Schema="techscope", Item="PbiTechnologyExplorer"]}[Data]
+			in
+				Data
+

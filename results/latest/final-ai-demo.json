@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-08-16T14:04:36.419829+00:00",
+  "status": "PASS",
+  "question": "What role does Azure Databricks play in TechScope? Include authoritative technology IDs.",
+  "health_status": 200,
+  "ask_status": 200,
+  "grounded": true,
+  "citation_count": 5,
+  "grounded_technology_ids": [
+    "T0056",
+    "T0147",
+    "T0148",
+    "T0260",
+    "T0262"
+  ],
+  "retrieved_chunk_count": 5,
+  "sql_request_count_before": 3,
+  "sql_request_count_after": 4,
+  "html": "/workspaces/TechScope/results/latest/final-ai-demo.html",
+  "secrets_persisted": false
+}

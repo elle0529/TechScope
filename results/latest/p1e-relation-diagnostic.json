@@ -1,0 +1,678 @@
+{
+  "timestamp_utc": "2026-08-16T19:23:00.247136+00:00",
+  "mutation": false,
+  "relation_files": [
+    {
+      "path": "extractor/output/relation.csv",
+      "exists": true,
+      "headers": [
+        "extract_record_id",
+        "source_id",
+        "source_row_number",
+        "source_line_number",
+        "source_row_sha256",
+        "item_number",
+        "category_raw",
+        "flow_fragment_raw",
+        "relation_resolution_status",
+        "evidence_type_resolution_status"
+      ],
+      "row_count": 77,
+      "sample_rows": [
+        {
+          "extract_record_id": "XR000001",
+          "source_id": "SRC001",
+          "source_row_number": "1",
+          "source_line_number": "3",
+          "source_row_sha256": "305d1f1492f53a431ec0951ff3379e77d3b8f9732de2586943af5bed8273717b",
+          "item_number": "1",
+          "category_raw": "AI Transformation / AX Consulting",
+          "flow_fragment_raw": "기업/부서 현황·도입 목적 파악 → AI/Data 전략 수립 → End-to-End Roadmap → Multi-Cloud Data Platform/거버넌스 설계 → Power BI·Generative BI·Microsoft Azure OpenAI·Power Platform 등 적용 → 현업 활용/데이터 기반 의사결정 → 실무 교육 → 운영·기술지원·비용 최적화 → 지속 가능한 AX 확장 및 비즈니스 성과",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000002",
+          "source_id": "SRC001",
+          "source_row_number": "1",
+          "source_line_number": "3",
+          "source_row_sha256": "305d1f1492f53a431ec0951ff3379e77d3b8f9732de2586943af5bed8273717b",
+          "item_number": "2",
+          "category_raw": "AI Transformation / AX Consulting",
+          "flow_fragment_raw": "기업/부서 현황·도입 목적 파악 → ERP·MES·CRM·POS·SAP·HR·Excel·Legacy DB·문서 등 원천 파악 → ADF/SSIS 수집·Integration → Data Lake/Azure SQL/Cosmos DB 저장·통합 → Synapse/SSAS/Analysis Service/Data Mart 분석 기반 → Power BI/Azure ML/Azure OpenAI·BXG 분석 → Brain Portal/Embedded BI/Teams/Mobile 사용자 제공 → Power Apps/Power Automate 업무 실행·자동화 → 교육·운영·비용 최적화 → AX 확장",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000003",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "1",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "기존 원본 흐름: 사용자 질문 → 질문 전처리·Reformatting → RAG/Agentic RAG → 문서 검색 → LLM Prompt 구성 → LLM 응답 → 후처리·요약 → 사용자 응답 → Parameter/Prompt 조정",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000004",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "2",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "통합 확장 흐름: 사용자 질문/업무 요청 → 질문 전처리·Reformatting → RAG/Agentic RAG(해당 프로젝트) → 문서 검색·Context 구성 → LLM Prompt 구성 → OpenAI API/OpenAI LLM 또는 Microsoft Azure OpenAI 기반 생성형 AI → LLM 응답 → 후처리·요약 → 사용자/업무 시스템 응답 → Parameter/Prompt 조정",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000005",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "3",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "사용자 자연어 질문 → [문서형] 사내 문서/자료 검색 → 관련 정보·출처 추출 → GPT-4/Azure OpenAI 답변 생성 → Teams/Private GPT 등으로 제공 OR [정형데이터형] 질문 의도 파악 → 필요한 DB·Table·Column 선택 → Query → 데이터 전처리·계산·분석 → 자연어 답변·그래프 → 현업 Self-Service 분석",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        }
+      ]
+    },
+    {
+      "path": "generated/powerbi_adls_source/relation.csv",
+      "exists": true,
+      "headers": [
+        "extract_record_id",
+        "source_id",
+        "source_row_number",
+        "source_line_number",
+        "source_row_sha256",
+        "item_number",
+        "category_raw",
+        "flow_fragment_raw",
+        "relation_resolution_status",
+        "evidence_type_resolution_status"
+      ],
+      "row_count": 77,
+      "sample_rows": [
+        {
+          "extract_record_id": "XR000001",
+          "source_id": "SRC001",
+          "source_row_number": "1",
+          "source_line_number": "3",
+          "source_row_sha256": "305d1f1492f53a431ec0951ff3379e77d3b8f9732de2586943af5bed8273717b",
+          "item_number": "1",
+          "category_raw": "AI Transformation / AX Consulting",
+          "flow_fragment_raw": "기업/부서 현황·도입 목적 파악 → AI/Data 전략 수립 → End-to-End Roadmap → Multi-Cloud Data Platform/거버넌스 설계 → Power BI·Generative BI·Microsoft Azure OpenAI·Power Platform 등 적용 → 현업 활용/데이터 기반 의사결정 → 실무 교육 → 운영·기술지원·비용 최적화 → 지속 가능한 AX 확장 및 비즈니스 성과",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000002",
+          "source_id": "SRC001",
+          "source_row_number": "1",
+          "source_line_number": "3",
+          "source_row_sha256": "305d1f1492f53a431ec0951ff3379e77d3b8f9732de2586943af5bed8273717b",
+          "item_number": "2",
+          "category_raw": "AI Transformation / AX Consulting",
+          "flow_fragment_raw": "기업/부서 현황·도입 목적 파악 → ERP·MES·CRM·POS·SAP·HR·Excel·Legacy DB·문서 등 원천 파악 → ADF/SSIS 수집·Integration → Data Lake/Azure SQL/Cosmos DB 저장·통합 → Synapse/SSAS/Analysis Service/Data Mart 분석 기반 → Power BI/Azure ML/Azure OpenAI·BXG 분석 → Brain Portal/Embedded BI/Teams/Mobile 사용자 제공 → Power Apps/Power Automate 업무 실행·자동화 → 교육·운영·비용 최적화 → AX 확장",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000003",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "1",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "기존 원본 흐름: 사용자 질문 → 질문 전처리·Reformatting → RAG/Agentic RAG → 문서 검색 → LLM Prompt 구성 → LLM 응답 → 후처리·요약 → 사용자 응답 → Parameter/Prompt 조정",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000004",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "2",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "통합 확장 흐름: 사용자 질문/업무 요청 → 질문 전처리·Reformatting → RAG/Agentic RAG(해당 프로젝트) → 문서 검색·Context 구성 → LLM Prompt 구성 → OpenAI API/OpenAI LLM 또는 Microsoft Azure OpenAI 기반 생성형 AI → LLM 응답 → 후처리·요약 → 사용자/업무 시스템 응답 → Parameter/Prompt 조정",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        },
+        {
+          "extract_record_id": "XR000005",
+          "source_id": "SRC001",
+          "source_row_number": "2",
+          "source_line_number": "4",
+          "source_row_sha256": "62a2e485390e5b1a9cefed6f2f98218d1073169ef7ec12b33d0a1dfeabc8a4a2",
+          "item_number": "3",
+          "category_raw": "AI / LLM Engineering",
+          "flow_fragment_raw": "사용자 자연어 질문 → [문서형] 사내 문서/자료 검색 → 관련 정보·출처 추출 → GPT-4/Azure OpenAI 답변 생성 → Teams/Private GPT 등으로 제공 OR [정형데이터형] 질문 의도 파악 → 필요한 DB·Table·Column 선택 → Query → 데이터 전처리·계산·분석 → 자연어 답변·그래프 → 현업 Self-Service 분석",
+          "relation_resolution_status": "unresolved",
+          "evidence_type_resolution_status": "unresolved"
+        }
+      ]
+    }
+  ],
+  "gold_relation_artifacts": [],
+  "code_references": [
+    {
+      "path": "tools/p1d_cloud_data_e2e.py",
+      "line": 31,
+      "text": "\"relation.csv\","
+    },
+    {
+      "path": "tools/p1d_sql_verify.py",
+      "line": 29,
+      "text": "(\"relation\", \"techscope.FactTechnologyRelation\"),"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 12,
+      "text": "\"FactTechnologyRelation\",\"fact_technology_relation\",\"technology_relation\","
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 13,
+      "text": "\"relation.csv\",\"source_technology\",\"target_technology\","
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 45,
+      "text": "if (\"fact_technology_relation\" in full or \"technology_relation\" in full) and p.suffix.lower() in {\".csv\",\".json\",\".jsonl\",\".parquet\"}:"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 102,
+      "text": "result[\"FactTechnologyRelation\"]=table_info(\"techscope\",\"FactTechnologyRelation\")"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 118,
+      "text": "fact=report.get(\"sql\",{}).get(\"FactTechnologyRelation\",{})"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 152,
+      "text": "fact=report.get(\"sql\",{}).get(\"FactTechnologyRelation\",{})"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 157,
+      "text": "print(\"FACT_TECHNOLOGY_RELATION_EXISTS=\"+(\"YES\" if fact.get(\"exists\") else \"NO\"),flush=True)"
+    },
+    {
+      "path": "tools/p1e_relation_diagnostic.py",
+      "line": 158,
+      "text": "print(\"FACT_TECHNOLOGY_RELATION_ROWS=\"+str(fact.get(\"row_count\",\"UNKNOWN\")),flush=True)"
+    },
+    {
+      "path": "tools/powerbi_adls_finalize.py",
+      "line": 121,
+      "text": "\"landing/structured/relation.csv\","
+    },
+    {
+      "path": "tools/powerbi_adls_finalize.py",
+      "line": 122,
+      "text": "\"relation.csv\","
+    },
+    {
+      "path": "tools/powerbi_adls_finalize.py",
+      "line": 172,
+      "text": "raise RuntimeError(\"relation.csv is empty\")"
+    },
+    {
+      "path": "tools/powerbi_adls_finalize.py",
+      "line": 174,
+      "text": "raise RuntimeError(\"No DIRECT/INDIRECT claims found in relation.csv\")"
+    },
+    {
+      "path": "tools/powerbi_polish_source_metrics.py",
+      "line": 248,
+      "text": "# 4) Relation claims from actual relation.csv only."
+    },
+    {
+      "path": "tools/powerbi_polish_source_metrics.py",
+      "line": 249,
+      "text": "relation_path = first_candidate(\"relation.csv\")"
+    },
+    {
+      "path": "tools/powerbi_prepare_demo.py",
+      "line": 260,
+      "text": "if object_exists(cur, \"techscope.FactTechnologyRelation\", \"U\"):"
+    },
+    {
+      "path": "tools/powerbi_prepare_demo.py",
+      "line": 263,
+      "text": "\"SELECT COUNT_BIG(*) FROM techscope.FactTechnologyRelation \""
+    },
+    {
+      "path": "tools/powerbi_prepare_demo.py",
+      "line": 268,
+      "text": "\"SELECT COUNT_BIG(*) FROM techscope.FactTechnologyRelation \""
+    },
+    {
+      "path": "tools/sync_p1a_docs.py",
+      "line": 57,
+      "text": "\"technology.csv\",\"category.csv\",\"relation.csv\","
+    },
+    {
+      "path": "tools/validate_p1b_artifacts.py",
+      "line": 13,
+      "text": "\"relation.csv\","
+    },
+    {
+      "path": "tools/validate_p1b_artifacts.py",
+      "line": 101,
+      "text": "\"fact_technology_relation\","
+    },
+    {
+      "path": "tools/validate_p1c_artifacts.py",
+      "line": 12,
+      "text": "for x in [\"DimTechnology\",\"DimCategory\",\"DimCompany\",\"DimArchitecture\",\"FactTechnologyRelation\","
+    },
+    {
+      "path": "tools/validate_p1c_artifacts.py",
+      "line": 16,
+      "text": "for x in [\"DimTechnology\",\"DimCategory\",\"DimCompany\",\"DimArchitecture\",\"FactTechnologyRelation\","
+    },
+    {
+      "path": "tools/validate_p1d_artifacts.py",
+      "line": 60,
+      "text": "\"FactTechnologyRelation\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 265,
+      "text": ".withColumn(\"source_technology_raw\", F.trim(F.element_at(\"arrow_parts\", 1)))"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 266,
+      "text": ".withColumn(\"target_technology_raw\", F.trim(F.element_at(\"arrow_parts\", 2)))"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 267,
+      "text": ".withColumn(\"source_key_normalized\", normalized_key(F.col(\"source_technology_raw\")))"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 268,
+      "text": ".withColumn(\"target_key_normalized\", normalized_key(F.col(\"target_technology_raw\")))"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 293,
+      "text": "\"source_technology_name\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 294,
+      "text": "F.coalesce(\"source_canonical_name\", \"source_technology_raw\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 297,
+      "text": "\"target_technology_name\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 298,
+      "text": "F.coalesce(\"target_canonical_name\", \"target_technology_raw\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 303,
+      "text": "F.col(\"technology_name\").alias(\"source_technology_name\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 304,
+      "text": "F.col(\"technology_id\").alias(\"source_technology_id\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 307,
+      "text": "F.col(\"technology_name\").alias(\"target_technology_name\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 308,
+      "text": "F.col(\"technology_id\").alias(\"target_technology_id\"),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 313,
+      "text": ".join(source_dim, \"source_technology_name\", \"left\")"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 314,
+      "text": ".join(target_dim, \"target_technology_name\", \"left\")"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 320,
+      "text": "F.col(\"source_technology_id\").isNotNull()"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 321,
+      "text": "& F.col(\"target_technology_id\").isNotNull(),"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 326,
+      "text": "\"source_technology_id\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 327,
+      "text": "\"source_technology_name\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 328,
+      "text": "\"target_technology_id\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 329,
+      "text": "\"target_technology_name\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 405,
+      "text": "write_delta(silver_relation, f\"{SILVER_BASE}/technology_relation\")"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 406,
+      "text": "write_delta(silver_relation_unresolved, f\"{SILVER_BASE}/technology_relation_unresolved\")"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 440,
+      "text": "fact_technology_relation = ("
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 444,
+      "text": "\"source_technology_id\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 445,
+      "text": "\"target_technology_id\","
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 469,
+      "text": "write_delta(fact_technology_relation, f\"{GOLD_BASE}/fact_technology_relation\")"
+    },
+    {
+      "path": "databricks/src/01_build_techscope.py",
+      "line": 563,
+      "text": "\"resolved_relation_count\": fact_technology_relation.count(),"
+    },
+    {
+      "path": "databricks/src/02_cloud_data_e2e.py",
+      "line": 333,
+      "text": "write_delta(fact_relation, f\"{silver}/technology_relation\")"
+    },
+    {
+      "path": "databricks/src/02_cloud_data_e2e.py",
+      "line": 334,
+      "text": "write_delta(unresolved_relation, f\"{silver}/technology_relation_unresolved\")"
+    },
+    {
+      "path": "databricks/src/02_cloud_data_e2e.py",
+      "line": 355,
+      "text": "write_delta(fact_relation, f\"{gold}/fact_technology_relation\")"
+    },
+    {
+      "path": "databricks/src/02_cloud_data_e2e.py",
+      "line": 454,
+      "text": "(fact_relation, \"techscope.FactTechnologyRelation\"),"
+    },
+    {
+      "path": "databricks/src/02_cloud_data_e2e.py",
+      "line": 492,
+      "text": "LEFT JOIN techscope.FactTechnologyRelation r"
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 43,
+      "text": "IF OBJECT_ID(N'techscope.FactTechnologyRelation',N'U') IS NULL"
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 45,
+      "text": "CREATE TABLE techscope.FactTechnologyRelation("
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 56,
+      "text": "CREATE INDEX IX_FTR_Source ON techscope.FactTechnologyRelation(SourceTechnologyId);"
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 57,
+      "text": "CREATE INDEX IX_FTR_Target ON techscope.FactTechnologyRelation(TargetTechnologyId);"
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 98,
+      "text": "LEFT JOIN techscope.FactTechnologyRelation otr ON otr.SourceTechnologyId=t.TechnologyId"
+    },
+    {
+      "path": "sql/00_schema.sql",
+      "line": 99,
+      "text": "LEFT JOIN techscope.FactTechnologyRelation itr ON itr.TargetTechnologyId=t.TechnologyId"
+    },
+    {
+      "path": "sql/README.md",
+      "line": 3,
+      "text": "FactTechnologyRelation and FactCompanyTechnology. AI operations append FactAIInteraction."
+    },
+    {
+      "path": "extractor/extract.py",
+      "line": 292,
+      "text": "\"relation.csv\": ("
+    },
+    {
+      "path": "extractor/README.md",
+      "line": 10,
+      "text": "- `extractor/output/relation.csv`"
+    },
+    {
+      "path": "extractor/output/manifest.json",
+      "line": 28,
+      "text": "\"relation.csv\": {"
+    },
+    {
+      "path": "extractor/output/manifest.json",
+      "line": 29,
+      "text": "\"path\": \"extractor/output/relation.csv\","
+    }
+  ],
+  "sql": {
+    "related_tables": [
+      {
+        "schema": "techscope",
+        "table": "BridgeAIRequestTechnology"
+      },
+      {
+        "schema": "techscope",
+        "table": "DimTechnology"
+      },
+      {
+        "schema": "techscope",
+        "table": "FactCompanyTechnology"
+      },
+      {
+        "schema": "techscope",
+        "table": "FactTechnologyRelation"
+      },
+      {
+        "schema": "techscope",
+        "table": "PbiTechnologyExplorer"
+      }
+    ],
+    "FactTechnologyRelation": {
+      "exists": true,
+      "columns": [
+        {
+          "ordinal": 1,
+          "name": "SourceTechnologyId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 2,
+          "name": "TargetTechnologyId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 3,
+          "name": "RelationType",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        },
+        {
+          "ordinal": 4,
+          "name": "EvidenceType",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        },
+        {
+          "ordinal": 5,
+          "name": "SourceId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        }
+      ],
+      "row_count": 0
+    },
+    "DimTechnology": {
+      "exists": true,
+      "columns": [
+        {
+          "ordinal": 1,
+          "name": "TechnologyId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        },
+        {
+          "ordinal": 2,
+          "name": "TechnologyName",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 3,
+          "name": "CategoryName",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 4,
+          "name": "SourceId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 5,
+          "name": "TechnologyKey",
+          "type": "bigint",
+          "max_length": 8,
+          "nullable": false,
+          "identity": true
+        }
+      ],
+      "row_count": 515
+    },
+    "DimCategory": {
+      "exists": true,
+      "columns": [
+        {
+          "ordinal": 1,
+          "name": "CategoryId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        },
+        {
+          "ordinal": 2,
+          "name": "CategoryName",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": true,
+          "identity": false
+        },
+        {
+          "ordinal": 3,
+          "name": "SourceId",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": false,
+          "identity": false
+        }
+      ],
+      "row_count": 41
+    },
+    "related_views": [
+      {
+        "schema": "techscope",
+        "view": "vwGroundedRequestsByTechnology"
+      },
+      {
+        "schema": "techscope",
+        "view": "vwPbiGroundedTechnology"
+      },
+      {
+        "schema": "techscope",
+        "view": "vwTechnologyOverview"
+      }
+    ]
+  },
+  "databricks_current_user": {
+    "returncode": 0,
+    "stdout": "{\n  \"active\": true,\n  \"displayName\": \"joe k\",\n  \"emails\": [\n    {\n      \"primary\": true,\n      \"type\": \"work\",\n      \"value\": \"joe971008@naver.com\"\n    }\n  ],\n  \"entitlements\": [\n    {\n      \"value\": \"allow-cluster-create\"\n    },\n    {\n      \"value\": \"allow-instance-pool-create\"\n    }\n  ],\n  \"externalId\": \"79fd1bcc-4696-4559-bb0f-57ed56fadbdb\",\n  \"groups\": [\n    {\n      \"$ref\": \"Groups/157633596893503\",\n      \"display\": \"admins\",\n      \"type\": \"direct\",\n      \"value\": \"157633596893503\"\n    },\n    {\n      \"$ref\": \"Groups/151806804870237\",\n      \"display\": \"users\",\n      \"type\": \"direct\",\n      \"value\": \"151806804870237\"\n    }\n  ],\n  \"id\": \"142434342861822\",\n  \"name\": {\n    \"familyName\": \"k\",\n    \"givenName\": \"joe\"\n  },\n  \"schemas\": [\n    \"urn:ietf:params:scim:schemas:core:2.0:User\",\n    \"urn:ietf:params:scim:schemas:extension:workspace:2.0:User\"\n  ],\n  \"userName\": \"joe971008@naver.com\"\n}",
+    "stderr": ""
+  },
+  "databricks_jobs": {
+    "returncode": 0,
+    "stdout": "[\n  \n]",
+    "stderr": ""
+  },
+  "recommended_repair_path": "DATABRICKS_NORMALIZE_RESOLVE_IDS_BUILD_GOLD_THEN_LOAD_AZURE_SQL"
+}

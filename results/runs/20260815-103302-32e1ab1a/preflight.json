@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "elapsed_seconds": 0.02,
+  "config": "config/techscope.dev.yaml",
+  "source": "source/rawdata.md",
+  "toolchain": [
+    "python",
+    "uv",
+    "node",
+    "pnpm",
+    "az",
+    "bicep",
+    "databricks",
+    "sqlpackage",
+    "atk",
+    "git"
+  ]
+}

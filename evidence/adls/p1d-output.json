@@ -1,0 +1,12 @@
+{
+  "component": "CMP_ADLS",
+  "status": "PASS",
+  "verified_paths": [
+    "landing/structured/architecture_mapping.csv",
+    "landing/structured/category.csv",
+    "landing/structured/company_usecase.csv",
+    "landing/structured/relation.csv",
+    "landing/structured/technology.csv"
+  ],
+  "timestamp": "2026-08-15T15:52:08+00:00"
+}

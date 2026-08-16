@@ -1,0 +1,36 @@
+{
+  "component": "CMP_PYTHON",
+  "status": "PASS",
+  "mode": "LOCAL_PROTOTYPE",
+  "command": "python extractor/extract.py",
+  "manifest": "extractor/output/manifest.json",
+  "source_unchanged": true,
+  "outputs": {
+    "technology.csv": {
+      "path": "extractor/output/technology.csv",
+      "rows": 517,
+      "sha256": "f706d1637101e6d565cb89be434c9c899f1a7db1835b50a6a2e9bbe90fc9bf44"
+    },
+    "category.csv": {
+      "path": "extractor/output/category.csv",
+      "rows": 41,
+      "sha256": "a39a9e7cd9ec51dd63791bfee3574547f389cd2bdba602411abe05ff4295ff1c"
+    },
+    "relation.csv": {
+      "path": "extractor/output/relation.csv",
+      "rows": 77,
+      "sha256": "53bc6f2c4cc815023506b8e5b782afd2b0864a2aadba84dfb88520f0e3177d81"
+    },
+    "company_usecase.csv": {
+      "path": "extractor/output/company_usecase.csv",
+      "rows": 41,
+      "sha256": "27a5249a5d9bfdb43676e54866f2a1b162ece4a60d5b237d12a39a3f7b2a19db"
+    },
+    "architecture_mapping.csv": {
+      "path": "extractor/output/architecture_mapping.csv",
+      "rows": 41,
+      "sha256": "6768061e56999beadb9f85b185f948070a72e5c39cf4a92ae737d0fa8722e164"
+    }
+  },
+  "claim_boundary": "Local structural extraction prototype; ADLS-integrated runtime is not claimed."
+}

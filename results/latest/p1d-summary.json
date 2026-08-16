@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-08-16T10:23:45+00:00",
+  "status": "PASS",
+  "components": {
+    "CMP_ADLS": "PASS",
+    "CMP_ADF": "PASS",
+    "CMP_DATABRICKS": "PASS",
+    "CMP_AZURE_SQL": "PASS"
+  },
+  "blockers": [],
+  "runtime": {
+    "state": "P1_DATA_PROVISIONED",
+    "timestamp": "2026-08-15T15:52:00+00:00",
+    "location": "koreacentral",
+    "resource_group": "rg-techscope-dev-239bd206",
+    "storage_account": "sttechscopedev239bd206",
+    "storage_dfs_endpoint": "https://sttechscopedev239bd206.dfs.core.windows.net/",
+    "file_system": "techscope",
+    "data_factory": "adf-techscope-dev-239bd206",
+    "databricks_workspace": "dbw-techscope-dev-239bd206",
+    "databricks_workspace_url": "adb-7405611393729074.14.azuredatabricks.net",
+    "databricks_workspace_resource_id": "/subscriptions/20c99d23-dcad-42e2-bca2-b511133f4140/resourceGroups/rg-techscope-dev-239bd206/providers/Microsoft.Databricks/workspaces/dbw-techscope-dev-239bd206",
+    "sql_server": "sql-techscope-dev-239bd206",
+    "sql_server_fqdn": "sql-techscope-dev-239bd206.database.windows.net",
+    "sql_database": "sqldb-techscope-dev",
+    "sql_admin_login": "techscopeadmin",
+    "secrets_persisted": false
+  },
+  "resume_scope": "DATABRICKS_AND_AZURE_SQL_ONLY",
+  "secrets_persisted": false
+}

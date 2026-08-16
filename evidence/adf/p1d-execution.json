@@ -1,0 +1,40 @@
+{
+  "component": "CMP_ADF",
+  "status": "PASS",
+  "pipeline": "PL_Ingest_TechScope",
+  "factory": "adf-techscope-dev-239bd206",
+  "run": {
+    "annotations": [
+      "TechScope",
+      "P1D"
+    ],
+    "debugRunId": null,
+    "durationInMs": 52537,
+    "id": "/SUBSCRIPTIONS/20C99D23-DCAD-42E2-BCA2-B511133F4140/RESOURCEGROUPS/RG-TECHSCOPE-DEV-239BD206/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/ADF-TECHSCOPE-DEV-239BD206/pipelineruns/45c4b746-98c1-11f1-8973-0242ac110002",
+    "invokedBy": {
+      "id": "3612d947683f4b4f8eafe4728cc662a5",
+      "invokedByType": "Manual",
+      "name": "Manual",
+      "pipelineName": null,
+      "pipelineRunId": null
+    },
+    "isLatest": true,
+    "lastUpdated": "2026-08-15T15:53:02.256536+00:00",
+    "message": "",
+    "parameters": {
+      "file_list": "[\n  \"technology.csv\",\n  \"category.csv\",\n  \"relation.csv\",\n  \"company_usecase.csv\",\n  \"architecture_mapping.csv\"\n]",
+      "structured_folder": "landing/structured"
+    },
+    "pipelineName": "PL_Ingest_TechScope",
+    "pipelineReturnValue": {},
+    "resourceGroup": "RG-TECHSCOPE-DEV-239BD206",
+    "runDimension": {},
+    "runDimensions": null,
+    "runEnd": "2026-08-15T15:53:02.255608+00:00",
+    "runGroupId": "45c4b746-98c1-11f1-8973-0242ac110002",
+    "runId": "45c4b746-98c1-11f1-8973-0242ac110002",
+    "runStart": "2026-08-15T15:52:09.717725+00:00",
+    "status": "Succeeded"
+  },
+  "timestamp": "2026-08-15T15:53:06+00:00"
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "30000000000000000001",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 1000,
+    "height": 140,
+    "width": 1240,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "AI Requests"
+                }
+              },
+              "queryRef": "ExecutiveSummary.AI Requests",
+              "nativeQueryRef": "AI Requests"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Success Rate"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Success Rate",
+              "nativeQueryRef": "Success Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Citation Rate"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Citation Rate",
+              "nativeQueryRef": "Citation Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ExecutiveSummary"
+                    }
+                  },
+                  "Property": "Average AI Latency (ms)"
+                }
+              },
+              "queryRef": "ExecutiveSummary.Average AI Latency (ms)",
+              "nativeQueryRef": "Average AI Latency (ms)"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

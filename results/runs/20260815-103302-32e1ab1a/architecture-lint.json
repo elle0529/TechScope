@@ -1,0 +1,179 @@
+{
+  "passed": true,
+  "mode": "normal",
+  "checks": [
+    {
+      "check": "CHECK 01",
+      "passed": true,
+      "detail": "Duplicate Component IDs: []"
+    },
+    {
+      "check": "CHECK 02",
+      "passed": true,
+      "detail": "Duplicate Evidence IDs: []; invalid IDs: []"
+    },
+    {
+      "check": "CHECK 03",
+      "passed": true,
+      "detail": "Duplicate ADR IDs: []; missing IDs: []"
+    },
+    {
+      "check": "CHECK 04",
+      "passed": true,
+      "detail": "Invalid tracks: []"
+    },
+    {
+      "check": "CHECK 05",
+      "passed": true,
+      "detail": "Invalid scopes: []"
+    },
+    {
+      "check": "CHECK 06",
+      "passed": true,
+      "detail": "Invalid statuses: []"
+    },
+    {
+      "check": "CHECK 07",
+      "passed": true,
+      "detail": "Invalid ADR statuses: []"
+    },
+    {
+      "check": "CHECK 08",
+      "passed": true,
+      "detail": "Mermaid block cardinality: {'current': 1, 'target': 1, 'flow': 1, 'skill': 1}"
+    },
+    {
+      "check": "CHECK 09",
+      "passed": true,
+      "detail": "Invalid node types: {}"
+    },
+    {
+      "check": "CHECK 10",
+      "passed": true,
+      "detail": "Unregistered architecture components: []"
+    },
+    {
+      "check": "CHECK 11",
+      "passed": true,
+      "detail": "Unknown evidence components: []"
+    },
+    {
+      "check": "CHECK 12",
+      "passed": true,
+      "detail": "Invalid evidence types: []"
+    },
+    {
+      "check": "CHECK 13",
+      "passed": true,
+      "detail": "Missing/invalid evidence paths: []"
+    },
+    {
+      "check": "CHECK 14",
+      "passed": true,
+      "detail": "Incomplete Implemented: []"
+    },
+    {
+      "check": "CHECK 15",
+      "passed": true,
+      "detail": "Incomplete Prototype: []"
+    },
+    {
+      "check": "CHECK 16",
+      "passed": true,
+      "detail": "Non-MAIN in Current MAIN: []"
+    },
+    {
+      "check": "CHECK 17",
+      "passed": true,
+      "detail": "Invalid Current MAIN status: []"
+    },
+    {
+      "check": "CHECK 18",
+      "passed": true,
+      "detail": "Implemented MAIN missing: []"
+    },
+    {
+      "check": "CHECK 19",
+      "passed": true,
+      "detail": "Non-MAIN in Target MAIN: []"
+    },
+    {
+      "check": "CHECK 20",
+      "passed": true,
+      "detail": "Target diff: missing=[], extra=[]"
+    },
+    {
+      "check": "CHECK 21",
+      "passed": true,
+      "detail": "Non-MAIN in Target Key Data Flow: []"
+    },
+    {
+      "check": "CHECK 22",
+      "passed": true,
+      "detail": "Skill Proof leaked into MAIN views: []"
+    },
+    {
+      "check": "CHECK 23",
+      "passed": true,
+      "detail": "Required Skill Proof missing: []"
+    },
+    {
+      "check": "CHECK 24",
+      "passed": true,
+      "detail": "Unknown ADR components: []"
+    },
+    {
+      "check": "CHECK 25",
+      "passed": true,
+      "detail": "Missing superseded ADRs: []"
+    },
+    {
+      "check": "INTEGRITY 01",
+      "passed": true,
+      "detail": "Frozen baseline hashes: unchanged"
+    }
+  ],
+  "context": {
+    "components": 16,
+    "evidence": 0,
+    "adrs": 0,
+    "views": {
+      "current": [],
+      "target": [
+        "CMP_ADF",
+        "CMP_ADLS",
+        "CMP_AI_SEARCH",
+        "CMP_AZURE_OPENAI",
+        "CMP_AZURE_SQL",
+        "CMP_COSMOS",
+        "CMP_DATABRICKS",
+        "CMP_FASTAPI",
+        "CMP_POWER_BI",
+        "CMP_PYTHON",
+        "CMP_TEAMS"
+      ],
+      "flow": [
+        "CMP_ADF",
+        "CMP_AI_SEARCH",
+        "CMP_AZURE_OPENAI",
+        "CMP_AZURE_SQL",
+        "CMP_COSMOS",
+        "CMP_DATABRICKS",
+        "CMP_FASTAPI",
+        "CMP_POWER_BI",
+        "CMP_PYTHON",
+        "CMP_TEAMS"
+      ],
+      "skill": [
+        "CMP_AAS",
+        "CMP_AZURE_SQL",
+        "CMP_DATABRICKS",
+        "CMP_MLFLOW",
+        "CMP_SSAS",
+        "CMP_SSIS",
+        "CMP_SYNAPSE"
+      ]
+    }
+  },
+  "scope": "local deterministic contract verification; not live Azure verification"
+}

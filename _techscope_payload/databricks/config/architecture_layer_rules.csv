@@ -1,0 +1,16 @@
+canonical_name,layer_code,layer_name
+Azure Data Factory,02,Integration
+SSIS,02,Integration
+Azure Data Lake Storage Gen2,03,Storage
+Cosmos DB,03,Storage
+Azure Databricks,04,Processing
+Azure Synapse Analytics,05,Analytics
+Azure SQL,05,Analytics
+SSAS,06,Semantic
+Azure Analysis Services,06,Semantic
+Power BI,07,BI
+Azure AI Search,08,AI
+Azure OpenAI,08,AI
+FastAPI,09,Application
+Microsoft Teams,09,Application
+MLflow,10,Operations

@@ -1,0 +1,11 @@
+﻿{
+    "timestamp":  "2026-08-16T00:16:45.5903143+09:00",
+    "power_bi_desktop":  "PASS",
+    "power_bi_sources":  [
+                             "C:\\Program Files\\Microsoft Power BI Desktop\\bin\\PBIDesktop.exe",
+                             "REGISTRY:Microsoft Power BI Desktop (x64)"
+                         ],
+    "visual_studio_present":  true,
+    "windows_skill_proof_toolchain":  "PENDING",
+    "mutation_performed":  false
+}

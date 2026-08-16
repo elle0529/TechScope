@@ -1,0 +1,115 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "10000000000000000002",
+  "position": {
+    "x": 20,
+    "y": 190,
+    "z": 2000,
+    "height": 500,
+    "width": 1240,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TechnologyExplorer"
+                    }
+                  },
+                  "Property": "TechnologyId"
+                }
+              },
+              "queryRef": "TechnologyExplorer.TechnologyId",
+              "nativeQueryRef": "TechnologyId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TechnologyExplorer"
+                    }
+                  },
+                  "Property": "TechnologyName"
+                }
+              },
+              "queryRef": "TechnologyExplorer.TechnologyName",
+              "nativeQueryRef": "TechnologyName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TechnologyExplorer"
+                    }
+                  },
+                  "Property": "CategoryName"
+                }
+              },
+              "queryRef": "TechnologyExplorer.CategoryName",
+              "nativeQueryRef": "CategoryName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TechnologyExplorer"
+                    }
+                  },
+                  "Property": "ArchitectureLayer"
+                }
+              },
+              "queryRef": "TechnologyExplorer.ArchitectureLayer",
+              "nativeQueryRef": "ArchitectureLayer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "TechnologyExplorer"
+                    }
+                  },
+                  "Property": "EvidenceType"
+                }
+              },
+              "queryRef": "TechnologyExplorer.EvidenceType",
+              "nativeQueryRef": "EvidenceType"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

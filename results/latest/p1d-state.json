@@ -1,0 +1,41 @@
+{
+  "started_at": "2026-08-15T15:33:23+00:00",
+  "stages": {
+    "stage-gate": {
+      "status": "PASS",
+      "detail": "koreacentral",
+      "timestamp": "2026-08-15T15:47:20+00:00"
+    },
+    "p1d": {
+      "status": "FAIL",
+      "detail": "ERROR: {\"status\":\"Failed\",\"error\":{\"code\":\"DeploymentFailed\",\"target\":\"/subscriptions/20c99d23-dcad-42e2-bca2-b511133f4140/providers/Microsoft.Resources/deployments/techscope-p1d-239bd206\",\"message\":\"At least one resource deployment operation failed. Please list deployment operations for details. Pl",
+      "timestamp": "2026-08-15T15:41:56+00:00"
+    },
+    "provision": {
+      "status": "PASS",
+      "detail": "rg-techscope-dev-239bd206",
+      "timestamp": "2026-08-15T15:52:00+00:00"
+    },
+    "seed-adls": {
+      "status": "PASS",
+      "detail": "5 files",
+      "timestamp": "2026-08-15T15:52:08+00:00"
+    },
+    "run-adf": {
+      "status": "PASS",
+      "detail": "bronze files=5",
+      "timestamp": "2026-08-15T15:53:08+00:00"
+    },
+    "run-databricks": {
+      "status": "PASS",
+      "detail": "gold=21",
+      "timestamp": "2026-08-16T10:23:41+00:00"
+    },
+    "verify-sql": {
+      "status": "PASS",
+      "detail": "",
+      "timestamp": "2026-08-16T10:23:45+00:00"
+    }
+  },
+  "updated_at": "2026-08-16T10:23:45+00:00"
+}

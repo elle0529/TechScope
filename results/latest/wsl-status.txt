@@ -1,0 +1,8 @@
+# TechScope WSL Status
+
+timestamp: 2026-08-15T18:53:37.0858367+09:00
+exit_code: 0
+
+0??0쇱? docker-desktop
+
+0??꽱? 2

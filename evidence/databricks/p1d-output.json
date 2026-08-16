@@ -1,0 +1,32 @@
+{
+  "component": "CMP_DATABRICKS",
+  "status": "PASS",
+  "gold_file_count": 21,
+  "gold_sample": [
+    "gold/dim_architecture/_delta_log/00000000000000000000.crc",
+    "gold/dim_architecture/_delta_log/00000000000000000000.json",
+    "gold/dim_architecture/part-00000-16352f73-8aff-4e6b-90bd-0c5f369ea2d5.c000.snappy.parquet",
+    "gold/dim_architecture/part-00001-d50ec510-93af-493e-a6dc-8cab3e062b73.c000.snappy.parquet",
+    "gold/dim_architecture/part-00002-66bf0058-290e-4a64-b67e-d8080c8a3cfb.c000.snappy.parquet",
+    "gold/dim_architecture/part-00003-c4299693-b6be-4e57-9113-16d320f1c6be.c000.snappy.parquet",
+    "gold/dim_category/_delta_log/00000000000000000000.crc",
+    "gold/dim_category/_delta_log/00000000000000000000.json",
+    "gold/dim_category/part-00000-e2ef7a6f-c869-4651-90a2-a820be794754.c000.snappy.parquet",
+    "gold/dim_company/_delta_log/00000000000000000000.crc",
+    "gold/dim_company/_delta_log/00000000000000000000.json",
+    "gold/dim_technology/_delta_log/00000000000000000000.crc",
+    "gold/dim_technology/_delta_log/00000000000000000000.json",
+    "gold/dim_technology/part-00000-30001dd1-3508-48d8-8423-1b0f5dd97475.c000.snappy.parquet",
+    "gold/fact_company_technology/_delta_log/00000000000000000000.crc",
+    "gold/fact_company_technology/_delta_log/00000000000000000000.json",
+    "gold/fact_technology_relation/_delta_log/00000000000000000000.crc",
+    "gold/fact_technology_relation/_delta_log/00000000000000000000.json",
+    "gold/technology_summary/_delta_log/00000000000000000000.crc",
+    "gold/technology_summary/_delta_log/00000000000000000000.json",
+    "gold/technology_summary/part-00000-6ba6a050-1a04-4936-a6d5-4d0ef3a2cf30.c000.snappy.parquet"
+  ],
+  "rag_files": [
+    "rag/knowledge_chunks.jsonl"
+  ],
+  "timestamp": "2026-08-16T10:23:41+00:00"
+}

@@ -1,0 +1,6 @@
+Technology Count := DISTINCTCOUNT(TechnologyOverview[TechnologyId])
+Total Relations := SUM(TechnologyOverview[OutgoingRelationCount])
+Companies Using Technology := SUM(TechnologyOverview[CompanyCount])
+Grounding Rate := DIVIDE(SUM(AIInteractionSummary[GroundedCount]),SUM(AIInteractionSummary[InteractionCount]))
+Average AI Latency (ms) := AVERAGE(AIInteractionSummary[AvgLatencyMs])
+Average Feedback := AVERAGE(AIInteractionSummary[AvgFeedbackScore])

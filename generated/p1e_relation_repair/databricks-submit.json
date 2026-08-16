@@ -1,0 +1,14 @@
+{
+  "run_name": "TechScope-P1E-Relation-Repair",
+  "tasks": [
+    {
+      "task_key": "p1e_relation_repair",
+      "notebook_task": {
+        "notebook_path": "/Shared/TechScope/P1E_Relation_Repair/p1e_relation_repair_task",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 900
+    }
+  ],
+  "timeout_seconds": 900
+}

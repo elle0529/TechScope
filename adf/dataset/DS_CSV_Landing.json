@@ -1,0 +1,38 @@
+{
+  "name": "DS_CSV_Landing",
+  "properties": {
+    "linkedServiceName": {
+      "referenceName": "LS_ADLS_TechScope",
+      "type": "LinkedServiceReference"
+    },
+    "parameters": {
+      "folder_name": {
+        "type": "string"
+      },
+      "file_name": {
+        "type": "string"
+      }
+    },
+    "annotations": [],
+    "type": "DelimitedText",
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileName": {
+          "value": "@dataset().file_name",
+          "type": "Expression"
+        },
+        "folderPath": {
+          "value": "@dataset().folder_name",
+          "type": "Expression"
+        },
+        "fileSystem": "techscope"
+      },
+      "columnDelimiter": ",",
+      "escapeChar": "\\",
+      "firstRowAsHeader": true,
+      "quoteChar": "\""
+    },
+    "schema": []
+  }
+}

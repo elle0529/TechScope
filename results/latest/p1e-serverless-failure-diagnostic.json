@@ -1,0 +1,83 @@
+{
+  "parent_run_id": "323321120939012",
+  "task_run_id": "897092489347916",
+  "task_state": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "FAILED",
+    "state_message": "Workload failed, see run output for details",
+    "user_cancelled_or_timedout": false
+  },
+  "parent_state": {
+    "life_cycle_state": "INTERNAL_ERROR",
+    "result_state": "FAILED",
+    "state_message": "Task p1e_relation_repair failed with message: Workload failed, see run output for details.",
+    "user_cancelled_or_timedout": false
+  },
+  "output_error": "RuntimeError: NO_VALIDATED_RELATIONS: no explicit arrow-delimited technology relation could be resolved; SQL load must not occur",
+  "output_error_trace": "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n\u001b[0;31mRuntimeError\u001b[0m                              Traceback (most recent call last)\nFile \u001b[0;32m<command-4540698643038978>, line 339\u001b[0m\n\u001b[1;32m    322\u001b[0m validated_rows \u001b[38;5;241m=\u001b[39m [\n\u001b[1;32m    323\u001b[0m     {\n\u001b[1;32m    324\u001b[0m         \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mSourceTechnologyId\u001b[39m\u001b[38;5;124m\"\u001b[39m: r[\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mSourceTechnologyId\u001b[39m\u001b[38;5;124m\"\u001b[39m],\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m    335\u001b[0m     )\u001b[38;5;241m.\u001b[39mcollect()\n\u001b[1;32m    336\u001b[0m ]\n\u001b[1;32m    338\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m relation_count \u001b[38;5;241m<\u001b[39m\u001b[38;5;241m=\u001b[39m \u001b[38;5;241m0\u001b[39m:\n\u001b[0;32m--> 339\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m \u001b[38;5;167;01mRuntimeError\u001b[39;00m(\n\u001b[1;32m    340\u001b[0m         \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mNO_VALIDATED_RELATIONS: no explicit arrow-delimited technology \u001b[39m\u001b[38;5;124m\"\u001b[39m\n\u001b[1;32m    341\u001b[0m         \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mrelation could be resolved; SQL load must not occur\u001b[39m\u001b[38;5;124m\"\u001b[39m\n\u001b[1;32m    342\u001b[0m     )\n\u001b[1;32m    344\u001b[0m payload \u001b[38;5;241m=\u001b[39m {\n\u001b[1;32m    345\u001b[0m     \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mstatus\u001b[39m\u001b[38;5;124m\"\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mPASS\u001b[39m\u001b[38;5;124m\"\u001b[39m,\n\u001b[1;32m    346\u001b[0m     \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mraw_relation_rows\u001b[39m\u001b[38;5;124m\"\u001b[39m: \u001b[38;5;28mint\u001b[39m(raw_rows),\n\u001b[0;32m   (...)\u001b[0m\n\u001b[1;32m    356\u001b[0m     \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124munresolved_sample\u001b[39m\u001b[38;5;124m\"\u001b[39m: unresolved[:\u001b[38;5;241m20\u001b[39m],\n\u001b[1;32m    357\u001b[0m }\n\u001b[1;32m    359\u001b[0m \u001b[38;5;28mprint\u001b[39m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mP1E_DATABRICKS_RELATION_RESOLUTION=PASS\u001b[39m\u001b[38;5;124m\"\u001b[39m)\n\n\u001b[0;31mRuntimeError\u001b[0m: NO_VALIDATED_RELATIONS: no explicit arrow-delimited technology relation could be resolved; SQL load must not occur",
+  "output_logs": null,
+  "logs_truncated": null,
+  "notebook_output": {},
+  "metadata": {
+    "cleanup_duration": 0,
+    "creator_user_name": "joe971008@naver.com",
+    "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+    "end_time": 1786909429960,
+    "execution_duration": 42000,
+    "job_id": 700527248772061,
+    "job_run_id": 323321120939012,
+    "number_in_job": 897092489347916,
+    "run_id": 897092489347916,
+    "run_name": "p1e_relation_repair",
+    "run_page_url": "https://adb-7405611393729074.14.azuredatabricks.net/?o=7405611393729074#job/700527248772061/run/897092489347916",
+    "run_type": "SUBMIT_RUN",
+    "setup_duration": 7000,
+    "start_time": 1786909380005,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "FAILED",
+      "state_message": "Workload failed, see run output for details",
+      "user_cancelled_or_timedout": false
+    },
+    "status": {
+      "state": "TERMINATED",
+      "termination_details": {
+        "code": "RUN_EXECUTION_ERROR",
+        "message": "Workload failed, see run output for details",
+        "type": "CLIENT_ERROR"
+      }
+    },
+    "tasks": [
+      {
+        "attempt_number": 0,
+        "cleanup_duration": 0,
+        "effective_performance_target": "PERFORMANCE_OPTIMIZED",
+        "end_time": 1786909429960,
+        "execution_duration": 42000,
+        "notebook_task": {
+          "notebook_path": "/Shared/TechScope/P1E_Relation_Repair/p1e_relation_repair_task",
+          "source": "WORKSPACE"
+        },
+        "run_id": 897092489347916,
+        "run_page_url": "https://adb-7405611393729074.14.azuredatabricks.net/?o=7405611393729074#job/700527248772061/run/897092489347916",
+        "setup_duration": 7000,
+        "start_time": 1786909380005,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "FAILED",
+          "state_message": "Workload failed, see run output for details",
+          "user_cancelled_or_timedout": false
+        },
+        "status": {
+          "state": "TERMINATED",
+          "termination_details": {
+            "code": "RUN_EXECUTION_ERROR",
+            "message": "Workload failed, see run output for details",
+            "type": "CLIENT_ERROR"
+          }
+        },
+        "task_key": "p1e_relation_repair"
+      }
+    ]
+  }
+}

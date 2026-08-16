@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-08-16T13:09:10.581596+00:00",
+  "component": "CMP_FASTAPI",
+  "capability": "P2C Azure SQL operations persistence",
+  "status": "PASS",
+  "flow": [
+    "FastAPI /ask",
+    "Azure AI Search",
+    "Azure OpenAI",
+    "AzureSqlInteractionSink",
+    "FactAIRequest",
+    "BridgeAIRequestTechnology"
+  ],
+  "health_status": 200,
+  "ask_status": 200,
+  "grounded": true,
+  "citation_count": 5,
+  "grounded_technology_ids": [
+    "T0056",
+    "T0147",
+    "T0148",
+    "T0260",
+    "T0262"
+  ],
+  "persisted_technology_ids": [
+    "T0056",
+    "T0147",
+    "T0148",
+    "T0260",
+    "T0262"
+  ],
+  "request_key": 1,
+  "request_id": "DAB66BAA-8DE8-4A99-A123-30914CBCE370",
+  "retrieved_chunk_count": 5,
+  "latency_ms": 8150,
+  "model_name": "techscope-gpt-4-1-mini",
+  "requests_before": 0,
+  "requests_after": 1,
+  "bridge_before": 0,
+  "bridge_after": 5,
+  "secrets_persisted": false
+}

@@ -1,0 +1,12 @@
+﻿name: TechScope Run
+
+on:
+  workflow_dispatch:
+
+jobs:
+  techscope-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder
+        run: echo "P0 workflow scaffold"

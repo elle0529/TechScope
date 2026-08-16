@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-08-16T11:00:40.335381+00:00",
+  "health_status": 200,
+  "ask_status": 200,
+  "health": {
+    "status": "ok"
+  },
+  "ask": {
+    "answer": "Azure Databricks in TechScope plays a role primarily in data engineering, specifically for Spark-based data processing and AI model development. This is evidenced by the technology entry \"Databricks (Spark, 데이터 처리, AI 모델 개발)\" with the authoritative technology ID T0147. Additionally, TechScope has established official partnership and certification experience with Databricks (T0148) and participates in a global Cloud/Data Platform partnership that includes Microsoft, Databricks, and Snowflake supported by technology ID T0262. \n\nIn summary, Azure Databricks is leveraged for data processing and AI model development within TechScope's data engineering activities, supported by official partnerships and global technology alliances.",
+    "grounded": true,
+    "citations": [
+      {
+        "chunk_id": "CH0148",
+        "source_id": "SRC001",
+        "technology": [
+          "Databricks 공식 Partnership 기반 구축 경험"
+        ],
+        "technology_ids": [
+          "T0148"
+        ],
+        "category": [
+          "Technology Partnership / Certification"
+        ],
+        "architecture_layer": [],
+        "evidence_type": "DIRECT",
+        "company": []
+      },
+      {
+        "chunk_id": "CH0260",
+        "source_id": "SRC001",
+        "technology": [
+          "Microsoft Specialization: Analytics on Azure 인증"
+        ],
+        "technology_ids": [
+          "T0260"
+        ],
+        "category": [
+          "Technology Partnership / Certification"
+        ],
+        "architecture_layer": [],
+        "evidence_type": "DIRECT",
+        "company": []
+      },
+      {
+        "chunk_id": "CH0147",
+        "source_id": "SRC001",
+        "technology": [
+          "Databricks (Spark, 데이터 처리, AI 모델 개발)"
+        ],
+        "technology_ids": [
+          "T0147"
+        ],
+        "category": [
+          "Data Engineering"
+        ],
+        "architecture_layer": [],
+        "evidence_type": "DIRECT",
+        "company": []
+      },
+      {
+        "chunk_id": "CH0056",
+        "source_id": "SRC001",
+        "technology": [
+          "Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend)"
+        ],
+        "technology_ids": [
+          "T0056"
+        ],
+        "category": [
+          "Data Engineering"
+        ],
+        "architecture_layer": [],
+        "evidence_type": "DIRECT",
+        "company": []
+      },
+      {
+        "chunk_id": "CH0262",
+        "source_id": "SRC001",
+        "technology": [
+          "Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계"
+        ],
+        "technology_ids": [
+          "T0262"
+        ],
+        "category": [
+          "Technology Partnership / Certification"
+        ],
+        "architecture_layer": [],
+        "evidence_type": "DIRECT",
+        "company": []
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "CH0148",
+      "CH0260",
+      "CH0147",
+      "CH0056",
+      "CH0262"
+    ],
+    "grounded_technology_ids": [
+      "T0056",
+      "T0147",
+      "T0148",
+      "T0260",
+      "T0262"
+    ]
+  }
+}

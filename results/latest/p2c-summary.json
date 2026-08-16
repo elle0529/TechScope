@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-08-16T13:09:10.581596+00:00",
+  "status": "PASS",
+  "capability": "P2C Azure SQL operations persistence",
+  "request_key": 1,
+  "grounded_technology_ids": [
+    "T0056",
+    "T0147",
+    "T0148",
+    "T0260",
+    "T0262"
+  ],
+  "secrets_persisted": false
+}

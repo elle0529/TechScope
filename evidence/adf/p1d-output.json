@@ -1,0 +1,19 @@
+{
+  "component": "CMP_ADF",
+  "status": "PASS",
+  "bronze_paths": [
+    "bronze/architecture_mapping/2026/08/15/architecture_mapping.csv",
+    "bronze/category/2026/08/15/category.csv",
+    "bronze/company_usecase/2026/08/15/company_usecase.csv",
+    "bronze/relation/2026/08/15/relation.csv",
+    "bronze/technology/2026/08/15/technology.csv"
+  ],
+  "expected_entity_prefixes": [
+    "bronze/architecture_mapping",
+    "bronze/category",
+    "bronze/company_usecase",
+    "bronze/relation",
+    "bronze/technology"
+  ],
+  "timestamp": "2026-08-15T15:53:08+00:00"
+}

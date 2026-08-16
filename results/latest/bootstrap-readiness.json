@@ -1,0 +1,155 @@
+{
+  "timestamp": "2026-08-15T10:58:53+00:00",
+  "environment": "dev",
+  "probe_mode": "READ_ONLY",
+  "ENVIRONMENT_READY": "PASS",
+  "ZERO_INTERVENTION_READY": "PENDING_CAPABILITY",
+  "capabilities": {
+    "azure_auth": {
+      "status": "PASS",
+      "detail": "az account show succeeded."
+    },
+    "azure_management_token": {
+      "status": "PASS",
+      "detail": "Management-plane access token acquisition succeeded; token value was not persisted.",
+      "expires_on": "2026-08-15 12:07:51.000000"
+    },
+    "resource_providers": {
+      "status": "PENDING",
+      "detail": "Required provider registration states queried.",
+      "states": {
+        "Microsoft.Resources": "Registered",
+        "Microsoft.Storage": "NotRegistered",
+        "Microsoft.DataFactory": "NotRegistered",
+        "Microsoft.Databricks": "NotRegistered",
+        "Microsoft.Sql": "NotRegistered",
+        "Microsoft.Search": "NotRegistered",
+        "Microsoft.CognitiveServices": "NotRegistered",
+        "Microsoft.DocumentDB": "NotRegistered",
+        "Microsoft.AnalysisServices": "NotRegistered"
+      },
+      "unregistered": [
+        "Microsoft.AnalysisServices",
+        "Microsoft.CognitiveServices",
+        "Microsoft.DataFactory",
+        "Microsoft.Databricks",
+        "Microsoft.DocumentDB",
+        "Microsoft.Search",
+        "Microsoft.Sql",
+        "Microsoft.Storage"
+      ]
+    },
+    "azure_openai_discovery": {
+      "status": "PENDING",
+      "detail": "Subscription/region model and quota discovery completed. This does not substitute for post-deployment minimum API evidence.",
+      "selected_candidate": null,
+      "regions": [
+        {
+          "location": "koreacentral",
+          "model_query": "PASS",
+          "usage_query": "PASS",
+          "generation_candidates_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_candidates_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "positive_quota_observed": false,
+          "model_error": "",
+          "usage_error": ""
+        },
+        {
+          "location": "eastus2",
+          "model_query": "PASS",
+          "usage_query": "PASS",
+          "generation_candidates_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_candidates_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "positive_quota_observed": false,
+          "model_error": "",
+          "usage_error": ""
+        },
+        {
+          "location": "swedencentral",
+          "model_query": "PASS",
+          "usage_query": "PASS",
+          "generation_candidates_found": [
+            "gpt-4.1-mini",
+            "gpt-4o-mini",
+            "gpt-5-mini",
+            "gpt-4.1"
+          ],
+          "embedding_candidates_found": [
+            "text-embedding-3-small",
+            "text-embedding-3-large"
+          ],
+          "positive_quota_observed": false,
+          "model_error": "",
+          "usage_error": ""
+        }
+      ]
+    },
+    "arm_provider_validation": {
+      "status": "PASS",
+      "detail": "Subscription-scope Provider validation succeeded; no template deployment was executed."
+    },
+    "github_azure_oidc": {
+      "status": "PENDING_RUNTIME_PROOF",
+      "detail": "Pinned OIDC workflow skeleton exists; actual GitHub-to-Azure federated login must succeed before Zero-Intervention PASS."
+    },
+    "databricks_workspace": {
+      "status": "PENDING_TARGET",
+      "detail": "Databricks CLI is installed, but target workspace/service-principal capability requires an existing/reused workspace or provision stage."
+    },
+    "power_bi_fabric": {
+      "status": "PENDING_EXTERNAL",
+      "detail": "Power BI/Fabric license/workspace/API or Desktop fallback capability is not proven by this container probe."
+    },
+    "teams_tenant": {
+      "status": "PENDING_EXTERNAL",
+      "detail": "Teams tenant/custom-app/admin-consent capability is deferred until final deployment boundary."
+    },
+    "analysis_services": {
+      "status": "PENDING_TARGET",
+      "detail": "AAS deploy/admin capability requires target service/identity context."
+    },
+    "windows_skill_proof": {
+      "status": "PENDING_WINDOWS_LANE",
+      "detail": "SSIS/SSAS Windows capability is verified by the separate Windows lane, not the MAIN container."
+    }
+  },
+  "blockers": [
+    "RESOURCE_PROVIDER_REGISTRATION",
+    "AZURE_OPENAI_MODEL_OR_QUOTA",
+    "GITHUB_AZURE_OIDC_RUNTIME",
+    "DATABRICKS_TARGET_CAPABILITY",
+    "POWER_BI_FABRIC_CAPABILITY",
+    "TEAMS_TENANT_CAPABILITY",
+    "AAS_CAPABILITY",
+    "WINDOWS_SKILL_PROOF_CAPABILITY",
+    "AZURE_OPENAI_MINIMUM_API_POST_DEPLOY"
+  ],
+  "notes": [
+    "No cloud resource mutation performed.",
+    "No secret/token material persisted.",
+    "This is a derived bootstrap-readiness artifact, not Architecture Source of Truth."
+  ],
+  "target": {
+    "subscription_id": "20c99d23-dcad-42e2-bca2-b511133f4140",
+    "subscription_name": "Azure subscription 1",
+    "tenant_id": "8f2f3d4b-6bd8-4630-bcc7-4e889b92bdb2",
+    "identity_type": "user",
+    "identity_name": "joe971008@naver.com"
+  }
+}

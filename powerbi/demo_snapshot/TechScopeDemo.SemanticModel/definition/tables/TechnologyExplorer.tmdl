@@ -1,0 +1,80 @@
+table TechnologyExplorer
+
+	measure 'Technology Rows' = DISTINCTCOUNT(TechnologyExplorer[TechnologyId])
+		formatString: #,0
+
+	column TechnologyKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: TechnologyKey
+
+	column TechnologyId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyId
+
+	column TechnologyName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: TechnologyName
+
+	column CategoryName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CategoryName
+
+	column ArchitectureLayer
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ArchitectureLayer
+
+	column LayerOrder
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: LayerOrder
+
+	column EvidenceType
+		dataType: string
+		summarizeBy: none
+		sourceColumn: EvidenceType
+
+	column SourceId
+		dataType: string
+		summarizeBy: none
+		sourceColumn: SourceId
+
+	hierarchy 'Technology Hierarchy'
+		level Category
+			column: CategoryName
+
+		level 'Architecture Layer'
+			column: ArchitectureLayer
+
+		level Technology
+			column: TechnologyName
+
+	partition TechnologyExplorer = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents("C:\TechScope\powerbi\demo_snapshot\data\TechnologyExplorer.csv"),
+					[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				Types = Table.TransformColumnTypes(
+					Headers,
+					{
+						{"TechnologyKey", Int64.Type},
+						{"TechnologyId", type text},
+						{"TechnologyName", type text},
+						{"CategoryName", type text},
+						{"ArchitectureLayer", type text},
+						{"LayerOrder", Int64.Type},
+						{"EvidenceType", type text},
+						{"SourceId", type text}
+					}
+				)
+			in
+				Types

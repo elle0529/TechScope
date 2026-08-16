@@ -1,0 +1,46 @@
+{
+  "project": "TechScope Power BI",
+  "status": "source_blueprint_only",
+  "data_source": {
+    "type": "Azure SQL Database",
+    "server": "${AZURE_SQL_SERVER_FQDN}",
+    "database": "${AZURE_SQL_DATABASE}",
+    "views": [
+      "techscope.vwTechnologyOverview",
+      "techscope.vwCategorySummary",
+      "techscope.vwAIInteractionSummary"
+    ]
+  },
+  "pages": [
+    {
+      "name": "01 Executive Overview",
+      "visuals": [
+        "Technology Count card",
+        "Total Relations card",
+        "Category Technology Count bar",
+        "Technology table"
+      ]
+    },
+    {
+      "name": "02 Technology Relationships",
+      "visuals": [
+        "Relations by Technology bar",
+        "Relationship table"
+      ]
+    },
+    {
+      "name": "03 AI Operations",
+      "visuals": [
+        "Grounding Rate card",
+        "Latency card",
+        "Feedback card",
+        "Interactions trend"
+      ]
+    }
+  ],
+  "policy": {
+    "preferred": "Power BI/Fabric API when proven",
+    "fallback": "Power BI Desktop",
+    "pbip": "Materialize in Desktop; do not fabricate unsupported preview internals"
+  }
+}

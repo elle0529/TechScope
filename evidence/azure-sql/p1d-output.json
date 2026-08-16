@@ -1,0 +1,11 @@
+{
+  "component": "CMP_AZURE_SQL",
+  "status": "PASS",
+  "row_counts": {
+    "technology": 515,
+    "category": 41,
+    "relation": 0,
+    "view_count": 3
+  },
+  "timestamp": "2026-08-16T10:23:45+00:00"
+}

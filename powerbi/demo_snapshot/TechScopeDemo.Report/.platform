@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "TechScopeDemo"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "16167c5a-8b30-5f3c-92a8-8a3a84992c3a"
+  }
+}

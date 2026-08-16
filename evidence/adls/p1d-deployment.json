@@ -1,0 +1,11 @@
+{
+  "component": "CMP_ADLS",
+  "status": "PASS",
+  "deployment_name": "techscope-p1d-239bd206",
+  "resource_group": "rg-techscope-dev-239bd206",
+  "storage_account": "sttechscopedev239bd206",
+  "file_system": "techscope",
+  "location": "koreacentral",
+  "timestamp": "2026-08-15T15:52:00+00:00",
+  "secret_material": "NOT_STORED"
+}

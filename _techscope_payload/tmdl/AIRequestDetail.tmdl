@@ -1,0 +1,67 @@
+table AIRequestDetail
+
+	column RequestKey
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: RequestKey
+
+	column RequestTimestamp
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: RequestTimestamp
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+	column LatencyMs
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: LatencyMs
+
+	column RetrievedChunkCount
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: RetrievedChunkCount
+
+	column CitationFlag
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: CitationFlag
+
+	column FeedbackScore
+		dataType: int64
+		summarizeBy: average
+		sourceColumn: FeedbackScore
+
+	column ModelName
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ModelName
+
+	partition AIRequestDetail = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(
+					File.Contents("C:\TechScope\powerbi\demo_snapshot\data\AIRequestDetail.csv"),
+					[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
+				),
+				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				Types = Table.TransformColumnTypes(
+					Headers,
+					{
+						{"RequestKey", Int64.Type},
+						{"RequestTimestamp", type datetime},
+						{"Status", type text},
+						{"LatencyMs", Int64.Type},
+						{"RetrievedChunkCount", Int64.Type},
+						{"CitationFlag", type logical},
+						{"FeedbackScore", Int64.Type},
+						{"ModelName", type text}
+					}
+				)
+			in
+				Types

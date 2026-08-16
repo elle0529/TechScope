@@ -1,0 +1,34 @@
+{
+    "timestamp":  "2026-08-15T19:25:39.1985156+09:00",
+    "stage":  "P0 Local Dev Container Build",
+    "selected_environment":  "LOCAL_DEV_CONTAINER_REUSE",
+    "environment_ready":  "PASS",
+    "zero_intervention_ready":  "NOT_EVALUATED",
+    "main_toolchain_on_windows":  false,
+    "image":  "techscope-dev:7bda86544d6a",
+    "container":  "techscope-dev",
+    "fingerprint":  "7bda86544d6aaf1ace1d9f66d159fce78a311a5c7f7c7cbc353ba1bac9b8d5b2",
+    "ownership":  {
+                      "label":  "TechScope",
+                      "image_match":  true,
+                      "running":  true
+                  },
+    "toolchain":  {
+                      "python":  "Python 3.12.11",
+                      "uv":  "uv 0.12.0 (x86_64-unknown-linux-gnu)",
+                      "node":  "v24.18.0",
+                      "pnpm":  "11.21.0",
+                      "azure_cli":  "azure-cli                         2.88.0 *",
+                      "bicep":  "Bicep CLI version 0.46.1 (545b338e2c)",
+                      "databricks":  "Databricks CLI v1.12.1",
+                      "sqlpackage":  "170.4.83.3",
+                      "git":  "git version 2.39.5",
+                      "agents_toolkit":  "PASS",
+                      "agents_playground":  "PASS"
+                  },
+    "locks":  {
+                  "uv_lock":  true,
+                  "pnpm_lock":  true
+              },
+    "repository_smoke":  "PASS"
+}

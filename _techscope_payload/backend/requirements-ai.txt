@@ -1,0 +1,6 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+openai>=2.0
+azure-identity>=1.17
+azure-search-documents>=11.6
+pydantic>=2.8

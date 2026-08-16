@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "30000000000000000003",
+  "position": {
+    "x": 650,
+    "y": 180,
+    "z": 3000,
+    "height": 510,
+    "width": 610,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "RequestTimestamp"
+                }
+              },
+              "queryRef": "AIRequestDetail.RequestTimestamp",
+              "nativeQueryRef": "RequestTimestamp"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "Status"
+                }
+              },
+              "queryRef": "AIRequestDetail.Status",
+              "nativeQueryRef": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "LatencyMs"
+                }
+              },
+              "queryRef": "AIRequestDetail.LatencyMs",
+              "nativeQueryRef": "LatencyMs"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "RetrievedChunkCount"
+                }
+              },
+              "queryRef": "AIRequestDetail.RetrievedChunkCount",
+              "nativeQueryRef": "RetrievedChunkCount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "CitationFlag"
+                }
+              },
+              "queryRef": "AIRequestDetail.CitationFlag",
+              "nativeQueryRef": "CitationFlag"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AIRequestDetail"
+                    }
+                  },
+                  "Property": "ModelName"
+                }
+              },
+              "queryRef": "AIRequestDetail.ModelName",
+              "nativeQueryRef": "ModelName"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

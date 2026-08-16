@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechScope Final AI Demo</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f5f7fa;color:#1f1f1f}
+.wrap{max-width:1120px;margin:32px auto;padding:0 24px}
+.hero{background:linear-gradient(135deg,#0f6cbd,#115ea3);color:#fff;padding:26px;border-radius:14px}
+.hero h1{margin:0 0 7px;font-size:31px}
+.hero p{margin:0;opacity:.9}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.kpi,.card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:17px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.kpi b{display:block;font-size:27px;margin-top:7px}
+.card{margin-top:16px}
+.answer{white-space:pre-wrap;line-height:1.6}
+.badge{display:inline-block;background:#e8f2fc;color:#0f548c;padding:7px 10px;border-radius:999px;margin:3px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+.pass{color:#107c10;font-weight:700}
+.meta{font-size:12px;color:#666;margin-top:12px}
+.question{font-size:17px;font-weight:600}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>TechScope — Final AI Knowledge Ops Demo</h1>
+    <p>Azure AI Search → Azure OpenAI → FastAPI → Azure SQL operational persistence</p>
+  </div>
+
+  <div class="grid">
+    <div class="kpi">API Health<b class="pass">PASS</b></div>
+    <div class="kpi">Grounded<b class="pass">True</b></div>
+    <div class="kpi">Citations<b>5</b></div>
+    <div class="kpi">SQL Requests<b>4</b></div>
+  </div>
+
+  <div class="card">
+    <h3>Question</h3>
+    <div class="question">What role does Azure Databricks play in TechScope? Include authoritative technology IDs.</div>
+  </div>
+
+  <div class="card">
+    <h3>Grounded Answer</h3>
+    <div class="answer">Azure Databricks in TechScope plays a role in data engineering activities such as Spark, data processing, and AI model development. This is supported by the technology ID T0147. Additionally, TechScope has established an official Databricks partnership, reinforcing their capability in this area (T0148), and participates in a global Cloud/Data Platform partnership that includes Microsoft, Databricks, and Snowflake (T0262). 
+
+Authoritative technology IDs related to Azure Databricks in TechScope are:
+- T0147: Databricks (Spark, 데이터 처리, AI 모델 개발)
+- T0148: Databricks 공식 Partnership 기반 구축 경험
+- T0262: Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계</div>
+  </div>
+
+  <div class="card">
+    <h3>Authoritative Technology IDs</h3>
+    <div><span class="badge">T0056</span> <span class="badge">T0147</span> <span class="badge">T0148</span> <span class="badge">T0260</span> <span class="badge">T0262</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Citations</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Chunk ID</th>
+          <th>Source</th>
+          <th>Technology IDs</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody><tr><td>CH0148</td><td>SRC001</td><td>T0148</td><td>Technology Partnership / Certification</td></tr><tr><td>CH0260</td><td>SRC001</td><td>T0260</td><td>Technology Partnership / Certification</td></tr><tr><td>CH0147</td><td>SRC001</td><td>T0147</td><td>Data Engineering</td></tr><tr><td>CH0056</td><td>SRC001</td><td>T0056</td><td>Data Engineering</td></tr><tr><td>CH0262</td><td>SRC001</td><td>T0262</td><td>Technology Partnership / Certification</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Operational Proof</h3>
+    <p>FactAIRequest count: <b>3 → 4</b></p>
+    <p>Retrieved chunks: <b>5</b></p>
+    <p>Grounded technology IDs: <b>5</b></p>
+    <p class="pass">LIVE_RAG_AND_SQL_PERSISTENCE = PASS</p>
+    <div class="meta">Generated from the live TechScope runtime at 2026-08-16T14:04:36.419829+00:00</div>
+  </div>
+</div>
+</body>
+</html>
