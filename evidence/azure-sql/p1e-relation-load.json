@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-08-17T12:33:03.432229+00:00",
+  "component": "CMP_AZURE_SQL",
+  "phase": "P1E_RELATION_REPAIR",
+  "implementation_evidence": "OUTPUT",
+  "table": "techscope.FactTechnologyRelation",
+  "before": 0,
+  "after": 43,
+  "inserted": 43,
+  "invalid_fk_rows": 0,
+  "self_edges": 0,
+  "result": "PASS"
+}

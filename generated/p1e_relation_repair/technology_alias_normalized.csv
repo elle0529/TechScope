@@ -1,1 +1,21 @@
 ﻿alias,canonical_name
+Analysis Service,Azure Analysis Service (모두투어·한국암웨이 등)
+Analysis Services,Azure Analysis Service (모두투어·한국암웨이 등)
+ADF,Azure Data Factory/SSIS를 통한 시스템 간 데이터 수집·이동
+ADLS Gen2,Azure Data Factory·Data Lake Gen2·Synapse Analytics·Azure SQL·Azure Analysis Service 등 Azure Data Platform 구성
+Data Lake Gen2,Azure Data Factory·Data Lake Gen2·Synapse Analytics·Azure SQL·Azure Analysis Service 등 Azure Data Platform 구성
+Azure ML,Azure Machine Learning / Azure ML (대덕전자 생산수율 예측)
+Brain Portal,Brain Portal 데이터 문의 채널 통합
+Cosmos DB,"Cosmos DB (정형/비정형 데이터 저장·조회, AI/BI Data Backend)"
+Data Mart,Data Mart (Synapse 기반 BI용 분석 구조)
+Synapse,Data Mart (Synapse 기반 BI용 분석 구조)
+Azure Databricks,Databricks 교육 (Spark 데이터 처리)
+Databricks,Databricks 교육 (Spark 데이터 처리)
+Azure OpenAI,OpenAI LLM 연동 (Teams Chatbot)
+Power Apps,"Power Apps (Low-code, PCF)"
+Power Automate,"Power Automate (Power Platform, Workflow)"
+Power BI,Power BI Mobile / Teams 사용자 접점
+Power Virtual Agents,"PVA / Power Virtual Agents (Power Platform, Bot)"
+SSAS,SSAS / SQL Server Analysis Services (넷마블: 게임 KPI 등 다차원 분석)
+Teams,Workflow (Teams 자동 전달)
+Embedded BI,"데이터 접근 (Portal 조회, 모바일 보고서, Embedded BI, 사용자별 보고서)"

@@ -1,0 +1,15 @@
+{
+  "timestamp_utc": "2026-08-17T12:33:03.432229+00:00",
+  "component": "CMP_DATABRICKS",
+  "phase": "P1E_RELATION_REPAIR",
+  "implementation_evidence": "OUTPUT",
+  "silver": {
+    "adls_path": "techscope/silver/technology_relation/technology_relation.csv",
+    "rows": 43
+  },
+  "gold": {
+    "adls_path": "techscope/gold/fact_technology_relation/fact_technology_relation.csv",
+    "rows": 43
+  },
+  "result": "PASS"
+}

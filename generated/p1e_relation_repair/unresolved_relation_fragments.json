@@ -1,0 +1,102 @@
+[
+  {
+    "extract_record_id": "XR000001",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "기업/부서 현황·도입 목적 파악 → AI/Data 전략 수립 → End-to-End Roadmap → Multi-Cloud Data Platform/거버넌스 설계 → Power BI·Generative BI·Microsoft Azure OpenAI·Power Platform 등 적용 → 현업 활용/데이터 기반 의사결정 → 실무 교육 → 운영·기술지원·비용 최적화 → 지속 가능한 AX 확장 및 비즈니스 성과"
+  },
+  {
+    "extract_record_id": "XR000003",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "기존 원본 흐름: 사용자 질문 → 질문 전처리·Reformatting → RAG/Agentic RAG → 문서 검색 → LLM Prompt 구성 → LLM 응답 → 후처리·요약 → 사용자 응답 → Parameter/Prompt 조정"
+  },
+  {
+    "extract_record_id": "XR000004",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "통합 확장 흐름: 사용자 질문/업무 요청 → 질문 전처리·Reformatting → RAG/Agentic RAG(해당 프로젝트) → 문서 검색·Context 구성 → LLM Prompt 구성 → OpenAI API/OpenAI LLM 또는 Microsoft Azure OpenAI 기반 생성형 AI → LLM 응답 → 후처리·요약 → 사용자/업무 시스템 응답 → Parameter/Prompt 조정"
+  },
+  {
+    "extract_record_id": "XR000006",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "사용자 Query → Query 전처리 → 검색용 Query 재구성 → Vector DB 검색 → 관련 문서 Retrieval → RAG Context → LLM 답변"
+  },
+  {
+    "extract_record_id": "XR000007",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "사용자 질문/문의 → 문서·Portal/기업 Data Source 탐색 → 관련 정보 검색·추출 → 필요 시 출처 연결 → GPT/AI 요약·답변 → Teams/Brain Portal/Private GPT 등 사용자 Interface 제공"
+  },
+  {
+    "extract_record_id": "XR000008",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "원본 사용자 질문 → 모호성/비정형성 처리 → Query Reformatting → Prompt 구성 → LLM 실행 → 출력 후처리 → 사용자 친화적 요약 → 결과 평가 → Prompt/Parameter 재조정"
+  },
+  {
+    "extract_record_id": "XR000009",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "원본 자연어 질문 → 질문 의도/분석 목적 파악(BXG 기능 흐름상 직접 확인) → [문서형] 검색 Query·Context 구성 또는 [데이터형] 필요한 Table/Column 선별·Query 구성 → Prompt Engineering이 적용되는 구간에서는 Prompt 구성/실행 → 답변·그래프/요약 → 결과 평가·조정"
+  },
+  {
+    "extract_record_id": "XR000010",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "데이터 준비 → ML 모델 구축 → 성능 평가·최적화 → MLflow 활용 → 모델 배포 → 프로젝트 적용"
+  },
+  {
+    "extract_record_id": "XR000011",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "생산/업무 데이터 준비 → 영향 인자·변수 연관성 분석 → Azure ML 예측모델 → 생산수율 등 미래 결과 예측 → 예측 결과를 Power BI/업무에 제공 → 사용자 의사결정"
+  },
+  {
+    "extract_record_id": "XR000012",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "데이터 → 딥러닝 모델 개발 → CV 적용 → 이상 탐지 → 모델 최적화 → 배포"
+  },
+  {
+    "extract_record_id": "XR000013",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "기존 원본 흐름: 생성형 AI 기술 선정 → Backend 또는 Low-code 환경과 연동 → Prompt/대화 구조 구성 → 사용자 입력 처리 → 생성 결과 제공"
+  },
+  {
+    "extract_record_id": "XR000014",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "통합 확장 흐름: 기업 Data/업무 요구 → 생성형 AI 기술 선정 → Data Platform/Backend/Low-code 환경과 연동 → Microsoft Azure OpenAI·LLM/Prompt·대화 구조 구성 → 사용자 입력 처리 → 생성 결과 또는 자연어 Insight 생성 → BI·업무 App·Chat Interface 등에 제공"
+  },
+  {
+    "extract_record_id": "XR000015",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "기업 사용자 질문 → [지식검색] 문서 Retrieval/출처 기반 Context → GPT 답변 또는 [데이터분석] DB/Table/Column 선택 → Query/전처리/분석 → 자연어 답변·그래프 → Teams/Portal/업무환경에 제공 → 현업 Self-Service 활용"
+  },
+  {
+    "extract_record_id": "XR000016",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "Data Source → Data Platform(Databricks/Snowflake/Microsoft Fabric 등) → 데이터 분석·시각화 → Microsoft Power BI/Generative BI → 사용자 자연어 질의 또는 BI 탐색 → 생성형 AI 기반 Insight → 현업 사용자 → 데이터 기반 의사결정"
+  },
+  {
+    "extract_record_id": "XR000019",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "분석/업무 데이터 → 정해진 Report Template → SSRS 정형/Paginated Report 생성 → 정기 배포·출력 → 호텔/경영 사용자 확인"
+  },
+  {
+    "extract_record_id": "XR000020",
+    "reason": "NO_EXPLICIT_DIRECTION",
+    "flow": "역할 구분: 탐색형 경영 Dashboard는 Power BI, 정형·출력 중심 보고서는 SSRS"
+  },
+  {
+    "extract_record_id": "XR000021",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "이미지/시각 데이터 → Deep Learning 기반 CV Model → 이상 탐지 → Model Optimization → Deployment"
+  },
+  {
+    "extract_record_id": "XR000022",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "데이터 처리 → CV/DL Model → 이상 여부 분석 → 모델 최적화 → 실제 시스템 배포"
+  },
+  {
+    "extract_record_id": "XR000023",
+    "reason": "NO_ADJACENT_TECHNOLOGY_PAIR",
+    "flow": "기존 원본 흐름: 데이터 Source → Loading → Transformation → Filtering → Aggregation → SQL 처리 → AI Model/Analytics에 전달"
+  },
+  {
+    "extract_record_id": "XR000027",
+    "reason": "NO_EXPLICIT_DIRECTION",
+    "flow": "자료상 사례 패턴: 기존 Microsoft On-Premise SSIS 계열에서 Cloud ADF 계열로 확장되는 경향이 관찰되나, 개별 고객의 직접 마이그레이션 사실로 단정하지 않음"
+  }
+]

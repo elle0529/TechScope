@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-08-17T12:33:03.432229+00:00",
+  "status": "PASS",
+  "resume_stage": "ADLS_AND_AZURE_SQL",
+  "databricks_rerun": false,
+  "validated_relation_rows": 43,
+  "fact_rows_before": 0,
+  "fact_rows_after": 43,
+  "fact_rows_inserted": 43,
+  "silver_adls": "silver/technology_relation/technology_relation.csv",
+  "gold_adls": "gold/fact_technology_relation/fact_technology_relation.csv",
+  "storage_auth": "account_key_queried_at_runtime_not_persisted",
+  "databricks_success_run": null
+}
