@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "runtime_version": "v6",
+  "stopped_live_pids": [
+    6302
+  ],
+  "new_live_pid": 9133,
+  "live_pid_identity_verified": true,
+  "ask_guard_wrapped": true,
+  "container_recreated": false,
+  "azure_resource_mutation": false,
+  "real_ai_ask_calls": 1,
+  "ai_request_before": 19,
+  "ai_request_after": 20,
+  "ai_request_delta": 1,
+  "negative_response": {
+    "grounded": false,
+    "citations": 0,
+    "technology_ids": 0
+  },
+  "sql": {
+    "request_key": 20,
+    "citation_flag": false,
+    "bridge_rows": 0
+  },
+  "environment_values_printed": false,
+  "environment_values_persisted": false
+}

@@ -60,3 +60,21 @@
 
 > This block records verified evidence only; it does not upgrade blocked/prototype components.
 <!-- TECHSCOPE_MAIN_FINAL_EVIDENCE:END -->
+
+<!-- TECHSCOPE_GROUNDING_EVIDENCE:START -->
+## AI Grounding Quality Evidence
+
+- Live activation report: `results/latest/grounding-live-activation-v6.json`
+- Persistence diagnostic: `results/latest/grounding-persistence-diagnostic-v3.json`
+- Grounding guard configuration: `config/grounding-guard.json`
+- Grounding guard source: `backend/app/grounding_guard.py`
+- Latest verified RequestKey: `20`
+- Latest CitationFlag: `False`
+- Latest Bridge rows: `0`
+- Live `/demo/grounding-runtime`: `version=v6`, `ask_guard_wrapped=true`
+- Live unrelated-question regression:
+  - Grounded=False
+  - Citations=0
+  - Technology IDs=0
+- Power BI Snapshot: synchronized after live verification.
+<!-- TECHSCOPE_GROUNDING_EVIDENCE:END -->

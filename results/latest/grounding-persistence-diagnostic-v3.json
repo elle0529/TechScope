@@ -1,0 +1,129 @@
+{
+  "status": "PASS",
+  "ai_ask_calls": 0,
+  "ai_request_increment_expected": 0,
+  "live_fastapi_pid": 6295,
+  "live_fastapi_pid_is_1": false,
+  "live_auto_reload": false,
+  "persistence": {
+    "baseline_count": 16,
+    "current_count": 18,
+    "delta_from_baseline": 2,
+    "fact_schema": [
+      {
+        "name": "RequestKey",
+        "type": "bigint",
+        "identity": true
+      },
+      {
+        "name": "RequestId",
+        "type": "uniqueidentifier",
+        "identity": false
+      },
+      {
+        "name": "RequestTimestamp",
+        "type": "datetime2",
+        "identity": false
+      },
+      {
+        "name": "Status",
+        "type": "varchar",
+        "identity": false
+      },
+      {
+        "name": "LatencyMs",
+        "type": "int",
+        "identity": false
+      },
+      {
+        "name": "RetrievedChunkCount",
+        "type": "int",
+        "identity": false
+      },
+      {
+        "name": "CitationFlag",
+        "type": "bit",
+        "identity": false
+      },
+      {
+        "name": "FeedbackScore",
+        "type": "tinyint",
+        "identity": false
+      },
+      {
+        "name": "ErrorType",
+        "type": "nvarchar",
+        "identity": false
+      },
+      {
+        "name": "ModelName",
+        "type": "nvarchar",
+        "identity": false
+      }
+    ],
+    "bridge_schema": [
+      {
+        "name": "RequestKey",
+        "type": "bigint"
+      },
+      {
+        "name": "TechnologyKey",
+        "type": "bigint"
+      }
+    ],
+    "request_id_column": "RequestId",
+    "grounded_column": null,
+    "citation_column": null,
+    "latest": [
+      {
+        "row": 1,
+        "values": {
+          "RequestId": "587f5632-fd14-41af-9060-a4fd3abd0591",
+          "RequestTimestamp": "2026-08-17 14:03:07.484000",
+          "RequestKey": "18"
+        },
+        "bridge_count": null
+      },
+      {
+        "row": 2,
+        "values": {
+          "RequestId": "0d61eb35-8288-43d6-931c-631886e12eb9",
+          "RequestTimestamp": "2026-08-17 14:03:00.552000",
+          "RequestKey": "17"
+        },
+        "bridge_count": null
+      }
+    ],
+    "persistence_state": "UNDETERMINED"
+  },
+  "route": {
+    "endpoint_wrapped": true,
+    "response_model": "AskResponse",
+    "response_model_fields": [
+      "answer",
+      "citations",
+      "grounded",
+      "grounded_technology_ids",
+      "retrieved_chunk_ids"
+    ],
+    "guard_field_declared": false,
+    "response_model_filters_debug": true,
+    "negative_classification": {
+      "in_domain": false,
+      "max_search_score": 0.0,
+      "threshold": 3.961351,
+      "authoritative_term_hit": false,
+      "reason": "SEARCH_SCORE_BELOW_DOMAIN_THRESHOLD"
+    },
+    "positive_classification": {
+      "in_domain": true,
+      "max_search_score": 8.253894,
+      "threshold": 3.961351,
+      "authoritative_term_hit": true,
+      "reason": "AUTHORITATIVE_TECH_TERM"
+    },
+    "synthetic_guard_transform_pass": true
+  },
+  "azure_resource_mutation": false,
+  "environment_values_persisted": false
+}

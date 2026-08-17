@@ -55,3 +55,24 @@
 
 > This block is generated from `results/latest/main-final-status-summary.json`.
 <!-- TECHSCOPE_MAIN_FINAL_STATUS:END -->
+
+<!-- TECHSCOPE_GROUNDING_FIX:START -->
+## AI Grounding Quality Fix
+
+- Status: `LIVE VERIFIED`
+- Live runtime: `v6`
+- False-positive grounding guard: `Implemented`
+- Out-of-domain response:
+  - Grounded: `False`
+  - Citations: `0`
+  - Grounded Technology IDs: `0`
+- SQL reconciliation:
+  - FactAIRequest retained: `YES`
+  - CitationFlag: `False`
+  - BridgeAIRequestTechnology rows: `0`
+- Verified latest RequestKey: `20`
+- Current FactAIRequest rows: `20`
+- Power BI Snapshot sync: `PASS`
+
+> Out-of-domain requests remain operational requests, but are no longer represented as grounded requests.
+<!-- TECHSCOPE_GROUNDING_FIX:END -->

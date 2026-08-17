@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "runtime": {
+    "version": "v6",
+    "pid": 9133,
+    "ask_guard_wrapped": true
+  },
+  "sql": {
+    "ai_requests": 20,
+    "latest_request_key": 20,
+    "latest_citation_flag": false,
+    "latest_bridge_rows": 0
+  },
+  "powerbi_sync_response": {
+    "status": "PASS",
+    "ai_request_count": 20,
+    "successful_requests": 20,
+    "citation_requests": 19,
+    "avg_latency_ms": 5562.35,
+    "detail_rows": 20,
+    "grounded_rows": 31,
+    "targets": [
+      "/workspaces/TechScope/powerbi/demo_snapshot/data",
+      "/workspaces/TechScope/powerbi/demo_final/data"
+    ]
+  },
+  "snapshot": {
+    "powerbi/demo_final/data": {
+      "detail_rows": 20,
+      "grounded_rows": 31,
+      "latest_request_present": true
+    },
+    "powerbi/demo_snapshot/data": {
+      "detail_rows": 20,
+      "grounded_rows": 31,
+      "latest_request_present": true
+    }
+  },
+  "ai_ask_calls": 0,
+  "azure_resource_mutation": false
+}
