@@ -1,0 +1,17 @@
+{
+  "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+  "component": "CMP_TEAMS",
+  "status": "Prototype",
+  "implementation_evidence": "EXECUTION",
+  "typescript_build": "PASS",
+  "adapter_smoke": "PASS",
+  "smoke_assertions": [
+    "POST /ask",
+    "question forwarding",
+    "answer formatting",
+    "grounding formatting",
+    "citation formatting",
+    "technology ID formatting"
+  ],
+  "live_teams_tenant_e2e": false
+}

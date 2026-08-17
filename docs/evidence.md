@@ -23,3 +23,40 @@
 | EVD-AI-SEARCH-002 | CMP_AI_SEARCH | EXECUTION | evidence/rag/p2b-cloud-e2e.json |
 | EVD-AZURE-OPENAI-002 | CMP_AZURE_OPENAI | EXECUTION | evidence/rag/p2b-cloud-e2e.json |
 | EVD-FASTAPI-002 | CMP_FASTAPI | EXECUTION | evidence/rag/p2b-cloud-e2e.json |
+
+<!-- TECHSCOPE_MAIN_FINAL_EVIDENCE:START -->
+## MAIN Final Verification Evidence
+
+- Final verification report: `results/latest/main-final-verification.json`
+- Final status summary: `results/latest/main-final-status-summary.json`
+- P1E relation repair report: `results/latest/p1e-relation-repair.json`
+- Teams Prototype report: `results/latest/p3-teams-prototype.json`
+- Cosmos blocker report: `results/latest/p3-cosmos-blocker.json`
+
+### P1E Technology Relation
+
+- FactTechnologyRelation rows: `43`
+- FK validation: `PASS`
+- Silver/Gold relation persistence: `PASS`
+
+### Teams
+
+- Status: `Prototype`
+- Teams SDK → FastAPI `/ask` adapter smoke: `PASS`
+- SOURCE evidence: `PASS`
+- EXECUTION evidence: `PASS`
+- Live Teams tenant E2E: `NOT COMPLETED`
+
+### Cosmos DB
+
+- Status: `Blocked`
+- Reason: `NO_EXISTING_COSMOS_ACCOUNT`
+- Azure resource creation performed: `NO`
+
+### Architecture
+
+- Architecture lint: `PASS`
+- Architecture lint checks: `25`
+
+> This block records verified evidence only; it does not upgrade blocked/prototype components.
+<!-- TECHSCOPE_MAIN_FINAL_EVIDENCE:END -->

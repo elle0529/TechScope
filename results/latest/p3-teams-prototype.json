@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+  "component": "CMP_TEAMS",
+  "status": "Prototype",
+  "source_evidence": "evidence/teams/p3-teams-source.json",
+  "execution_evidence": "evidence/teams/p3-teams-execution.json",
+  "teams_sdk": "@microsoft/teams.apps@2.0.14",
+  "teamsfx_used": false,
+  "fastapi_path": "/ask",
+  "live_teams_tenant_e2e": false,
+  "azure_resource_creation": false,
+  "next_requirement": "Teams app registration/tenant installation and live message E2E are still required for Implemented status."
+}

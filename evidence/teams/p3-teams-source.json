@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+  "component": "CMP_TEAMS",
+  "status": "Prototype",
+  "implementation_evidence": "SOURCE",
+  "sdk": "@microsoft/teams.apps",
+  "sdk_version": "2.0.14",
+  "teamsfx_used": false,
+  "files": [
+    "teams/techscope-agent/package.json",
+    "teams/techscope-agent/tsconfig.json",
+    "teams/techscope-agent/src/index.ts",
+    "teams/techscope-agent/src/techscope-client.ts",
+    "teams/techscope-agent/src/smoke.ts",
+    "teams/techscope-agent/README.md"
+  ],
+  "flow": [
+    "Teams message",
+    "Teams SDK message handler",
+    "POST FastAPI /ask",
+    "grounded answer/citations/technology IDs",
+    "Teams reply"
+  ]
+}

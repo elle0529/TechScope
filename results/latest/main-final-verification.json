@@ -1,0 +1,282 @@
+{
+  "timestamp_utc": "2026-08-17T13:32:22.672551+00:00",
+  "status": "PASS",
+  "ai_ask_call_performed": false,
+  "components": {
+    "CMP_ADLS": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "results/latest/p1d-summary.json",
+        "docs/evidence.md"
+      ],
+      "evidence_present": true
+    },
+    "CMP_PYTHON": {
+      "expected_status": "Prototype",
+      "evidence_found": [
+        "extractor",
+        "results/latest"
+      ],
+      "evidence_present": true
+    },
+    "CMP_ADF": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "results/latest/p1d-summary.json",
+        "docs/evidence.md"
+      ],
+      "evidence_present": true
+    },
+    "CMP_DATABRICKS": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "results/latest/p1e-relation-repair.json",
+        "evidence/databricks"
+      ],
+      "evidence_present": true
+    },
+    "CMP_AZURE_SQL": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "evidence/backend/p2c-sql-persistence.json",
+        "results/latest/p1e-relation-repair.json"
+      ],
+      "evidence_present": true
+    },
+    "CMP_POWER_BI": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "powerbi/demo_final/TechScopeDemo.pbip",
+        "powerbi/demo_final/data"
+      ],
+      "evidence_present": true
+    },
+    "CMP_AI_SEARCH": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "evidence/rag/p2b-cloud-e2e.json"
+      ],
+      "evidence_present": true
+    },
+    "CMP_AZURE_OPENAI": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "evidence/rag/p2b-cloud-e2e.json"
+      ],
+      "evidence_present": true
+    },
+    "CMP_FASTAPI": {
+      "expected_status": "Implemented",
+      "evidence_found": [
+        "backend/app/main.py",
+        "evidence/rag/p2b-cloud-e2e.json"
+      ],
+      "evidence_present": true
+    },
+    "CMP_COSMOS": {
+      "expected_status": "Blocked",
+      "evidence_found": [
+        "results/latest/p3-cosmos-blocker.json",
+        "evidence/cosmos/p3-cosmos-blocked.json"
+      ],
+      "evidence_present": true
+    },
+    "CMP_TEAMS": {
+      "expected_status": "Prototype",
+      "evidence_found": [
+        "results/latest/p3-teams-prototype.json",
+        "evidence/teams/p3-teams-source.json",
+        "evidence/teams/p3-teams-execution.json"
+      ],
+      "evidence_present": true
+    }
+  },
+  "sql": {
+    "technology": 515,
+    "category": 41,
+    "relation": 43,
+    "ai_request": 16,
+    "bridge": 80,
+    "relation_invalid_fk": 0
+  },
+  "fastapi_health": {
+    "url": "http://127.0.0.1:8000/health",
+    "http_status": 200,
+    "body": "{\"status\":\"ok\"}"
+  },
+  "rag_evidence": {
+    "present": true,
+    "data": {
+      "timestamp": "2026-08-16T11:00:40.335381+00:00",
+      "health_status": 200,
+      "ask_status": 200,
+      "health": {
+        "status": "ok"
+      },
+      "ask": {
+        "answer": "Azure Databricks in TechScope plays a role primarily in data engineering, specifically for Spark-based data processing and AI model development. This is evidenced by the technology entry \"Databricks (Spark, 데이터 처리, AI 모델 개발)\" with the authoritative technology ID T0147. Additionally, TechScope has established official partnership and certification experience with Databricks (T0148) and participates in a global Cloud/Data Platform partnership that includes Microsoft, Databricks, and Snowflake supported by technology ID T0262. \n\nIn summary, Azure Databricks is leveraged for data processing and AI model development within TechScope's data engineering activities, supported by official partnerships and global technology alliances.",
+        "grounded": true,
+        "citations": [
+          {
+            "chunk_id": "CH0148",
+            "source_id": "SRC001",
+            "technology": [
+              "Databricks 공식 Partnership 기반 구축 경험"
+            ],
+            "technology_ids": [
+              "T0148"
+            ],
+            "category": [
+              "Technology Partnership / Certification"
+            ],
+            "architecture_layer": [],
+            "evidence_type": "DIRECT",
+            "company": []
+          },
+          {
+            "chunk_id": "CH0260",
+            "source_id": "SRC001",
+            "technology": [
+              "Microsoft Specialization: Analytics on Azure 인증"
+            ],
+            "technology_ids": [
+              "T0260"
+            ],
+            "category": [
+              "Technology Partnership / Certification"
+            ],
+            "architecture_layer": [],
+            "evidence_type": "DIRECT",
+            "company": []
+          },
+          {
+            "chunk_id": "CH0147",
+            "source_id": "SRC001",
+            "technology": [
+              "Databricks (Spark, 데이터 처리, AI 모델 개발)"
+            ],
+            "technology_ids": [
+              "T0147"
+            ],
+            "category": [
+              "Data Engineering"
+            ],
+            "architecture_layer": [],
+            "evidence_type": "DIRECT",
+            "company": []
+          },
+          {
+            "chunk_id": "CH0056",
+            "source_id": "SRC001",
+            "technology": [
+              "Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend)"
+            ],
+            "technology_ids": [
+              "T0056"
+            ],
+            "category": [
+              "Data Engineering"
+            ],
+            "architecture_layer": [],
+            "evidence_type": "DIRECT",
+            "company": []
+          },
+          {
+            "chunk_id": "CH0262",
+            "source_id": "SRC001",
+            "technology": [
+              "Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계"
+            ],
+            "technology_ids": [
+              "T0262"
+            ],
+            "category": [
+              "Technology Partnership / Certification"
+            ],
+            "architecture_layer": [],
+            "evidence_type": "DIRECT",
+            "company": []
+          }
+        ],
+        "retrieved_chunk_ids": [
+          "CH0148",
+          "CH0260",
+          "CH0147",
+          "CH0056",
+          "CH0262"
+        ],
+        "grounded_technology_ids": [
+          "T0056",
+          "T0147",
+          "T0148",
+          "T0260",
+          "T0262"
+        ]
+      }
+    }
+  },
+  "p1e_relation": {
+    "present": true,
+    "data": {
+      "timestamp_utc": "2026-08-17T12:33:03.432229+00:00",
+      "status": "PASS",
+      "resume_stage": "ADLS_AND_AZURE_SQL",
+      "databricks_rerun": false,
+      "validated_relation_rows": 43,
+      "fact_rows_before": 0,
+      "fact_rows_after": 43,
+      "fact_rows_inserted": 43,
+      "silver_adls": "silver/technology_relation/technology_relation.csv",
+      "gold_adls": "gold/fact_technology_relation/fact_technology_relation.csv",
+      "storage_auth": "account_key_queried_at_runtime_not_persisted",
+      "databricks_success_run": null
+    }
+  },
+  "cosmos": {
+    "present": true,
+    "data": {
+      "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+      "component": "CMP_COSMOS",
+      "status": "Blocked",
+      "reason": "NO_EXISTING_COSMOS_ACCOUNT",
+      "resource_group": "rg-techscope-dev-239bd206",
+      "existing_accounts_in_resource_group": 0,
+      "azure_resource_creation_performed": false,
+      "azure_resource_deletion_performed": false,
+      "session_runtime_verified": false,
+      "conversation_runtime_verified": false,
+      "feedback_runtime_verified": false,
+      "next_resolution_condition": "A reusable Cosmos DB for NoSQL account/database/container must already exist, or the no-new-Azure-resource policy must change."
+    }
+  },
+  "teams": {
+    "present": true,
+    "data": {
+      "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+      "component": "CMP_TEAMS",
+      "status": "Prototype",
+      "source_evidence": "evidence/teams/p3-teams-source.json",
+      "execution_evidence": "evidence/teams/p3-teams-execution.json",
+      "teams_sdk": "@microsoft/teams.apps@2.0.14",
+      "teamsfx_used": false,
+      "fastapi_path": "/ask",
+      "live_teams_tenant_e2e": false,
+      "azure_resource_creation": false,
+      "next_requirement": "Teams app registration/tenant installation and live message E2E are still required for Implemented status."
+    }
+  },
+  "architecture_lint": {
+    "pass": true,
+    "checks": 25,
+    "tail": "CHECK 01=PASS | Duplicate Component IDs: []\nCHECK 02=PASS | Duplicate Evidence IDs: []; invalid IDs: []\nCHECK 03=PASS | Duplicate ADR IDs: []; missing IDs: []\nCHECK 04=PASS | Invalid tracks: []\nCHECK 05=PASS | Invalid scopes: []\nCHECK 06=PASS | Invalid statuses: []\nCHECK 07=PASS | Invalid ADR statuses: []\nCHECK 08=PASS | Mermaid block cardinality: {'current': 1, 'target': 1, 'flow': 1, 'skill': 1}\nCHECK 09=PASS | Invalid node types: {}\nCHECK 10=PASS | Unregistered architecture components: []\nCHECK 11=PASS | Unknown evidence components: []\nCHECK 12=PASS | Invalid evidence types: []\nCHECK 13=PASS | Missing/invalid evidence paths: []\nCHECK 14=PASS | Incomplete Implemented: []\nCHECK 15=PASS | Incomplete Prototype: []\nCHECK 16=PASS | Non-MAIN in Current MAIN: []\nCHECK 17=PASS | Invalid Current MAIN status: []\nCHECK 18=PASS | Implemented MAIN missing: []\nCHECK 19=PASS | Non-MAIN in Target MAIN: []\nCHECK 20=PASS | Target diff: missing=[], extra=[]\nCHECK 21=PASS | Non-MAIN in Target Key Data Flow: []\nCHECK 22=PASS | Skill Proof leaked into MAIN views: []\nCHECK 23=PASS | Required Skill Proof missing: []\nCHECK 24=PASS | Unknown ADR components: []\nCHECK 25=PASS | Missing superseded ADRs: []\nINTEGRITY 01=PASS | Frozen baseline hashes: unchanged\nARCHITECTURE_LINT=PASS\n\n"
+  },
+  "release": {
+    "release_ready": false,
+    "portfolio_core_ready": true,
+    "missing_evidence": [],
+    "blockers": [
+      "CMP_COSMOS: NO_EXISTING_COSMOS_ACCOUNT",
+      "CMP_TEAMS: Prototype only; live Teams tenant E2E not completed"
+    ]
+  }
+}

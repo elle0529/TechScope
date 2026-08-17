@@ -1,0 +1,15 @@
+{
+  "timestamp_utc": "2026-08-17T13:24:13.482942+00:00",
+  "component": "CMP_COSMOS",
+  "status": "Blocked",
+  "reason": "NO_EXISTING_COSMOS_ACCOUNT",
+  "resource_group": "rg-techscope-dev-239bd206",
+  "existing_accounts_in_resource_group": 0,
+  "azure_resource_creation_performed": false,
+  "azure_resource_deletion_performed": false,
+  "session_runtime_verified": false,
+  "conversation_runtime_verified": false,
+  "feedback_runtime_verified": false,
+  "next_resolution_condition": "A reusable Cosmos DB for NoSQL account/database/container must already exist, or the no-new-Azure-resource policy must change.",
+  "implementation_evidence": "EXECUTION"
+}
