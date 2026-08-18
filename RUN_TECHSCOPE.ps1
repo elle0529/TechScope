@@ -90,64 +90,303 @@ function Invoke-DockerCapture {
 }
 
 function Wait-DockerEngine {
+    # DOCKER_ENGINE_STABLE_V3
     Write-Host "DOCKER_ENGINE_RECOVERY=START"
-
-    $probe=Invoke-DockerCapture @("--context","desktop-linux","info","--format","{{.ServerVersion}}")
-    if($probe.ExitCode-eq 0){
-        Write-Host "DOCKER_ENGINE=PASS_ALREADY_RUNNING"
-        return
-    }
+    Write-Host "DOCKER_ENGINE_STABILITY_WAIT=START"
+    Write-Host "DOCKER_ENGINE_STABILITY_REQUIRED_CONSECUTIVE_PASS=3"
+    Write-Host "DOCKER_ENGINE_STABILITY_WAIT_MAX_SECONDS=300"
 
     $desktop="C:\Program Files\Docker\Docker\Docker Desktop.exe"
+
     if(-not (Test-Path $desktop)){
         throw "DOCKER_DESKTOP_EXE_NOT_FOUND"
     }
 
-    $running=Get-Process "Docker Desktop" -ErrorAction SilentlyContinue
-    if($null-eq $running){
-        Start-Process -FilePath $desktop | Out-Null
-        Write-Host "DOCKER_DESKTOP_LAUNCH=PASS"
-    }else{
-        Write-Host "DOCKER_DESKTOP_PROCESS=ALREADY_RUNNING"
-    }
-
-    Write-Host "DOCKER_ENGINE_WAIT_MAX_SECONDS=300"
-
     $deadline=(Get-Date).AddMinutes(5)
+    $consecutive=0
     $attempt=0
 
     while((Get-Date)-lt $deadline){
         $attempt++
-        Start-Sleep -Seconds 5
-        $probe=Invoke-DockerCapture @("--context","desktop-linux","info","--format","{{.ServerVersion}}")
-        if($probe.ExitCode-eq 0){
-            Write-Host "DOCKER_ENGINE=PASS attempt=$attempt"
-            return
+
+        $probe=Invoke-DockerCapture @(
+            "--context","desktop-linux",
+            "version",
+            "--format","{{.Server.Version}}"
+        )
+
+        if($probe.ExitCode-eq 0 -and
+           -not [string]::IsNullOrWhiteSpace($probe.Output)){
+            $consecutive++
+            Write-Host "DOCKER_ENGINE_STABILITY=PASS attempt=$attempt consecutive=$consecutive"
+
+            if($consecutive-ge 3){
+                Write-Host "DOCKER_ENGINE=PASS_STABLE"
+                return
+            }
+
+            Start-Sleep -Seconds 2
+            continue
         }
-        Write-Host "DOCKER_ENGINE=WAIT attempt=$attempt"
+
+        $consecutive=0
+        Write-Host "DOCKER_ENGINE_STABILITY=WAIT attempt=$attempt"
+
+        $running=Get-Process "Docker Desktop" -ErrorAction SilentlyContinue
+        if($null-eq $running){
+            Start-Process -FilePath $desktop | Out-Null
+            Write-Host "DOCKER_DESKTOP_LAUNCH=PASS"
+        }else{
+            Write-Host "DOCKER_DESKTOP_PROCESS=RUNNING_ENGINE_NOT_READY"
+        }
+
+        Start-Sleep -Seconds 5
     }
 
-    throw "DOCKER_ENGINE_START_TIMEOUT"
+    throw "DOCKER_ENGINE_STABILITY_TIMEOUT"
 }
 
 function Ensure-MainContainer {
+    # MAIN_CONTAINER_RECREATE_V2
     Write-Host "TECHSCOPE_CONTAINER_RECOVERY=START"
 
-    $inspect=Invoke-DockerCapture @("--context","desktop-linux","inspect",$MainContainer)
-    if($inspect.ExitCode-ne 0){
-        throw "TECHSCOPE_CONTAINER_NOT_FOUND"
-    }
+    $inspect=Invoke-DockerCapture @(
+        "--context","desktop-linux","inspect",$MainContainer
+    )
 
-    $obj=(($inspect.Output | ConvertFrom-Json)[0])
-    if($obj.State.Running-ne $true){
-        $start=Invoke-DockerCapture @("--context","desktop-linux","start",$MainContainer)
-        if($start.ExitCode-ne 0){
-            throw "TECHSCOPE_CONTAINER_START=FAIL`n$($start.Output)"
+    if($inspect.ExitCode-eq 0){
+        $obj=(($inspect.Output | ConvertFrom-Json)[0])
+
+        if($obj.State.Running-ne $true){
+            $start=Invoke-DockerCapture @(
+                "--context","desktop-linux","start",$MainContainer
+            )
+
+            if($start.ExitCode-ne 0){
+                throw "TECHSCOPE_CONTAINER_START=FAIL`n$($start.Output)"
+            }
+
+            Start-Sleep -Seconds 2
         }
-        Start-Sleep -Seconds 2
+
+        Write-Host "TECHSCOPE_CONTAINER=PASS_RUNNING"
+        Write-Host "MAIN_CONTAINER_RECREATE=NOT_REQUIRED"
+        return
     }
 
-    Write-Host "TECHSCOPE_CONTAINER=PASS_RUNNING"
+    Write-Host "MAIN_CONTAINER_RECREATE=START"
+    Write-Host "MAIN_CONTAINER_RECREATE_REASON=CONTAINER_NOT_FOUND"
+
+    # Find the newest tagged TechScope dev image that already exists locally.
+    # TECHSCOPE_IMAGE_DISCOVERY_RETRY_V3
+    $images=$null
+    $imageDeadline=(Get-Date).AddMinutes(5)
+    $imageAttempt=0
+
+    while((Get-Date)-lt $imageDeadline){
+        $imageAttempt++
+
+        $images=Invoke-Capture "docker.exe" @(
+            "--context","desktop-linux",
+            "images",
+            "techscope-dev",
+            "--format","{{.Repository}}|{{.Tag}}|{{.ID}}"
+        )
+
+        if($images.ExitCode-eq 0){
+            break
+        }
+
+        if($images.Output -match '(?i)dockerDesktopLinuxEngine|pipe.*not found|cannot find the file specified|error during connect'){
+            Write-Host "TECHSCOPE_IMAGE_DISCOVERY_ENGINE_RACE=DETECTED attempt=$imageAttempt"
+            Write-Host "TECHSCOPE_IMAGE_DISCOVERY_ENGINE_RECOVERY=START"
+
+            Wait-DockerEngine
+
+            Write-Host "TECHSCOPE_IMAGE_DISCOVERY_ENGINE_RECOVERY=PASS"
+            Start-Sleep -Seconds 2
+            continue
+        }
+
+        throw "TECHSCOPE_IMAGE_DISCOVERY=FAIL`n$($images.Output)"
+    }
+
+    if($null-eq $images -or $images.ExitCode-ne 0){
+        throw "TECHSCOPE_IMAGE_DISCOVERY_ENGINE_RETRY_TIMEOUT"
+    }
+
+    $candidates=@(
+        $images.Output -split "`r?`n" |
+        Where-Object {
+            $_ -match '^techscope-dev\|[^|]+\|[^|]+$' -and
+            $_ -notmatch '\|<none>\|'
+        }
+    )
+
+    if($candidates.Count-eq 0){
+        throw "TECHSCOPE_IMAGE_NOT_FOUND"
+    }
+
+    $parts=$candidates[0].Split("|")
+    $image="$($parts[0]):$($parts[1])"
+    $imageId=$parts[2]
+
+    Write-Host "TECHSCOPE_IMAGE_DISCOVERY=PASS image=$image id=$imageId"
+
+    # The repo itself is the durable source of truth.
+    if(-not (Test-Path $Repo)){
+        throw "TECHSCOPE_REPO_BIND_SOURCE_MISSING"
+    }
+
+    # Reuse the authenticated host Azure CLI cache outside the repository.
+    # This keeps credentials out of Git while allowing DefaultAzureCredential
+    # and Azure CLI based recovery after recreating the dev container.
+    $hostAzure=Join-Path $env:USERPROFILE ".azure"
+
+    if(-not (Test-Path $hostAzure)){
+        throw "HOST_AZURE_CLI_CACHE_NOT_FOUND"
+    }
+
+    $hostAz=Invoke-Capture "az.cmd" @(
+        "account","show","--output","none"
+    )
+
+    if($hostAz.ExitCode-ne 0){
+        throw "HOST_AZURE_LOGIN_REQUIRED"
+    }
+
+    Write-Host "HOST_AZURE_LOGIN=PASS"
+    Write-Host "AZURE_AUTH_CACHE_SOURCE=OUTSIDE_REPO"
+    Write-Host "AZURE_AUTH_SECRET_VALUES_PRINTED=NO"
+
+    $repoMount="type=bind,source=$Repo,target=/workspaces/TechScope"
+    $azureMount="type=bind,source=$hostAzure,target=/home/vscode/.azure"
+
+    $run=Invoke-DockerCapture @(
+        "--context","desktop-linux",
+        "run","-d",
+        "--name",$MainContainer,
+        "--restart","unless-stopped",
+        "--mount",$repoMount,
+        "--mount",$azureMount,
+        "-w","/workspaces/TechScope",
+        $image,
+        "sleep","infinity"
+    )
+
+    if($run.ExitCode-ne 0){
+        throw "TECHSCOPE_CONTAINER_RECREATE=FAIL`n$($run.Output)"
+    }
+
+    Start-Sleep -Seconds 3
+
+    $verify=Invoke-DockerCapture @(
+        "--context","desktop-linux",
+        "inspect","-f","{{.State.Running}}",$MainContainer
+    )
+
+    if($verify.ExitCode-ne 0 -or
+       $verify.Output.Trim()-ne "true"){
+        throw "TECHSCOPE_CONTAINER_RECREATE_VERIFY=FAIL"
+    }
+
+    Write-Host "TECHSCOPE_CONTAINER_RECREATE=PASS"
+    Write-Host "TECHSCOPE_CONTAINER_RESTART_POLICY=unless-stopped"
+    Write-Host "TECHSCOPE_REPO_BIND_MOUNT=PASS"
+    Write-Host "TECHSCOPE_AZURE_CACHE_BIND_MOUNT=PASS_OUTSIDE_REPO"
+
+    # Verify the image has the expected vscode user.
+    $userCheck=Invoke-DockerCapture @(
+        "--context","desktop-linux",
+        "exec",
+        $MainContainer,
+        "sh","-lc","id vscode >/dev/null 2>&1"
+    )
+
+    if($userCheck.ExitCode-ne 0){
+        throw "TECHSCOPE_CONTAINER_VSCODE_USER=FAIL"
+    }
+
+    Write-Host "TECHSCOPE_CONTAINER_VSCODE_USER=PASS"
+
+    # Verify runtime dependencies. Repair only the container-local user
+    # environment if the recreated image predates later P3 dependencies.
+    $moduleCheck=Invoke-DockerCapture @(
+        "--context","desktop-linux",
+        "exec",
+        "--user","vscode",
+        "-w","/workspaces/TechScope",
+        $MainContainer,
+        "python","-c",
+        "import fastapi,uvicorn,azure.cosmos,azure.identity,mssql_python"
+    )
+
+    if($moduleCheck.ExitCode-ne 0){
+        Write-Host "TECHSCOPE_RUNTIME_DEPENDENCIES=REPAIR_START"
+
+        $installCosmos=Invoke-DockerCapture @(
+            "--context","desktop-linux",
+            "exec",
+            "--user","vscode",
+            "-w","/workspaces/TechScope",
+            $MainContainer,
+            "python","-m","pip","install","--user",
+            "-r","backend/requirements-cosmos.txt"
+        )
+
+        if($installCosmos.ExitCode-ne 0){
+            throw "TECHSCOPE_COSMOS_DEPENDENCY_REPAIR=FAIL`n$($installCosmos.Output)"
+        }
+
+        $installCore=Invoke-DockerCapture @(
+            "--context","desktop-linux",
+            "exec",
+            "--user","vscode",
+            "-w","/workspaces/TechScope",
+            $MainContainer,
+            "python","-m","pip","install","--user",
+            "mssql-python","fastapi","uvicorn"
+        )
+
+        if($installCore.ExitCode-ne 0){
+            throw "TECHSCOPE_CORE_DEPENDENCY_REPAIR=FAIL`n$($installCore.Output)"
+        }
+
+        $moduleCheck=Invoke-DockerCapture @(
+            "--context","desktop-linux",
+            "exec",
+            "--user","vscode",
+            "-w","/workspaces/TechScope",
+            $MainContainer,
+            "python","-c",
+            "import fastapi,uvicorn,azure.cosmos,azure.identity,mssql_python"
+        )
+
+        if($moduleCheck.ExitCode-ne 0){
+            throw "TECHSCOPE_RUNTIME_DEPENDENCIES=FAIL_AFTER_REPAIR"
+        }
+
+        Write-Host "TECHSCOPE_RUNTIME_DEPENDENCIES=PASS_AFTER_REPAIR"
+    }
+    else{
+        Write-Host "TECHSCOPE_RUNTIME_DEPENDENCIES=PASS"
+    }
+
+    # Verify Azure CLI cache is usable inside the recreated container.
+    $containerAz=Invoke-DockerCapture @(
+        "--context","desktop-linux",
+        "exec",
+        "--user","vscode",
+        $MainContainer,
+        "az","account","show","--output","none"
+    )
+
+    if($containerAz.ExitCode-ne 0){
+        throw "TECHSCOPE_CONTAINER_AZURE_LOGIN=FAIL`n$($containerAz.Output)"
+    }
+
+    Write-Host "TECHSCOPE_CONTAINER_AZURE_LOGIN=PASS"
+    Write-Host "MAIN_CONTAINER_RECREATE=PASS"
 }
 
 function Ensure-RuntimeNetwork {
