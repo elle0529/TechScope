@@ -1,0 +1,22 @@
+{
+    "status":  "PASS",
+    "stage":  "FINAL_RELEASE_FREEZE",
+    "release_version":  "1.0.0",
+    "release_tag":  "techscope-portfolio-v1.0.0",
+    "validated_source_commit":  "0788eccedde689644e7fc2277d92b5b97eb862c4",
+    "main_full_regression":  "PASS",
+    "teams_live_tenant_e2e":  "PASS",
+    "cosmos_runtime":  "PASS",
+    "physical_reboot_cold_start":  "PASS",
+    "docker_engine_stability_recovery":  "PASS",
+    "main_container_auto_recreate":  "PASS",
+    "canonical_startup_idempotence":  "PASS",
+    "normal_start_ai_request_delta":  0,
+    "ai_requests_at_freeze":  25,
+    "architecture_lint":  "PASS",
+    "git_tracked_secret_path_scan":  "PASS",
+    "release_manifest":  "release/TechScope_RELEASE_MANIFEST_v1.0.0.json",
+    "release_ready":  true,
+    "release_blocker":  null,
+    "frozen_utc":  "2026-08-18T11:09:43.7161602Z"
+}
