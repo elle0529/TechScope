@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "type": "OUTPUT",
+  "free_tier": true,
+  "data_plane_create_read_delete": "PASS",
+  "account_key_persisted": false
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "stage": "P3A1",
+  "component": "CMP_COSMOS",
+  "component_status": "In Progress",
+  "account": "cosmostechscope20c99d23dc",
+  "account_created": true,
+  "free_tier": true,
+  "database": "techscope-interactions",
+  "database_created": true,
+  "shared_throughput_ru": 400,
+  "containers": {
+    "sessions": "/session_id",
+    "messages": "/session_id",
+    "feedback": "/session_id"
+  },
+  "containers_created": [
+    "sessions",
+    "messages",
+    "feedback"
+  ],
+  "auth": "Microsoft Entra RBAC / DefaultAzureCredential",
+  "account_key_persisted": false,
+  "data_plane_probe": {
+    "endpoint": "https://cosmostechscope20c99d23dc.documents.azure.com:443/",
+    "database": "techscope-interactions",
+    "probe": "PASS"
+  },
+  "next": "P3A2_BACKEND_SESSION_CONVERSATION_FEEDBACK_INTEGRATION"
+}

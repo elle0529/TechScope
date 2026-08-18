@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "type": "EXECUTION",
+  "account": "cosmostechscope20c99d23dc",
+  "database": "techscope-interactions",
+  "containers": {
+    "sessions": "/session_id",
+    "messages": "/session_id",
+    "feedback": "/session_id"
+  },
+  "auth": "Microsoft Entra RBAC"
+}
