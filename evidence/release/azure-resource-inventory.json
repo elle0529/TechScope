@@ -1,0 +1,70 @@
+{
+    "status":  "PASS",
+    "resource_group":  "rg-techscope-dev-239bd206",
+    "collected_utc":  "2026-08-18T11:19:49.9993328Z",
+    "secret_values_included":  false,
+    "actual_billing_cost_claimed":  false,
+    "resource_count":  10,
+    "resources":  [
+                      {
+                          "name":  "sttechscopedev239bd206",
+                          "type":  "Microsoft.Storage/storageAccounts",
+                          "location":  "koreacentral",
+                          "kind":  "StorageV2"
+                      },
+                      {
+                          "name":  "dbw-techscope-dev-239bd206",
+                          "type":  "Microsoft.Databricks/workspaces",
+                          "location":  "koreacentral",
+                          "kind":  ""
+                      },
+                      {
+                          "name":  "adf-techscope-dev-239bd206",
+                          "type":  "Microsoft.DataFactory/factories",
+                          "location":  "koreacentral",
+                          "kind":  ""
+                      },
+                      {
+                          "name":  "sql-techscope-dev-239bd206",
+                          "type":  "Microsoft.Sql/servers",
+                          "location":  "koreacentral",
+                          "kind":  "v12.0"
+                      },
+                      {
+                          "name":  "sql-techscope-dev-239bd206/master",
+                          "type":  "Microsoft.Sql/servers/databases",
+                          "location":  "koreacentral",
+                          "kind":  "v12.0,system,serverless"
+                      },
+                      {
+                          "name":  "sql-techscope-dev-239bd206/sqldb-techscope-dev",
+                          "type":  "Microsoft.Sql/servers/databases",
+                          "location":  "koreacentral",
+                          "kind":  "v12.0,user"
+                      },
+                      {
+                          "name":  "srch-techscope-dev-239bd206",
+                          "type":  "Microsoft.Search/searchServices",
+                          "location":  "koreacentral",
+                          "kind":  ""
+                      },
+                      {
+                          "name":  "aoai-techscope-dev-239bd206",
+                          "type":  "Microsoft.CognitiveServices/accounts",
+                          "location":  "koreacentral",
+                          "kind":  "OpenAI"
+                      },
+                      {
+                          "name":  "srch-techscope-dev-239bd206-b1",
+                          "type":  "Microsoft.Search/searchServices",
+                          "location":  "koreacentral",
+                          "kind":  ""
+                      },
+                      {
+                          "name":  "cosmostechscope20c99d23dc",
+                          "type":  "Microsoft.DocumentDB/databaseAccounts",
+                          "location":  "koreacentral",
+                          "kind":  "GlobalDocumentDB"
+                      }
+                  ]
+}

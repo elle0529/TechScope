@@ -1,0 +1,28 @@
+{
+    "status":  "PASS",
+    "project_complete":  true,
+    "technical_release_frozen":  true,
+    "technical_release_tag":  "techscope-portfolio-v1.0.0",
+    "technical_release_commit":  "1c2457062b20796f196fb1b160dbda7f6eda6fcb",
+    "final_recording_pending":  true,
+    "final_recording_is_release_blocker":  false,
+    "post_recording_cloud_decommission_pending":  true,
+    "post_recording_cloud_decommission_is_project_blocker":  false,
+    "ai_requests_created_during_completion":  0,
+    "azure_resource_mutation":  "NO",
+    "azure_inventory_resource_count":  10,
+    "deliverables":  [
+                         "PROJECT_COMPLETION.md",
+                         "docs/release.md",
+                         "docs/portfolio/01_architecture_and_runtime.md",
+                         "docs/portfolio/02_implementation_and_verification.md",
+                         "docs/portfolio/03_security_scope_cost.md",
+                         "docs/portfolio/04_interview_brief.md",
+                         "docs/portfolio/05_final_recording_runbook.md",
+                         "docs/portfolio/06_post_recording_closeout.md",
+                         "RUN_FINAL_RECORDING_PREP.ps1",
+                         "RUN_FINAL_RECORDING_POSTCHECK.ps1",
+                         "evidence/release/azure-resource-inventory.json"
+                     ],
+    "completed_utc":  "2026-08-18T11:19:50.0663597Z"
+}
