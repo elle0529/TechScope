@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "type": "EXECUTION",
+  "component": "CMP_TEAMS",
+  "teams_app_id": "4351e73e-7b44-4db8-842f-4ae8ca328bee",
+  "tunnel_id": "techscope-live-971008",
+  "tunnel_url": "https://xp3rqwt9-3978.jpe1.devtunnels.ms",
+  "endpoint": "https://xp3rqwt9-3978.jpe1.devtunnels.ms/api/messages",
+  "local_port": 3978,
+  "install_link_obtained": true,
+  "teams_live_message_observed": true,
+  "secret_values_persisted_in_repo": false
+}

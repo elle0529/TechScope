@@ -1,12 +1,11 @@
 {
   "name": "techscope-teams-agent",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "TechScope Teams SDK v2 adapter to the existing FastAPI /ask endpoint",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "smoke": "node dist/smoke.js"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@microsoft/teams.apps": "2.0.14"

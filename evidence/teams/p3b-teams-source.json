@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "type": "SOURCE",
+  "component": "CMP_TEAMS",
+  "files": [
+    "teams/techscope-agent/package.json",
+    "teams/techscope-agent/tsconfig.json",
+    "teams/techscope-agent/src/index.ts"
+  ],
+  "sdk": "@microsoft/teams.apps 2.0.14"
+}

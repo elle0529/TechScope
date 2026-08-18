@@ -94,3 +94,13 @@
 - Conversation messages: `2`
 - Feedback rows: `1`
 <!-- TECHSCOPE_COSMOS_RUNTIME_EVIDENCE:END -->
+
+<!-- TECHSCOPE_TEAMS_LIVE_EVIDENCE:START -->
+## Teams Live Evidence
+
+- Source: `teams/techscope-agent/src/index.ts`
+- SOURCE: `evidence/teams/p3b-teams-source.json`
+- EXECUTION: `evidence/teams/p3b-teams-execution.json`
+- OUTPUT: `evidence/teams/p3b-teams-output.json`
+- Result: `results/latest/p3b-teams-live-e2e.json`
+<!-- TECHSCOPE_TEAMS_LIVE_EVIDENCE:END -->

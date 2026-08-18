@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "type": "OUTPUT",
+  "component": "CMP_TEAMS",
+  "ai_requests_before": 23,
+  "ai_requests_after": 24,
+  "sql_increment": 1,
+  "teams_session_id": "a:1eKKexmVczqMhfFkaZ1QvJpGBWpXtT2_WzLF2mWiPBaqW-chVw7VKvHUC49fsADQljOPABCwCtYLK_Vq_9bLvEMmkD3v_qyBLe-P7YbdR_6YhoagmVGz9MUQBFGwKbvRu",
+  "conversation_messages": 2,
+  "feedback_required_for_teams_e2e": false,
+  "grounded": true,
+  "citation_count": 5,
+  "technology_id_count": 5,
+  "cosmos_channel": "teams",
+  "powerbi_snapshot_sync": "PASS"
+}

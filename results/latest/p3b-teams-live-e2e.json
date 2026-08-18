@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "stage": "P3B",
+  "component": "CMP_TEAMS",
+  "component_status": "Implemented",
+  "live_tenant_e2e": "PASS",
+  "teams_app_id": "4351e73e-7b44-4db8-842f-4ae8ca328bee",
+  "tunnel_id": "techscope-live-971008",
+  "endpoint": "https://xp3rqwt9-3978.jpe1.devtunnels.ms/api/messages",
+  "sql_persistence": "PASS",
+  "cosmos_session_persistence": "PASS",
+  "cosmos_conversation_persistence": "PASS",
+  "powerbi_snapshot_sync": "PASS",
+  "secret_values_persisted_in_repo": false,
+  "verification": {
+    "ai_requests_before": 23,
+    "ai_requests_after": 24,
+    "sql_increment": 1,
+    "session_id": "a:1eKKexmVczqMhfFkaZ1QvJpGBWpXtT2_WzLF2mWiPBaqW-chVw7VKvHUC49fsADQljOPABCwCtYLK_Vq_9bLvEMmkD3v_qyBLe-P7YbdR_6YhoagmVGz9MUQBFGwKbvRu",
+    "channel": "teams",
+    "messages": 2,
+    "grounded": true,
+    "citation_count": 5,
+    "technology_id_count": 5,
+    "powerbi_snapshot_sync": "PASS"
+  },
+  "next": "MAIN_FULL_REGRESSION_AND_COLD_START_AUTOMATION"
+}

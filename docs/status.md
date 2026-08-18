@@ -38,7 +38,7 @@
 | `CMP_AZURE_OPENAI` | Implemented |
 | `CMP_FASTAPI` | Implemented |
 | `CMP_COSMOS` | Implemented |
-| `CMP_TEAMS` | Prototype |
+| `CMP_TEAMS` | Implemented |
 
 ### Verified runtime counts
 
@@ -51,7 +51,7 @@
 ### Release blockers
 
 - CMP_COSMOS: NO_EXISTING_COSMOS_ACCOUNT
-- CMP_TEAMS: Prototype only; live Teams tenant E2E not completed
+- CMP_TEAMS: Implemented only; live Teams tenant E2E not completed
 
 > This block is generated from `results/latest/main-final-status-summary.json`.
 <!-- TECHSCOPE_MAIN_FINAL_STATUS:END -->
@@ -92,3 +92,18 @@
 - Verified feedback rows: `1`
 - AI Requests: `21 -> 22`
 <!-- TECHSCOPE_COSMOS_RUNTIME:END -->
+
+<!-- TECHSCOPE_TEAMS_LIVE:START -->
+## Teams Live Tenant E2E
+
+- `CMP_TEAMS = Implemented`
+- Teams SDK: `@microsoft/teams.apps 2.0.14`
+- Live Tenant E2E: `PASS`
+- Teams App ID: `4351e73e-7b44-4db8-842f-4ae8ca328bee`
+- Dev Tunnel endpoint: `https://xp3rqwt9-3978.jpe1.devtunnels.ms/api/messages`
+- Teams → FastAPI `/ask`: `PASS`
+- Azure SQL persistence: `PASS`
+- Cosmos Session/Conversation persistence: `PASS`
+- Power BI Snapshot sync: `PASS`
+- Secrets persisted in repository: `NO`
+<!-- TECHSCOPE_TEAMS_LIVE:END -->
