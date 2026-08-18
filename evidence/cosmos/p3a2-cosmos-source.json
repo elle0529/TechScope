@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "type": "SOURCE",
+  "component": "CMP_COSMOS",
+  "files": [
+    "backend/app/cosmos_interaction_store.py",
+    "backend/app/cosmos_runtime.py",
+    "backend/app/main.py",
+    "backend/requirements-cosmos.txt",
+    "config/cosmos-runtime.json"
+  ]
+}

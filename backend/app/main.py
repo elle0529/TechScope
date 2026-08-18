@@ -12,6 +12,7 @@ from .azure_sql_interaction_sink import AzureSqlInteractionSink
 from .config import Settings
 from .rag_service import RagService
 from .grounding_guard import install_grounding_guard
+from .cosmos_runtime import install_cosmos_runtime
 
 
 class AskRequest(BaseModel):
@@ -110,3 +111,4 @@ def create_app() -> FastAPI:
 app = create_app()
 
 install_grounding_guard(app)
+install_cosmos_runtime(app)

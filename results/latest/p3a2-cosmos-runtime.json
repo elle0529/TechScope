@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "stage": "P3A2",
+  "component": "CMP_COSMOS",
+  "component_status": "Implemented",
+  "runtime_version": "p3a2-v1",
+  "session_persistence": "PASS",
+  "conversation_persistence": "PASS",
+  "feedback_persistence": "PASS",
+  "grounding_v6_preserved": true,
+  "secret_values_persisted": false,
+  "live_pid": 493,
+  "smoke": {
+    "session_id": "337b9b59-12a0-4cbb-a78e-96ce4effc721",
+    "interaction_id": "abaa584a-5f78-46ab-8bf3-bf334edf98ee",
+    "messages": 2,
+    "feedback": 1,
+    "ai_requests_before": 20,
+    "ai_requests_after": 21,
+    "grounded": true,
+    "citation_count": 5,
+    "technology_id_count": 5
+  },
+  "next": "P3B_TEAMS_LIVE_TENANT_E2E"
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "type": "EXECUTION",
+  "component": "CMP_COSMOS",
+  "runtime": {
+    "version": "p3a2-v1",
+    "pid": 493,
+    "configured": true,
+    "data_plane": true,
+    "database": "techscope-interactions",
+    "containers": {
+      "sessions": "sessions",
+      "messages": "messages",
+      "feedback": "feedback"
+    },
+    "auth": "DefaultAzureCredential",
+    "account_key_persisted": false
+  },
+  "grounding_runtime": {
+    "version": "v6",
+    "pid": 493,
+    "ask_guard_wrapped": true
+  },
+  "live_pid": 493,
+  "stopped_pids": [],
+  "runtime_env_recovery": "Azure CLI / memory only",
+  "secret_values_printed": false,
+  "secret_values_persisted": false,
+  "auth": "DefaultAzureCredential / Microsoft Entra RBAC"
+}

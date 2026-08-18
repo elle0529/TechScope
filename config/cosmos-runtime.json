@@ -1,0 +1,13 @@
+{
+  "account": "cosmostechscope20c99d23dc",
+  "endpoint": "https://cosmostechscope20c99d23dc.documents.azure.com:443/",
+  "database": "techscope-interactions",
+  "containers": {
+    "sessions": "sessions",
+    "messages": "messages",
+    "feedback": "feedback"
+  },
+  "partition_key": "/session_id",
+  "auth": "DefaultAzureCredential",
+  "account_key_persisted": false
+}

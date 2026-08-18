@@ -37,7 +37,7 @@
 | `CMP_AI_SEARCH` | Implemented |
 | `CMP_AZURE_OPENAI` | Implemented |
 | `CMP_FASTAPI` | Implemented |
-| `CMP_COSMOS` | Blocked |
+| `CMP_COSMOS` | Implemented |
 | `CMP_TEAMS` | Prototype |
 
 ### Verified runtime counts
@@ -76,3 +76,19 @@
 
 > Out-of-domain requests remain operational requests, but are no longer represented as grounded requests.
 <!-- TECHSCOPE_GROUNDING_FIX:END -->
+
+
+<!-- TECHSCOPE_COSMOS_RUNTIME:START -->
+## Cosmos Runtime Persistence
+
+- `CMP_COSMOS = Implemented`
+- Authentication: `Microsoft Entra RBAC / DefaultAzureCredential`
+- Session persistence: `PASS`
+- Conversation persistence: `PASS`
+- Feedback persistence: `PASS`
+- Account key persisted: `NO`
+- Verified session: `337b9b59-12a0-4cbb-a78e-96ce4effc721`
+- Verified messages: `2`
+- Verified feedback rows: `1`
+- AI Requests: `20 -> 21`
+<!-- TECHSCOPE_COSMOS_RUNTIME:END -->

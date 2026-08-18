@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "type": "OUTPUT",
+  "component": "CMP_COSMOS",
+  "session_persistence": true,
+  "conversation_persistence": true,
+  "feedback_persistence": true,
+  "smoke": {
+    "session_id": "337b9b59-12a0-4cbb-a78e-96ce4effc721",
+    "interaction_id": "abaa584a-5f78-46ab-8bf3-bf334edf98ee",
+    "messages": 2,
+    "feedback": 1,
+    "ai_requests_before": 20,
+    "ai_requests_after": 21,
+    "grounded": true,
+    "citation_count": 5,
+    "technology_id_count": 5
+  }
+}

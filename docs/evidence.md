@@ -78,3 +78,19 @@
   - Technology IDs=0
 - Power BI Snapshot: synchronized after live verification.
 <!-- TECHSCOPE_GROUNDING_EVIDENCE:END -->
+
+
+<!-- TECHSCOPE_COSMOS_RUNTIME_EVIDENCE:START -->
+## Cosmos Runtime Evidence
+
+- Source: `backend/app/cosmos_interaction_store.py`
+- Runtime: `backend/app/cosmos_runtime.py`
+- Config: `config/cosmos-runtime.json`
+- Result: `results/latest/p3a2-cosmos-runtime.json`
+- SOURCE: `evidence/cosmos/p3a2-cosmos-source.json`
+- EXECUTION: `evidence/cosmos/p3a2-cosmos-execution.json`
+- OUTPUT: `evidence/cosmos/p3a2-cosmos-output.json`
+- Verified session: `337b9b59-12a0-4cbb-a78e-96ce4effc721`
+- Conversation messages: `2`
+- Feedback rows: `1`
+<!-- TECHSCOPE_COSMOS_RUNTIME_EVIDENCE:END -->
