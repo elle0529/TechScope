@@ -367,15 +367,23 @@ def command_all(args: argparse.Namespace) -> int:
 
     architecture_lint()
 
-    write_report(
-        env_name=args.env,
-        state=state,
-        prior=prior,
-        live=live,
-        tracked_count=len(tracked),
-    )
+    if args.live_regression:
+        write_report(
+            env_name=args.env,
+            state=state,
+            prior=prior,
+            live=live,
+            tracked_count=len(tracked),
+        )
+        emit("MAIN_FULL_REGRESSION", "PASS")
+    else:
+        # Normal startup is verification-only. Do not rewrite tracked
+        # regression evidence or create synthetic AI requests.
+        emit("MAIN_REGRESSION_REPORT", "SKIPPED_NORMAL_START")
+        emit("MAIN_RUNTIME_VERIFY", "PASS")
+        emit("NORMAL_START_TRACKED_REPORT_MUTATION", "NO")
+        emit("NORMAL_START_AI_REQUEST", "NO")
 
-    emit("MAIN_FULL_REGRESSION", "PASS")
     emit("RELEASE_READY", "NO")
     emit("RELEASE_BLOCKER", "FULL_REBOOT_COLD_START_VALIDATION_PENDING")
     return 0
