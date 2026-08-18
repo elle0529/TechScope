@@ -1,9 +1,9 @@
 ﻿TechnologyId,TechnologyName,GroundedRequestCount
-T0056,Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend),14
-T0147,"Databricks (Spark, 데이터 처리, AI 모델 개발)",13
-T0262,Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계,12
-T0148,Databricks 공식 Partnership 기반 구축 경험,10
-T0260,Microsoft Specialization: Analytics on Azure 인증,10
+T0056,Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend),15
+T0147,"Databricks (Spark, 데이터 처리, AI 모델 개발)",14
+T0262,Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계,13
+T0148,Databricks 공식 Partnership 기반 구축 경험,11
+T0260,Microsoft Specialization: Analytics on Azure 인증,11
 T0427,"기업 정형데이터 자연어 분석 (DRB동일·HL만도·성우하이텍·흥아·SJG세종·CTR 계열, 이마트24, LG전자 사례)",5
 T0081,CV Evaluation Metrics (이상 탐지 정확도 평가 필요),4
 T0163,Embedded BI 권한 통제 (한국암웨이: 본인 실적과 하위 조직 실적만 조회),4

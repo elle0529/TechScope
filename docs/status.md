@@ -107,3 +107,15 @@
 - Power BI Snapshot sync: `PASS`
 - Secrets persisted in repository: `NO`
 <!-- TECHSCOPE_TEAMS_LIVE:END -->
+
+<!-- TECHSCOPE_MAIN_RUNTIME:START -->
+## Canonical Runtime / Cold-start
+
+- Canonical user command: `.\RUN_TECHSCOPE.ps1`
+- Canonical internal command: `python tools/techscope.py all --env dev`
+- Simulated Cold-start Recovery: `PASS`
+- MAIN Full Regression: `PASS`
+- Runtime secret persistence in repository: `NO`
+- Release Ready: `NO`
+- Remaining blocker: `FULL_REBOOT_COLD_START_VALIDATION_PENDING`
+<!-- TECHSCOPE_MAIN_RUNTIME:END -->

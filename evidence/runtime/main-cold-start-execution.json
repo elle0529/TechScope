@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "type": "EXECUTION",
+  "component": "MAIN_RUNTIME",
+  "cold_start_simulation": "PASS",
+  "docker_engine_reused": true,
+  "techscope_owned_runtime_was_stopped_before_start": true,
+  "runtime_recovered_by_canonical_script": true,
+  "timestamp_utc": "2026-08-18T10:48:03.183879+00:00"
+}

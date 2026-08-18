@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "stage": "MAIN_FULL_REGRESSION",
+  "runtime_cli": "TECHSCOPE_RUNTIME_CLI_V1",
+  "environment": "dev",
+  "canonical_command": "python tools/techscope.py all --env dev",
+  "fastapi": "PASS",
+  "cosmos": "PASS",
+  "grounding": "PASS",
+  "teams_prior_live_e2e": "PASS",
+  "powerbi_snapshot_sync": "PASS",
+  "architecture_lint": "PASS",
+  "git_tracked_secret_path_scan": "PASS",
+  "prior_artifacts": {
+    "results/latest/p1d-summary.json": "PASS",
+    "results/latest/p2b-summary.json": "PASS",
+    "evidence/rag/p2b-cloud-e2e.json": "PRESENT",
+    "results/latest/p3a2-cosmos-runtime.json": "PASS",
+    "results/latest/p3b-teams-live-e2e.json": "PASS"
+  },
+  "tracked_file_count": 721,
+  "ai_requests_current": 24,
+  "live_regression": {
+    "question": "What role does Azure Databricks play in TechScope? Include authoritative technology IDs and citations.",
+    "session_id": "main-regression-7dda36cb-bf4d-4ee4-9aa6-d64c74ee6580",
+    "interaction_id": "ce0d6129-f8c2-4b6e-8d8d-efea0047157e",
+    "grounded": true,
+    "citation_count": 5,
+    "technology_id_count": 5,
+    "cosmos_persisted": true,
+    "session_get_status": 200,
+    "ai_requests_before": 24,
+    "ai_requests_after": 25,
+    "sql_increment": 1,
+    "powerbi_snapshot_sync": "PASS"
+  },
+  "release_ready": false,
+  "release_blocker": "FULL_REBOOT_COLD_START_VALIDATION_PENDING"
+}

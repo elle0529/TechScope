@@ -1,585 +1,851 @@
 ﻿param(
-    [switch]$ProbeOnly
+    [switch]$FullRegression
 )
 
 $ErrorActionPreference = "Stop"
 
-$RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Location $RepoRoot
+$Repo = "C:\TechScope"
+$RuntimeRoot = "C:\TechScope_Runtime"
+$TeamsRuntimeRoot = Join-Path $RuntimeRoot "teams"
+$ProxyRuntimeRoot = Join-Path $RuntimeRoot "proxy"
 
-$ResultsLatest = Join-Path $RepoRoot "results\latest"
-$BootstrapStatePath = Join-Path $RepoRoot "results\bootstrap-state.json"
+$MainContainer = "techscope-dev"
+$ProxyContainer = "techscope-live-ui-proxy"
+$RuntimeNetwork = "techscope-runtime-net"
 
-New-Item -ItemType Directory -Force -Path $ResultsLatest | Out-Null
+$TunnelId = "techscope-live-971008"
+$TunnelPidFile = Join-Path $TeamsRuntimeRoot "devtunnel.pid"
+$TunnelLog = Join-Path $TeamsRuntimeRoot "devtunnel.log"
 
-function Get-TechScopeCommandInfo {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Name,
-
-        [string[]]$VersionArguments = @("--version")
-    )
-
-    $command = Get-Command $Name -ErrorAction SilentlyContinue
-
-    if ($null -eq $command) {
-        return [pscustomobject]@{
-            found   = $false
-            path    = $null
-            version = $null
-        }
-    }
-
-    $versionText = $null
-
-    try {
-        $versionOutput = & $command.Source @VersionArguments 2>&1
-        if ($null -ne $versionOutput) {
-            $versionText = (($versionOutput | Select-Object -First 1) | Out-String).Trim()
-        }
-    }
-    catch {
-        $versionText = $null
-    }
-
-    return [pscustomobject]@{
-        found   = $true
-        path    = $command.Source
-        version = $versionText
-    }
-}
-
-function Invoke-TechScopeExternal {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$FilePath,
-
-        [string[]]$Arguments = @()
-    )
-
-    try {
-        $output = & $FilePath @Arguments 2>&1
-        $code = $LASTEXITCODE
-
-        return [pscustomobject]@{
-            exit_code = $code
-            output    = (($output | Out-String).Trim())
-        }
-    }
-    catch {
-        return [pscustomobject]@{
-            exit_code = 999
-            output    = $_.Exception.Message
-        }
-    }
-}
-
-function Get-TechScopeGitHubRepoSlug {
-    param(
-        [string]$RemoteUrl
-    )
-
-    if ([string]::IsNullOrWhiteSpace($RemoteUrl)) {
-        return $null
-    }
-
-    $value = $RemoteUrl.Trim()
-
-    $httpsPattern = '^https://github\.com/([^/]+)/([^/]+?)(?:\.git)?$'
-    $sshPattern = '^git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$'
-
-    $match = [regex]::Match($value, $httpsPattern)
-
-    if (-not $match.Success) {
-        $match = [regex]::Match($value, $sshPattern)
-    }
-
-    if ($match.Success) {
-        return ($match.Groups[1].Value + "/" + $match.Groups[2].Value)
-    }
-
-    return $null
-}
-
-function Write-TechScopeText {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$Path,
-
-        [Parameter(Mandatory = $true)]
-        [string]$Content
-    )
-
-    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
-}
+$BotPidFile = Join-Path $TeamsRuntimeRoot "teams-agent.pid"
+$BotLog = Join-Path $TeamsRuntimeRoot "teams-agent.log"
+$RuntimeEnv = Join-Path $TeamsRuntimeRoot "teams-live.env"
+$RuntimeJson = Join-Path $TeamsRuntimeRoot "teams-runtime.json"
+$TeamsProject = Join-Path $Repo "teams\techscope-agent"
 
 Write-Host ""
-Write-Host "TechScope Bootstrap Controller v2"
-Write-Host ("Repository: " + $RepoRoot)
+Write-Host "TechScope Canonical Runtime v1"
+Write-Host "User command: .\RUN_TECHSCOPE.ps1"
+Write-Host "Internal command: python tools/techscope.py all --env dev"
 Write-Host ""
 
-# ----------------------------------------------------------------------
-# 1. Repository contract probe
-# ----------------------------------------------------------------------
+New-Item -ItemType Directory -Force -Path $TeamsRuntimeRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $ProxyRuntimeRoot | Out-Null
 
-$requiredFiles = @(
-    "IMPLEMENTATION_PLAN.md",
-    "docs\operator-guide.md",
-    "docs\baselines\TechScope_Baseline_Architecture_Model_v1.2_FINAL_FROZEN.md",
-    "source\rawdata.md",
-    "docs\status.md",
-    "docs\architecture.md",
-    "docs\evidence.md",
-    ".devcontainer\devcontainer.json",
-    ".devcontainer\Dockerfile",
-    "tools\techscope.py",
-    "tools\architecture_lint.py"
-)
-
-$missingFiles = @()
-
-foreach ($relativePath in $requiredFiles) {
-    $absolutePath = Join-Path $RepoRoot $relativePath
-
-    if (-not (Test-Path $absolutePath)) {
-        $missingFiles += $relativePath
-    }
-}
-
-$repositoryReady = ($missingFiles.Count -eq 0)
-
-# ----------------------------------------------------------------------
-# 2. Non-secret fingerprints
-# ----------------------------------------------------------------------
-
-$fingerprints = [ordered]@{}
-
-$fingerprintTargets = [ordered]@{
-    baseline = "docs\baselines\TechScope_Baseline_Architecture_Model_v1.2_FINAL_FROZEN.md"
-    rawdata = "source\rawdata.md"
-    implementation_plan = "IMPLEMENTATION_PLAN.md"
-    devcontainer_json = ".devcontainer\devcontainer.json"
-    devcontainer_dockerfile = ".devcontainer\Dockerfile"
-}
-
-foreach ($fingerprintKey in $fingerprintTargets.Keys) {
-    $relativePath = $fingerprintTargets[$fingerprintKey]
-    $absolutePath = Join-Path $RepoRoot $relativePath
-
-    if (Test-Path $absolutePath) {
-        $fingerprints[$fingerprintKey] = (Get-FileHash -Algorithm SHA256 -Path $absolutePath).Hash.ToLowerInvariant()
-    }
-    else {
-        $fingerprints[$fingerprintKey] = $null
-    }
-}
-
-# ----------------------------------------------------------------------
-# 3. Host capability probe
-# ----------------------------------------------------------------------
-
-$winget = Get-TechScopeCommandInfo -Name "winget" -VersionArguments @("--version")
-$git = Get-TechScopeCommandInfo -Name "git" -VersionArguments @("--version")
-$gh = Get-TechScopeCommandInfo -Name "gh" -VersionArguments @("--version")
-$docker = Get-TechScopeCommandInfo -Name "docker" -VersionArguments @("--version")
-$code = Get-TechScopeCommandInfo -Name "code" -VersionArguments @("--version")
-$wsl = Get-TechScopeCommandInfo -Name "wsl.exe" -VersionArguments @("--version")
-
-$dockerDaemonReady = $false
-$dockerServerVersion = $null
-$techscopeContainers = @()
-
-if ($docker.found) {
-    $dockerInfo = Invoke-TechScopeExternal -FilePath $docker.path -Arguments @(
-        "info",
-        "--format",
-        "{{.ServerVersion}}"
+function Invoke-Capture {
+    param(
+        [Parameter(Mandatory=$true)][string]$File,
+        [string[]]$CommandArgs=@()
     )
 
-    if (($dockerInfo.exit_code -eq 0) -and (-not [string]::IsNullOrWhiteSpace($dockerInfo.output))) {
-        $dockerDaemonReady = $true
-        $dockerServerVersion = $dockerInfo.output.Trim()
-
-        $containerList = Invoke-TechScopeExternal -FilePath $docker.path -Arguments @(
-            "ps",
-            "-a",
-            "--filter",
-            "label=techscope.project=TechScope",
-            "--format",
-            "{{.Names}}|{{.Status}}"
-        )
-
-        if (($containerList.exit_code -eq 0) -and (-not [string]::IsNullOrWhiteSpace($containerList.output))) {
-            $lines = $containerList.output -split "`r?`n"
-            foreach ($line in $lines) {
-                if (-not [string]::IsNullOrWhiteSpace($line)) {
-                    $techscopeContainers += $line
-                }
-            }
+    $old=$ErrorActionPreference
+    $lines=New-Object System.Collections.Generic.List[string]
+    try {
+        $ErrorActionPreference="Continue"
+        & $File @CommandArgs 2>&1 | ForEach-Object {
+            $line=$_.ToString()
+            [void]$lines.Add($line)
+            Write-Host $line
         }
+        $rc=$LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference=$old
+    }
+
+    return @{
+        ExitCode=$rc
+        Output=($lines -join [Environment]::NewLine)
     }
 }
 
-$wslReady = $false
+function Invoke-DockerCapture {
+    param([Parameter(Mandatory=$true)][string[]]$DockerArgs)
 
-if ($wsl.found) {
-    $wslStatus = Invoke-TechScopeExternal -FilePath $wsl.path -Arguments @("--status")
-    if ($wslStatus.exit_code -eq 0) {
-        $wslReady = $true
+    $dir=Join-Path $RuntimeRoot "tmp"
+    New-Item -ItemType Directory -Force -Path $dir | Out-Null
+    $out=Join-Path $dir ("docker-" + [guid]::NewGuid().ToString("N") + ".out")
+    $err="$out.err"
+
+    $p=Start-Process `
+        -FilePath "docker.exe" `
+        -ArgumentList $DockerArgs `
+        -Wait -PassThru -NoNewWindow `
+        -RedirectStandardOutput $out `
+        -RedirectStandardError $err
+
+    $body=""
+    if(Test-Path $out){ $body += Get-Content $out -Raw -ErrorAction SilentlyContinue }
+    if(Test-Path $err){
+        $e=Get-Content $err -Raw -ErrorAction SilentlyContinue
+        if(-not [string]::IsNullOrWhiteSpace($e)){ $body += "`n$e" }
+    }
+
+    Remove-Item $out,$err -Force -ErrorAction SilentlyContinue
+
+    return @{
+        ExitCode=$p.ExitCode
+        Output=$body
     }
 }
 
-# ----------------------------------------------------------------------
-# 4. Git / GitHub / Codespaces probe
-# ----------------------------------------------------------------------
+function Wait-DockerEngine {
+    Write-Host "DOCKER_ENGINE_RECOVERY=START"
 
-$isGitRepository = $false
-$originUrl = $null
-$repoSlug = $null
+    $probe=Invoke-DockerCapture @("--context","desktop-linux","info","--format","{{.ServerVersion}}")
+    if($probe.ExitCode-eq 0){
+        Write-Host "DOCKER_ENGINE=PASS_ALREADY_RUNNING"
+        return
+    }
 
-if ($git.found) {
-    $gitRepositoryProbe = Invoke-TechScopeExternal -FilePath $git.path -Arguments @(
-        "-C",
-        $RepoRoot,
-        "rev-parse",
-        "--is-inside-work-tree"
+    $desktop="C:\Program Files\Docker\Docker\Docker Desktop.exe"
+    if(-not (Test-Path $desktop)){
+        throw "DOCKER_DESKTOP_EXE_NOT_FOUND"
+    }
+
+    $running=Get-Process "Docker Desktop" -ErrorAction SilentlyContinue
+    if($null-eq $running){
+        Start-Process -FilePath $desktop | Out-Null
+        Write-Host "DOCKER_DESKTOP_LAUNCH=PASS"
+    }else{
+        Write-Host "DOCKER_DESKTOP_PROCESS=ALREADY_RUNNING"
+    }
+
+    Write-Host "DOCKER_ENGINE_WAIT_MAX_SECONDS=300"
+
+    $deadline=(Get-Date).AddMinutes(5)
+    $attempt=0
+
+    while((Get-Date)-lt $deadline){
+        $attempt++
+        Start-Sleep -Seconds 5
+        $probe=Invoke-DockerCapture @("--context","desktop-linux","info","--format","{{.ServerVersion}}")
+        if($probe.ExitCode-eq 0){
+            Write-Host "DOCKER_ENGINE=PASS attempt=$attempt"
+            return
+        }
+        Write-Host "DOCKER_ENGINE=WAIT attempt=$attempt"
+    }
+
+    throw "DOCKER_ENGINE_START_TIMEOUT"
+}
+
+function Ensure-MainContainer {
+    Write-Host "TECHSCOPE_CONTAINER_RECOVERY=START"
+
+    $inspect=Invoke-DockerCapture @("--context","desktop-linux","inspect",$MainContainer)
+    if($inspect.ExitCode-ne 0){
+        throw "TECHSCOPE_CONTAINER_NOT_FOUND"
+    }
+
+    $obj=(($inspect.Output | ConvertFrom-Json)[0])
+    if($obj.State.Running-ne $true){
+        $start=Invoke-DockerCapture @("--context","desktop-linux","start",$MainContainer)
+        if($start.ExitCode-ne 0){
+            throw "TECHSCOPE_CONTAINER_START=FAIL`n$($start.Output)"
+        }
+        Start-Sleep -Seconds 2
+    }
+
+    Write-Host "TECHSCOPE_CONTAINER=PASS_RUNNING"
+}
+
+function Ensure-RuntimeNetwork {
+    Write-Host "TECHSCOPE_RUNTIME_NETWORK_RECOVERY=START"
+
+    $net=Invoke-DockerCapture @(
+        "--context","desktop-linux","network","inspect",$RuntimeNetwork
     )
 
-    if (($gitRepositoryProbe.exit_code -eq 0) -and ($gitRepositoryProbe.output.Trim() -eq "true")) {
-        $isGitRepository = $true
-
-        $originProbe = Invoke-TechScopeExternal -FilePath $git.path -Arguments @(
-            "-C",
-            $RepoRoot,
-            "remote",
-            "get-url",
-            "origin"
+    if($net.ExitCode-ne 0){
+        $create=Invoke-DockerCapture @(
+            "--context","desktop-linux","network","create",
+            "--driver","bridge",
+            $RuntimeNetwork
         )
-
-        if ($originProbe.exit_code -eq 0) {
-            $originUrl = $originProbe.output.Trim()
-            $repoSlug = Get-TechScopeGitHubRepoSlug -RemoteUrl $originUrl
+        if($create.ExitCode-ne 0){
+            throw "TECHSCOPE_RUNTIME_NETWORK_CREATE=FAIL`n$($create.Output)"
         }
+        Write-Host "TECHSCOPE_RUNTIME_NETWORK_CREATE=PASS"
+    }else{
+        Write-Host "TECHSCOPE_RUNTIME_NETWORK_REUSE=PASS"
+    }
+
+    $inspect=Invoke-DockerCapture @("--context","desktop-linux","inspect",$MainContainer)
+    if($inspect.ExitCode-ne 0){ throw "TECHSCOPE_CONTAINER_INSPECT=FAIL" }
+    $obj=(($inspect.Output | ConvertFrom-Json)[0])
+
+    $connected=$false
+    foreach($p in @($obj.NetworkSettings.Networks.PSObject.Properties)){
+        if([string]$p.Name -eq $RuntimeNetwork){
+            $connected=$true
+            break
+        }
+    }
+
+    if(-not $connected){
+        $connect=Invoke-DockerCapture @(
+            "--context","desktop-linux","network","connect",
+            $RuntimeNetwork,
+            $MainContainer
+        )
+        if($connect.ExitCode-ne 0 -and
+           $connect.Output -notmatch '(?i)already exists'){
+            throw "TECHSCOPE_RUNTIME_NETWORK_CONNECT=FAIL`n$($connect.Output)"
+        }
+        Write-Host "TECHSCOPE_RUNTIME_NETWORK_CONNECT=PASS"
+    }else{
+        Write-Host "TECHSCOPE_RUNTIME_NETWORK_CONNECT=PASS_ALREADY"
     }
 }
 
-$githubAuthenticated = $false
-$codespaces = @()
+function Recover-FastApi {
+    Write-Host "FASTAPI_RECOVERY=START"
 
-if ($gh.found) {
-    $authProbe = Invoke-TechScopeExternal -FilePath $gh.path -Arguments @(
-        "auth",
-        "status",
-        "--hostname",
-        "github.com"
+    $run=Invoke-DockerCapture @(
+        "--context","desktop-linux","exec",
+        "--user","vscode",
+        "-w","/workspaces/TechScope",
+        "-e","PYTHONPATH=/workspaces/TechScope",
+        $MainContainer,
+        "python","tools/runtime/recover_backend.py"
     )
 
-    if ($authProbe.exit_code -eq 0) {
-        $githubAuthenticated = $true
+    Write-Host $run.Output
+
+    if($run.ExitCode-ne 0){
+        throw "FASTAPI_RECOVERY=FAIL"
     }
 
-    if ($githubAuthenticated -and (-not [string]::IsNullOrWhiteSpace($repoSlug))) {
-        $codespaceProbe = Invoke-TechScopeExternal -FilePath $gh.path -Arguments @(
-            "codespace",
-            "list",
-            "-R",
-            $repoSlug,
-            "--limit",
-            "10",
-            "--json",
-            "name,state,repository,lastUsedAt"
-        )
+    Write-Host "FASTAPI_RECOVERY=PASS"
+}
 
-        if (($codespaceProbe.exit_code -eq 0) -and (-not [string]::IsNullOrWhiteSpace($codespaceProbe.output))) {
-            try {
-                $parsedCodespaces = $codespaceProbe.output | ConvertFrom-Json
+function Ensure-Proxy {
+    Write-Host "LIVE_UI_PROXY_RECOVERY=START"
 
-                if ($null -ne $parsedCodespaces) {
-                    $codespaces = @($parsedCodespaces)
-                }
-            }
-            catch {
-                $codespaces = @()
+    $inspect=Invoke-DockerCapture @("--context","desktop-linux","inspect",$MainContainer)
+    if($inspect.ExitCode-ne 0){ throw "TECHSCOPE_CONTAINER_INSPECT=FAIL" }
+    $main=(($inspect.Output | ConvertFrom-Json)[0])
+    $image=[string]$main.Config.Image
+
+    $old=Invoke-DockerCapture @("--context","desktop-linux","inspect",$ProxyContainer)
+    if($old.ExitCode-eq 0){
+        $rm=Invoke-DockerCapture @("--context","desktop-linux","rm","-f",$ProxyContainer)
+        if($rm.ExitCode-ne 0){
+            throw "LIVE_UI_PROXY_REMOVE_OLD=FAIL`n$($rm.Output)"
+        }
+        Write-Host "LIVE_UI_PROXY_OLD_INSTANCE=REMOVED"
+    }
+
+    $proxyScript=Join-Path $ProxyRuntimeRoot "tcp_proxy.py"
+
+    # Write the proxy runtime script explicitly as UTF-8 without BOM.
+    $proxyText=@'
+import os
+import socket
+import threading
+
+TARGET_HOST = os.environ.get("TARGET_HOST", "techscope-dev")
+TARGET_PORT = int(os.environ.get("TARGET_PORT", "8000"))
+
+def pipe(src, dst):
+    try:
+        while True:
+            data = src.recv(65536)
+            if not data:
+                break
+            dst.sendall(data)
+    except Exception:
+        pass
+    finally:
+        try:
+            dst.shutdown(socket.SHUT_WR)
+        except Exception:
+            pass
+
+def handle(client):
+    upstream = None
+    try:
+        upstream = socket.create_connection((TARGET_HOST, TARGET_PORT), timeout=10)
+        upstream.settimeout(None)
+        t1 = threading.Thread(target=pipe, args=(client, upstream), daemon=True)
+        t2 = threading.Thread(target=pipe, args=(upstream, client), daemon=True)
+        t1.start()
+        t2.start()
+        t1.join()
+        t2.join()
+    finally:
+        try:
+            client.close()
+        except Exception:
+            pass
+        if upstream is not None:
+            try:
+                upstream.close()
+            except Exception:
+                pass
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server.bind(("0.0.0.0", 8000))
+server.listen(128)
+print(f"TECHSCOPE_PROXY_READY target={TARGET_HOST}:{TARGET_PORT}", flush=True)
+while True:
+    client, _ = server.accept()
+    threading.Thread(target=handle, args=(client,), daemon=True).start()
+'@
+    [IO.File]::WriteAllText(
+        $proxyScript,
+        $proxyText,
+        (New-Object Text.UTF8Encoding($false))
+    )
+
+    $run=Invoke-DockerCapture @(
+        "--context","desktop-linux","run","-d",
+        "--name",$ProxyContainer,
+        "--restart","unless-stopped",
+        "--network",$RuntimeNetwork,
+        "-p","127.0.0.1:8000:8000",
+        "-e","TARGET_HOST=techscope-dev",
+        "-e","TARGET_PORT=8000",
+        "-v","${proxyScript}:/tmp/techscope_tcp_proxy.py:ro",
+        $image,
+        "python","/tmp/techscope_tcp_proxy.py"
+    )
+
+    if($run.ExitCode-ne 0){
+        throw "LIVE_UI_PROXY_CREATE=FAIL`n$($run.Output)"
+    }
+
+    Start-Sleep -Seconds 3
+
+    $dns=Invoke-DockerCapture @(
+        "--context","desktop-linux","exec",
+        $ProxyContainer,
+        "python","-c",
+        "print(__import__('socket').gethostbyname('techscope-dev'))"
+    )
+    if($dns.ExitCode-ne 0){
+        throw "LIVE_UI_PROXY_DOCKER_DNS=FAIL`n$($dns.Output)"
+    }
+
+    $health=Invoke-DockerCapture @(
+        "--context","desktop-linux","exec",
+        $ProxyContainer,
+        "python","-c",
+        "print(__import__('urllib.request',fromlist=['urlopen']).urlopen('http://techscope-dev:8000/health',timeout=10).status)"
+    )
+    if($health.ExitCode-ne 0 -or $health.Output -notmatch '200'){
+        throw "LIVE_UI_PROXY_UPSTREAM_HEALTH=FAIL`n$($health.Output)"
+    }
+
+    Write-Host "LIVE_UI_PROXY_DOCKER_DNS=PASS"
+    Write-Host "LIVE_UI_PROXY_UPSTREAM_HEALTH=PASS"
+    Write-Host "LIVE_UI_PROXY_RESPONSE_READ_TIMEOUT=NONE"
+    Write-Host "LIVE_UI_PROXY=PASS"
+}
+
+function Verify-WindowsBackend {
+    Write-Host "WINDOWS_BACKEND_VERIFY=START"
+
+    $deadline=(Get-Date).AddMinutes(1)
+    while((Get-Date)-lt $deadline){
+        try {
+            $health=Invoke-RestMethod `
+                -Uri "http://127.0.0.1:8000/health" `
+                -TimeoutSec 10
+            $cosmos=Invoke-RestMethod `
+                -Uri "http://127.0.0.1:8000/demo/cosmos-runtime" `
+                -TimeoutSec 10
+            $grounding=Invoke-RestMethod `
+                -Uri "http://127.0.0.1:8000/demo/grounding-runtime" `
+                -TimeoutSec 10
+
+            if($cosmos.version-eq "p3a2-v1" -and
+               $cosmos.data_plane-eq $true -and
+               $grounding.version-eq "v6" -and
+               $grounding.ask_guard_wrapped-eq $true){
+                Write-Host "WINDOWS_BACKEND_VERIFY=PASS"
+                return
             }
         }
+        catch {}
+
+        Start-Sleep -Seconds 3
+    }
+
+    throw "WINDOWS_BACKEND_VERIFY=FAIL"
+}
+
+
+function Get-SqlDiagnostic {
+    $script=@'
+from mssql_python import connect
+c=connect("Server=sql-techscope-dev-239bd206.database.windows.net;Database=sqldb-techscope-dev;Authentication=ActiveDirectoryDefault;Encrypt=yes;TrustServerCertificate=no;")
+cur=c.cursor()
+cur.execute("SELECT COUNT_BIG(*) FROM techscope.FactAIRequest")
+print(cur.fetchone()[0])
+c.close()
+'@
+
+    $encoded=[Convert]::ToBase64String(
+        [Text.Encoding]::UTF8.GetBytes($script)
+    )
+    $payload="exec(__import__('base64').b64decode('$encoded'))"
+
+    return Invoke-DockerCapture @(
+        "--context","desktop-linux","exec",
+        "--user","vscode",
+        $MainContainer,
+        "python","-c",
+        $payload
+    )
+}
+
+function Repair-SqlFirewallFromDiagnostic {
+    param([Parameter(Mandatory=$true)][string]$Diagnostic)
+
+    if($Diagnostic -notmatch "Client with IP address '([0-9]{1,3}(?:\.[0-9]{1,3}){3})'"){
+        throw "SQL_FIREWALL_CLIENT_IP_PARSE=FAIL"
+    }
+
+    $ip=$Matches[1]
+    $parsed=$null
+    if(-not [Net.IPAddress]::TryParse($ip,[ref]$parsed)){
+        throw "SQL_FIREWALL_CLIENT_IP_VALIDATE=FAIL"
+    }
+
+    $rg="rg-techscope-dev-239bd206"
+    $server="sql-techscope-dev-239bd206"
+    $rule="TechScope-DevClient-119-194-29-21"
+
+    Write-Host "SQL_FIREWALL_BLOCK_DETECTED=YES"
+    Write-Host "SQL_FIREWALL_CLIENT_IP=$ip"
+    Write-Host "SQL_FIREWALL_MUTATION_POLICY=UPDATE_EXACT_EXISTING_RULE_ONLY"
+
+    $show=Invoke-Capture "az.cmd" @(
+        "sql","server","firewall-rule","show",
+        "--resource-group",$rg,
+        "--server",$server,
+        "--name",$rule,
+        "--query","[startIpAddress,endIpAddress]",
+        "--output","tsv",
+        "--only-show-errors"
+    )
+    if($show.ExitCode-ne 0){
+        throw "SQL_FIREWALL_EXACT_RULE_SHOW=FAIL"
+    }
+
+    $update=Invoke-Capture "az.cmd" @(
+        "sql","server","firewall-rule","update",
+        "--resource-group",$rg,
+        "--server",$server,
+        "--name",$rule,
+        "--start-ip-address",$ip,
+        "--end-ip-address",$ip,
+        "--output","none",
+        "--only-show-errors"
+    )
+    if($update.ExitCode-ne 0){
+        throw "SQL_FIREWALL_RULE_UPDATE=FAIL"
+    }
+
+    Write-Host "SQL_FIREWALL_RULE_UPDATE=PASS"
+    Write-Host "SQL_FIREWALL_RULE_NEW_RANGE=$ip..$ip"
+
+    return $ip
+}
+
+function Ensure-SqlAccess {
+    Write-Host "SQL_ACCESS_PREFLIGHT=START"
+
+    try {
+        $sync=Invoke-RestMethod `
+            -Method Post `
+            -Uri "http://127.0.0.1:8000/demo/powerbi-sync" `
+            -ContentType "application/json" `
+            -Body "{}" `
+            -TimeoutSec 90
+
+        if($sync.status-eq "PASS"){
+            Write-Host "SQL_ACCESS_PREFLIGHT=PASS"
+            return
+        }
+    } catch {}
+
+    $diag=Get-SqlDiagnostic
+    if($diag.ExitCode-eq 0){
+        Write-Host "SQL_ACCESS_PREFLIGHT=PASS_DIRECT"
+        return
+    }
+
+    if($diag.Output -notmatch "Client with IP address '[0-9]{1,3}(?:\.[0-9]{1,3}){3}' is not allowed to access the server"){
+        throw "SQL_ACCESS_PREFLIGHT=FAIL`n$($diag.Output)"
+    }
+
+    $ip=Repair-SqlFirewallFromDiagnostic -Diagnostic $diag.Output
+
+    Write-Host "SQL_FIREWALL_PROPAGATION_WAIT=START"
+    Write-Host "SQL_FIREWALL_PROPAGATION_MAX_SECONDS=300"
+
+    $deadline=(Get-Date).AddMinutes(5)
+    $attempt=0
+
+    while((Get-Date)-lt $deadline){
+        $attempt++
+        Start-Sleep -Seconds 10
+
+        try {
+            $sync=Invoke-RestMethod `
+                -Method Post `
+                -Uri "http://127.0.0.1:8000/demo/powerbi-sync" `
+                -ContentType "application/json" `
+                -Body "{}" `
+                -TimeoutSec 90
+
+            if($sync.status-eq "PASS"){
+                Write-Host "SQL_FIREWALL_PROPAGATION=PASS attempt=$attempt"
+                Write-Host "SQL_ACCESS_PREFLIGHT=PASS_AFTER_FIREWALL_REPAIR"
+                return
+            }
+        } catch {
+            Write-Host "SQL_FIREWALL_PROPAGATION=WAIT attempt=$attempt"
+        }
+    }
+
+    throw "SQL_FIREWALL_PROPAGATION_TIMEOUT ip=$ip"
+}
+
+function Stop-PidFile {
+    param([string]$Path)
+
+    if(-not (Test-Path $Path)){ return }
+
+    $raw=(Get-Content $Path -Raw -ErrorAction SilentlyContinue).Trim()
+    if($raw -match '^\d+$'){
+        $pidValue=[int]$raw
+        $proc=Get-Process -Id $pidValue -ErrorAction SilentlyContinue
+        if($null-ne $proc){
+            Stop-Process -Id $pidValue -Force -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 1
+        }
+    }
+
+    Remove-Item $Path -Force -ErrorAction SilentlyContinue
+}
+
+function Ensure-DevTunnel {
+    Write-Host "DEVTUNNEL_RECOVERY=START"
+
+    $auth=Invoke-Capture "devtunnel.exe" @("user","show")
+    if($auth.ExitCode-ne 0){
+        throw "DEVTUNNEL_AUTH_REQUIRED"
+    }
+
+    $show=Invoke-Capture "devtunnel.exe" @("show",$TunnelId)
+    if($show.ExitCode-ne 0){
+        $create=Invoke-Capture "devtunnel.exe" @(
+            "create",$TunnelId,
+            "--allow-anonymous",
+            "--expiration","30d"
+        )
+        if($create.ExitCode-ne 0){
+            throw "DEVTUNNEL_CREATE=FAIL"
+        }
+        Write-Host "DEVTUNNEL_CREATE=PASS"
+    }else{
+        Write-Host "DEVTUNNEL_REUSE=PASS"
+    }
+
+    $port=Invoke-Capture "devtunnel.exe" @(
+        "port","show",$TunnelId,
+        "-p","3978"
+    )
+    if($port.ExitCode-ne 0){
+        $createPort=Invoke-Capture "devtunnel.exe" @(
+            "port","create",$TunnelId,
+            "-p","3978",
+            "--protocol","http"
+        )
+        if($createPort.ExitCode-ne 0){
+            throw "DEVTUNNEL_PORT_CREATE=FAIL"
+        }
+    }
+
+    Stop-PidFile $TunnelPidFile
+    Remove-Item $TunnelLog,"$TunnelLog.err" -Force -ErrorAction SilentlyContinue
+
+    $proc=Start-Process `
+        -FilePath "devtunnel.exe" `
+        -ArgumentList @("host",$TunnelId) `
+        -PassThru `
+        -WindowStyle Hidden `
+        -RedirectStandardOutput $TunnelLog `
+        -RedirectStandardError "$TunnelLog.err"
+
+    $proc.Id | Set-Content $TunnelPidFile -Encoding ascii
+
+    $deadline=(Get-Date).AddMinutes(2)
+    $url=$null
+
+    while((Get-Date)-lt $deadline){
+        Start-Sleep -Seconds 2
+
+        $body=""
+        if(Test-Path $TunnelLog){ $body += Get-Content $TunnelLog -Raw -ErrorAction SilentlyContinue }
+        if(Test-Path "$TunnelLog.err"){ $body += "`n" + (Get-Content "$TunnelLog.err" -Raw -ErrorAction SilentlyContinue) }
+
+        if($body -match 'Connect via browser:\s*(https://[^\s]+)'){
+            $url=$Matches[1].Trim()
+            break
+        }
+
+        if($proc.HasExited){
+            Write-Host $body
+            throw "DEVTUNNEL_HOST_EXITED"
+        }
+    }
+
+    if([string]::IsNullOrWhiteSpace($url)){
+        throw "DEVTUNNEL_URL_DISCOVERY_TIMEOUT"
+    }
+
+    Write-Host "DEVTUNNEL_HOST=PASS"
+    Write-Host "DEVTUNNEL_PUBLIC_URL=$url"
+
+    return @{
+        Process=$proc
+        Url=$url
+        Endpoint=($url.TrimEnd("/") + "/api/messages")
     }
 }
 
-# ----------------------------------------------------------------------
-# 5. Existing TechScope local container probe
-# ----------------------------------------------------------------------
+function Get-Port3978OwnerPids {
+    try {
+        return @(
+            Get-NetTCPConnection -State Listen -LocalPort 3978 -ErrorAction Stop |
+            Select-Object -ExpandProperty OwningProcess -Unique
+        )
+    } catch {
+        return @()
+    }
+}
 
-$existingLocalContainer = $null
-$localContainerCapabilityPass = $false
+function Get-ProcessCommandLine {
+    param([int]$ProcessId)
+    try {
+        $item=Get-CimInstance `
+            -ClassName Win32_Process `
+            -Filter "ProcessId=$ProcessId" `
+            -ErrorAction Stop
+        return [string]$item.CommandLine
+    } catch {
+        return ""
+    }
+}
 
-if ($dockerDaemonReady -and ($techscopeContainers.Count -gt 0)) {
-    $containerParts = $techscopeContainers[0] -split '\|'
-    $candidateContainer = $containerParts[0].Trim()
+function Stop-StaleTechScopeAgent {
+    $owners=@(Get-Port3978OwnerPids)
 
-    if (-not [string]::IsNullOrWhiteSpace($candidateContainer)) {
-        $existingLocalContainer = $candidateContainer
+    foreach($pidValue in $owners){
+        $proc=Get-Process -Id $pidValue -ErrorAction SilentlyContinue
+        if($null-eq $proc){ continue }
 
-        $inspectProbe = Invoke-TechScopeExternal -FilePath $docker.path -Arguments @(
-            "inspect",
-            "-f",
-            "{{.State.Running}}",
-            $candidateContainer
+        $cmd=Get-ProcessCommandLine -ProcessId $pidValue
+        $safe=(
+            $proc.ProcessName -match '^(node|nodejs)$' -and
+            $cmd -match '(?i)dist[\\/]+index\.js'
         )
 
-        if (($inspectProbe.exit_code -eq 0) -and ($inspectProbe.output.Trim().ToLowerInvariant() -eq "true")) {
-            $capabilityCommand = "set -eu; command -v python >/dev/null; command -v node >/dev/null; command -v az >/dev/null; (command -v bicep >/dev/null || az bicep version >/dev/null); command -v databricks >/dev/null"
+        if(-not $safe){
+            throw "PORT_3978_OCCUPIED_BY_NON_TECHSCOPE_PROCESS PID=$pidValue PROCESS=$($proc.ProcessName)"
+        }
 
-            $capabilityProbe = Invoke-TechScopeExternal -FilePath $docker.path -Arguments @(
-                "exec",
-                $candidateContainer,
-                "bash",
-                "-lc",
-                $capabilityCommand
+        Stop-Process -Id $pidValue -Force -ErrorAction Stop
+        Start-Sleep -Seconds 1
+        Write-Host "TEAMS_AGENT_STALE_PROCESS_STOP=PASS PID=$pidValue"
+    }
+
+    Stop-PidFile $BotPidFile
+
+    if(@(Get-Port3978OwnerPids).Count-gt 0){
+        throw "TEAMS_AGENT_STALE_LISTENER_CLEANUP=FAIL"
+    }
+}
+
+function Start-TeamsAgent {
+    param([string]$Endpoint)
+
+    Write-Host "TEAMS_AGENT_RECOVERY=START"
+
+    if(-not (Test-Path $RuntimeEnv)){
+        throw "TEAMS_RUNTIME_ENV_MISSING"
+    }
+
+    if(-not (Test-Path (Join-Path $TeamsProject "dist\index.js"))){
+        Set-Location $TeamsProject
+        $build=Invoke-Capture "npm.cmd" @("run","build")
+        if($build.ExitCode-ne 0){
+            throw "TEAMS_AGENT_BUILD=FAIL"
+        }
+    }
+
+    Stop-StaleTechScopeAgent
+
+    Get-Content $RuntimeEnv | ForEach-Object {
+        $line=$_.Trim()
+        if($line -and -not $line.StartsWith("#") -and $line.Contains("=")){
+            $parts=$line.Split("=",2)
+            [Environment]::SetEnvironmentVariable(
+                $parts[0].Trim(),
+                $parts[1].Trim(),
+                "Process"
             )
-
-            if ($capabilityProbe.exit_code -eq 0) {
-                $localContainerCapabilityPass = $true
-            }
         }
     }
-}
 
-# ----------------------------------------------------------------------
-# 6. Environment selection
-# ----------------------------------------------------------------------
-
-$availableCodespaces = @()
-
-foreach ($codespace in $codespaces) {
-    if ($codespace.state -eq "Available") {
-        $availableCodespaces += $codespace
-    }
-}
-
-$selectedEnvironment = $null
-$selectionReason = $null
-$environmentReady = $false
-
-if ($availableCodespaces.Count -gt 0) {
-    $selectedEnvironment = "CODESPACE_REUSE_CANDIDATE"
-    $selectionReason = "An existing GitHub Codespace is available for this repository."
-}
-elseif ($localContainerCapabilityPass) {
-    $selectedEnvironment = "LOCAL_DEV_CONTAINER_REUSE"
-    $selectionReason = "An existing running TechScope container passed the MAIN toolchain capability probe."
-    $environmentReady = $true
-}
-elseif ($dockerDaemonReady) {
-    $selectedEnvironment = "LOCAL_DEV_CONTAINER_CREATE"
-    $selectionReason = "Docker is ready, so the MAIN toolchain can remain off the Windows host and a local Dev Container can be created."
-}
-elseif ($githubAuthenticated -and (-not [string]::IsNullOrWhiteSpace($repoSlug))) {
-    $selectedEnvironment = "CODESPACE_CREATE"
-    $selectionReason = "GitHub CLI is authenticated and the repository has a GitHub origin."
-}
-elseif ($gh.found -and (-not $githubAuthenticated)) {
-    $selectedEnvironment = "GITHUB_AUTH_REQUIRED"
-    $selectionReason = "GitHub CLI is installed but authentication is not ready."
-}
-elseif ($winget.found) {
-    $selectedEnvironment = "MINIMAL_HOST_BOOTSTRAP_REQUIRED"
-    $selectionReason = "No reusable execution environment is ready. WinGet is available for minimal environment-entry bootstrap."
-}
-else {
-    $selectedEnvironment = "MANUAL_PREREQUISITE_REQUIRED"
-    $selectionReason = "No reusable environment and no supported automatic bootstrap entry path were detected."
-}
-
-if ($environmentReady) {
-    $environmentReadyText = "PASS"
-}
-else {
-    $environmentReadyText = "PENDING"
-}
-
-# ----------------------------------------------------------------------
-# 7. Persist bootstrap state
-# ----------------------------------------------------------------------
-
-$timestamp = (Get-Date).ToString("o")
-
-$probe = [ordered]@{
-    schema_version = 2
-    timestamp = $timestamp
-
-    repository = [ordered]@{
-        root = $RepoRoot
-        repository_contract_ready = $repositoryReady
-        missing_files = $missingFiles
-        is_git_repository = $isGitRepository
-        origin_url = $originUrl
-        github_repo = $repoSlug
+    foreach($required in @("CLIENT_ID","CLIENT_SECRET","TENANT_ID")){
+        $value=[Environment]::GetEnvironmentVariable($required,"Process")
+        if([string]::IsNullOrWhiteSpace($value)){
+            throw "TEAMS_RUNTIME_CREDENTIAL_MISSING=$required"
+        }
     }
 
-    fingerprints = $fingerprints
+    $env:PORT="3978"
+    $env:TECHSCOPE_API_BASE_URL="http://127.0.0.1:8000"
 
-    host = [ordered]@{
-        os_version = [System.Environment]::OSVersion.VersionString
-        powershell_version = $PSVersionTable.PSVersion.ToString()
+    Remove-Item $BotLog,"$BotLog.err" -Force -ErrorAction SilentlyContinue
+
+    $node=(Get-Command node.exe -ErrorAction Stop)
+    $proc=Start-Process `
+        -FilePath $node.Source `
+        -ArgumentList @("dist\index.js") `
+        -WorkingDirectory $TeamsProject `
+        -PassThru `
+        -WindowStyle Hidden `
+        -RedirectStandardOutput $BotLog `
+        -RedirectStandardError "$BotLog.err"
+
+    $proc.Id | Set-Content $BotPidFile -Encoding ascii
+
+    $deadline=(Get-Date).AddMinutes(2)
+    while((Get-Date)-lt $deadline){
+        Start-Sleep -Seconds 2
+
+        if($proc.HasExited){
+            $out=""
+            if(Test-Path $BotLog){ $out += Get-Content $BotLog -Raw -ErrorAction SilentlyContinue }
+            if(Test-Path "$BotLog.err"){ $out += "`n" + (Get-Content "$BotLog.err" -Raw -ErrorAction SilentlyContinue) }
+            Write-Host $out
+            throw "TEAMS_AGENT_EXITED code=$($proc.ExitCode)"
+        }
+
+        $owners=@(Get-Port3978OwnerPids)
+        if($owners.Count-eq 1 -and $owners[0]-eq $proc.Id){
+            $stdout=""
+            if(Test-Path $BotLog){ $stdout=Get-Content $BotLog -Raw -ErrorAction SilentlyContinue }
+            $stderr=""
+            if(Test-Path "$BotLog.err"){ $stderr=Get-Content "$BotLog.err" -Raw -ErrorAction SilentlyContinue }
+
+            if($stdout -notmatch 'TECHSCOPE_TEAMS_AGENT_READY port=3978'){
+                continue
+            }
+            if($stderr -match '(?i)EADDRINUSE'){
+                throw "TEAMS_AGENT_EADDRINUSE=FAIL"
+            }
+
+            Write-Host "TEAMS_AGENT_DIRECT_NODE_PID=$($proc.Id)"
+            Write-Host "TEAMS_AGENT_PORT_OWNER_VERIFY=PASS"
+            Write-Host "TEAMS_AGENT_READY_MARKER=PASS"
+            return $proc
+        }
     }
 
-    tools = [ordered]@{
-        winget = $winget
-        git = $git
-        github_cli = $gh
-        docker = $docker
-        vscode = $code
-        wsl = $wsl
+    throw "TEAMS_AGENT_START_TIMEOUT"
+}
+
+function Write-RuntimeState {
+    param(
+        [object]$Tunnel,
+        [object]$Agent
+    )
+
+    $appId=$null
+    if(Test-Path $RuntimeJson){
+        try {
+            $old=Get-Content $RuntimeJson -Raw | ConvertFrom-Json
+            $appId=[string]$old.teams_app_id
+        } catch {}
     }
 
-    capabilities = [ordered]@{
-        wsl_ready = $wslReady
-        docker_daemon_ready = $dockerDaemonReady
-        docker_server_version = $dockerServerVersion
-        github_authenticated = $githubAuthenticated
-        github_codespace_count = $codespaces.Count
-        existing_techscope_container = $existingLocalContainer
-        existing_local_container_main_toolchain_probe = $localContainerCapabilityPass
+    $state=[ordered]@{
+        teams_app_id=$appId
+        tunnel_id=$TunnelId
+        tunnel_url=$Tunnel.Url
+        endpoint=$Tunnel.Endpoint
+        credential_file=$RuntimeEnv
+        credential_file_inside_repo=$false
+        bot_pid=$Agent.Id
+        bot_process_model="direct-node"
+        tunnel_pid=$Tunnel.Process.Id
     }
 
-    environment_selection = [ordered]@{
-        selected = $selectedEnvironment
-        reason = $selectionReason
-        ENVIRONMENT_READY = $environmentReadyText
-        ZERO_INTERVENTION_READY = "NOT_EVALUATED"
-    }
+    $json=$state | ConvertTo-Json -Depth 5
+    [IO.File]::WriteAllText(
+        $RuntimeJson,
+        $json,
+        (New-Object Text.UTF8Encoding($false))
+    )
+
+    Write-Host "TEAMS_RUNTIME_STATE_WRITE=PASS_NO_BOM"
 }
 
-$probeJson = $probe | ConvertTo-Json -Depth 10
+function Run-InternalRuntime {
+    Write-Host "INTERNAL_RUNTIME=START"
+    $args=@(
+        "--context","desktop-linux","exec",
+        "--user","vscode",
+        "-w","/workspaces/TechScope",
+        $MainContainer,
+        "python","tools/techscope.py","all","--env","dev"
+    )
 
-Write-TechScopeText -Path (Join-Path $ResultsLatest "bootstrap-probe.json") -Content $probeJson
-Write-TechScopeText -Path $BootstrapStatePath -Content $probeJson
-
-# Avoid expandable here-strings so Windows PowerShell 5.1 parsing remains simple.
-$summaryLines = @()
-$summaryLines += "# TechScope Bootstrap Summary"
-$summaryLines += ""
-$summaryLines += ("- Timestamp: " + $timestamp)
-
-if ($repositoryReady) {
-    $summaryLines += "- Repository contract: PASS"
-}
-else {
-    $summaryLines += "- Repository contract: FAIL"
-}
-
-$summaryLines += ("- Selected environment path: " + $selectedEnvironment)
-$summaryLines += ("- ENVIRONMENT_READY: " + $environmentReadyText)
-$summaryLines += "- ZERO_INTERVENTION_READY: NOT_EVALUATED"
-$summaryLines += ("- Docker daemon ready: " + $dockerDaemonReady)
-$summaryLines += ("- GitHub authenticated: " + $githubAuthenticated)
-
-if ([string]::IsNullOrWhiteSpace($repoSlug)) {
-    $summaryLines += "- GitHub repository resolved: NO"
-}
-else {
-    $summaryLines += ("- GitHub repository resolved: " + $repoSlug)
-}
-
-$summaryLines += ("- Existing Codespaces: " + $codespaces.Count)
-
-if ([string]::IsNullOrWhiteSpace($existingLocalContainer)) {
-    $summaryLines += "- Existing TechScope local container: NO"
-}
-else {
-    $summaryLines += ("- Existing TechScope local container: " + $existingLocalContainer)
-}
-
-$summaryLines += ""
-$summaryLines += "## Selection reason"
-$summaryLines += ""
-$summaryLines += $selectionReason
-$summaryLines += ""
-$summaryLines += "## Next"
-$summaryLines += ""
-$summaryLines += "This run only probes capabilities. It does not install the MAIN Python/Node/Azure toolchain on Windows."
-$summaryLines += ""
-$summaryLines += "Detailed result: results/latest/bootstrap-probe.json"
-
-$summaryText = $summaryLines -join [Environment]::NewLine
-Write-TechScopeText -Path (Join-Path $ResultsLatest "summary.md") -Content $summaryText
-
-$manualLines = @()
-$manualLines += "# Manual Actions"
-$manualLines += ""
-
-if ($selectedEnvironment -eq "GITHUB_AUTH_REQUIRED") {
-    $manualLines += "blocked_stage: P0 Bootstrap / Environment Selection"
-    $manualLines += "affected_component: Automation & Operations Plane"
-    $manualLines += "reason: GitHub CLI is installed but not authenticated."
-    $manualLines += "where_to_fix: GitHub authentication"
-    $manualLines += "exact_manual_action: Complete browser authentication only when the next bootstrap unit requests it."
-    $manualLines += "how_to_verify: gh auth status --hostname github.com returns exit code 0."
-    $manualLines += "resume_path_or_command: .\RUN_TECHSCOPE.ps1"
-}
-elseif ($selectedEnvironment -eq "MINIMAL_HOST_BOOTSTRAP_REQUIRED") {
-    $manualLines += "blocked_stage: P0 Bootstrap / Environment Selection"
-    $manualLines += "affected_component: Automation & Operations Plane"
-    $manualLines += "reason: No ready local container or authenticated Codespaces path was detected."
-    $manualLines += "where_to_fix: Minimal host bootstrap"
-    $manualLines += "exact_manual_action: No manual installation yet. Use the next supplied bootstrap unit."
-    $manualLines += "how_to_verify: A reusable local Dev Container or Codespaces path becomes selectable."
-    $manualLines += "resume_path_or_command: .\RUN_TECHSCOPE.ps1"
-}
-elseif ($selectedEnvironment -eq "MANUAL_PREREQUISITE_REQUIRED") {
-    $manualLines += "blocked_stage: P0 Bootstrap / Environment Selection"
-    $manualLines += "affected_component: Automation & Operations Plane"
-    $manualLines += "reason: No supported automatic environment-entry path was detected."
-    $manualLines += "where_to_fix: Windows prerequisite layer"
-    $manualLines += "exact_manual_action: Return bootstrap-probe.json for targeted remediation. Do not install tools manually yet."
-    $manualLines += "how_to_verify: A supported environment-entry path is detected."
-    $manualLines += "resume_path_or_command: .\RUN_TECHSCOPE.ps1"
-}
-else {
-    $manualLines += "No manual action required by the current bootstrap probe."
-}
-
-$manualText = $manualLines -join [Environment]::NewLine
-Write-TechScopeText -Path (Join-Path $ResultsLatest "manual-actions.md") -Content $manualText
-
-# ----------------------------------------------------------------------
-# 8. Console result
-# ----------------------------------------------------------------------
-
-Write-Host "HOST_PROBE=PASS"
-
-if ($repositoryReady) {
-    Write-Host "REPOSITORY_CONTRACT=PASS"
-}
-else {
-    Write-Host "REPOSITORY_CONTRACT=FAIL"
-}
-
-Write-Host ("SELECTED_ENVIRONMENT=" + $selectedEnvironment)
-Write-Host ("ENVIRONMENT_READY=" + $environmentReadyText)
-Write-Host "ZERO_INTERVENTION_READY=NOT_EVALUATED"
-Write-Host ""
-Write-Host "Result:"
-Write-Host "  results\latest\bootstrap-probe.json"
-Write-Host "  results\latest\summary.md"
-Write-Host "  results\latest\manual-actions.md"
-Write-Host ""
-
-if (-not $repositoryReady) {
-    Write-Host "BOOTSTRAP=FAIL"
-
-    foreach ($missingFile in $missingFiles) {
-        Write-Host ("MISSING: " + $missingFile)
+    if($FullRegression){
+        $args += "--live-regression"
+        Write-Host "INTERNAL_LIVE_REGRESSION=ENABLED"
+    }else{
+        Write-Host "INTERNAL_LIVE_REGRESSION=DISABLED"
     }
 
-    exit 1
+    $run=Invoke-DockerCapture $args
+    Write-Host $run.Output
+
+    if($run.ExitCode-ne 0){
+        throw "INTERNAL_RUNTIME=FAIL"
+    }
+
+    Write-Host "INTERNAL_RUNTIME=PASS"
 }
 
-Write-Host "BOOTSTRAP_PROBE=PASS"
+Set-Location $Repo
 
-if (-not $ProbeOnly) {
-    Write-Host "The next unit will implement only the selected environment path."
-}
+Write-Host "COLD_START_RECOVERY=START"
 
-exit 0
+Wait-DockerEngine
+Ensure-MainContainer
+Ensure-RuntimeNetwork
+Recover-FastApi
+Ensure-Proxy
+Verify-WindowsBackend
+Ensure-SqlAccess
+
+$tunnel=Ensure-DevTunnel
+$agent=Start-TeamsAgent -Endpoint $tunnel.Endpoint
+Write-RuntimeState -Tunnel $tunnel -Agent $agent
+
+Run-InternalRuntime
+
+Write-Host "COLD_START_RECOVERY=PASS"
+Write-Host "RUN_TECHSCOPE=PASS"
+Write-Host "CANONICAL_USER_COMMAND=.\RUN_TECHSCOPE.ps1"
+Write-Host "CANONICAL_INTERNAL_COMMAND=python tools/techscope.py all --env dev"

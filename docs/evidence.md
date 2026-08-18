@@ -104,3 +104,12 @@
 - OUTPUT: `evidence/teams/p3b-teams-output.json`
 - Result: `results/latest/p3b-teams-live-e2e.json`
 <!-- TECHSCOPE_TEAMS_LIVE_EVIDENCE:END -->
+
+<!-- TECHSCOPE_MAIN_RUNTIME_EVIDENCE:START -->
+## MAIN Runtime / Cold-start Evidence
+
+- SOURCE: `evidence/runtime/main-cold-start-source.json`
+- EXECUTION: `evidence/runtime/main-cold-start-execution.json`
+- OUTPUT: `evidence/runtime/main-cold-start-output.json`
+- Regression Result: `results/latest/main-full-regression.json`
+<!-- TECHSCOPE_MAIN_RUNTIME_EVIDENCE:END -->

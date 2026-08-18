@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "type": "SOURCE",
+  "component": "MAIN_RUNTIME",
+  "files": [
+    "RUN_TECHSCOPE.ps1",
+    "tools/techscope.py",
+    "tools/runtime/recover_backend.py"
+  ],
+  "canonical_user_command": ".\\RUN_TECHSCOPE.ps1",
+  "canonical_internal_command": "python tools/techscope.py all --env dev"
+}
