@@ -90,7 +90,7 @@
 - SOURCE: `evidence/cosmos/p3a2-cosmos-source.json`
 - EXECUTION: `evidence/cosmos/p3a2-cosmos-execution.json`
 - OUTPUT: `evidence/cosmos/p3a2-cosmos-output.json`
-- Verified session: `337b9b59-12a0-4cbb-a78e-96ce4effc721`
+- Verified session: `ed7ee93c-5f1d-4fe4-9836-8b1eed332d22`
 - Conversation messages: `2`
 - Feedback rows: `1`
 <!-- TECHSCOPE_COSMOS_RUNTIME_EVIDENCE:END -->

@@ -4,7 +4,7 @@
   "component": "CMP_COSMOS",
   "runtime": {
     "version": "p3a2-v1",
-    "pid": 493,
+    "pid": 994,
     "configured": true,
     "data_plane": true,
     "database": "techscope-interactions",
@@ -18,11 +18,13 @@
   },
   "grounding_runtime": {
     "version": "v6",
-    "pid": 493,
+    "pid": 994,
     "ask_guard_wrapped": true
   },
-  "live_pid": 493,
-  "stopped_pids": [],
+  "live_pid": 994,
+  "stopped_pids": [
+    493
+  ],
   "runtime_env_recovery": "Azure CLI / memory only",
   "secret_values_printed": false,
   "secret_values_persisted": false,

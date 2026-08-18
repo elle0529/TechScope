@@ -87,8 +87,8 @@
 - Conversation persistence: `PASS`
 - Feedback persistence: `PASS`
 - Account key persisted: `NO`
-- Verified session: `337b9b59-12a0-4cbb-a78e-96ce4effc721`
+- Verified session: `ed7ee93c-5f1d-4fe4-9836-8b1eed332d22`
 - Verified messages: `2`
 - Verified feedback rows: `1`
-- AI Requests: `20 -> 21`
+- AI Requests: `21 -> 22`
 <!-- TECHSCOPE_COSMOS_RUNTIME:END -->
