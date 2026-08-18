@@ -1,0 +1,18 @@
+{
+    "status":  "PASS",
+    "patch_version":  "1.0.1",
+    "defect":  "PBIP_DIRECTQUERY_ARCHITECTURE_MISMATCH",
+    "corrected_storage":  "SNAPSHOT_CSV_IMPORT",
+    "directquery_tables_after":  0,
+    "sql_database_references_after":  0,
+    "import_tables_after":  4,
+    "manual_powerbi_desktop_validation":  "PASS",
+    "manual_ui_technology_count":  515,
+    "manual_ui_category_count":  41,
+    "manual_ui_ai_requests":  25,
+    "manual_ui_success_rate_percent":  100,
+    "manual_ui_citation_rate_percent":  96,
+    "normal_start_powerbi_snapshot_mutation":  "DISABLED",
+    "ai_request_created_by_patch":  false,
+    "validated_utc":  "2026-08-18T17:16:46.3288863Z"
+}

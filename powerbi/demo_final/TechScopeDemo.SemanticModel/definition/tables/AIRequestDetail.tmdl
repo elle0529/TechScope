@@ -45,23 +45,20 @@ table AIRequestDetail
 		mode: import
 		source =
 			let
-				Source = Csv.Document(
-					File.Contents("C:\TechScope\powerbi\demo_snapshot\data\AIRequestDetail.csv"),
-					[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
-				),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\AIRequestDetail.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				Types = Table.TransformColumnTypes(
-					Headers,
-					{
-						{"RequestKey", Int64.Type},
-						{"RequestTimestamp", type datetime},
-						{"Status", type text},
-						{"LatencyMs", Int64.Type},
-						{"RetrievedChunkCount", Int64.Type},
-						{"CitationFlag", type logical},
-						{"FeedbackScore", Int64.Type},
-						{"ModelName", type text}
-					}
-				)
+				ToInt64 = (x as any) as nullable number => if x = null or Text.Trim(Text.From(x)) = "" then null else Int64.From(Number.FromText(Text.From(x))),
+				ToLogical = (x as any) as nullable logical => if x = null or Text.Trim(Text.From(x)) = "" then null else let t = Text.Lower(Text.Trim(Text.From(x))) in if t = "true" or t = "1" then true else if t = "false" or t = "0" then false else Logical.From(x),
+				ToDateTime = (x as any) as nullable datetime => if x = null or Text.Trim(Text.From(x)) = "" then null else DateTime.FromText(Text.From(x)),
+				Typed = Table.TransformColumns(Headers, {
+					{"RequestKey", each ToInt64(_), Int64.Type},
+					{"RequestTimestamp", each ToDateTime(_), type datetime},
+					{"Status", each if _ = null then null else Text.From(_), type text},
+					{"LatencyMs", each ToInt64(_), Int64.Type},
+					{"RetrievedChunkCount", each ToInt64(_), Int64.Type},
+					{"CitationFlag", each ToLogical(_), type logical},
+					{"FeedbackScore", each ToInt64(_), Int64.Type},
+					{"ModelName", each if _ = null then null else Text.From(_), type text}
+				})
 			in
-				Types
+				Typed

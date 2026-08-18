@@ -1,12 +1,12 @@
-$ErrorActionPreference="Stop"
+﻿$ErrorActionPreference="Stop"
 $Repo="C:\TechScope"
 $RuntimeRoot="C:\TechScope_Runtime\recording"
 $RecordingCopy=Join-Path $RuntimeRoot "TechScopeDemo"
 $BaselineFile=Join-Path $RuntimeRoot "recording-baseline.json"
 
 Set-Location $Repo
-
 Write-Host "FINAL_RECORDING_POSTCHECK=START"
+Write-Host "EXPECTED_AI_REQUEST_DELTA=+1"
 
 if(-not (Test-Path $BaselineFile)){ throw "RECORDING_BASELINE_MISSING" }
 $state=Get-Content $BaselineFile -Raw | ConvertFrom-Json
@@ -14,27 +14,26 @@ $before=[int]$state.baseline
 
 $sync=Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8000/demo/powerbi-sync" -ContentType "application/json" -Body "{}" -TimeoutSec 90
 if($sync.status-ne "PASS"){ throw "POWERBI_SYNC=FAIL" }
-
 $after=[int]$sync.ai_request_count
 
 if($after-ne ($before+1)){
-    throw "RECORDING_AI_REQUEST_DELTA=FAIL before=$before after=$after"
+    throw ("RECORDING_AI_REQUEST_DELTA=FAIL before=" + [string]$before + " after=" + [string]$after)
 }
 
 Copy-Item ".\powerbi\demo_final\data\*" (Join-Path $RecordingCopy "data") -Force
 
-git restore -- powerbi/demo_final/data powerbi/demo_snapshot/data
+git.exe restore -- powerbi/demo_final/data powerbi/demo_snapshot/data | Out-Null
 if($LASTEXITCODE-ne 0){ throw "GIT_RESTORE_POWERBI=FAIL" }
 
-$dirty=@(git status --porcelain)
+$dirty=@(git.exe status --porcelain)
 if($LASTEXITCODE-ne 0){ throw "GIT_STATUS=FAIL" }
 if($dirty.Count-gt 0){
-    Write-Host $dirty
+    $dirty | ForEach-Object { Write-Host $_ }
     throw "RECORDING_POSTCHECK_GIT_NOT_CLEAN"
 }
 
-Write-Host "AI_REQUESTS_RECORDING_BEFORE=$before"
-Write-Host "AI_REQUESTS_RECORDING_AFTER=$after"
+Write-Host ("AI_REQUESTS_RECORDING_BEFORE=" + [string]$before)
+Write-Host ("AI_REQUESTS_RECORDING_AFTER=" + [string]$after)
 Write-Host "RECORDING_AI_REQUEST_DELTA=PASS +1"
 Write-Host "POWERBI_RECORDING_COPY_UPDATED=PASS"
 Write-Host "POWERBI_MANUAL_REFRESH_REQUIRED=YES"

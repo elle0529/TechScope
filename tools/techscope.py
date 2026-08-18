@@ -148,7 +148,7 @@ def architecture_lint() -> dict:
     return {"returncode": 0}
 
 
-def get_runtime_state(base_url: str) -> dict:
+def get_runtime_state(base_url: str, *, sync_powerbi: bool = True) -> dict:
     status, _, _ = http_json("GET", f"{base_url}/health", timeout=15)
     if status != 200:
         raise RuntimeError(f"FASTAPI_HEALTH=FAIL status={status}")
@@ -164,22 +164,28 @@ def get_runtime_state(base_url: str) -> dict:
         raise RuntimeError(f"GROUNDING_RUNTIME=FAIL payload={grounding}")
     emit("GROUNDING_RUNTIME", "PASS v6")
 
-    _, sync, _ = http_json(
-        "POST",
-        f"{base_url}/demo/powerbi-sync",
-        body={},
-        timeout=90,
-    )
-    if sync.get("status") != "PASS":
-        raise RuntimeError(f"POWERBI_SNAPSHOT_SYNC=FAIL payload={sync}")
+    # POWERBI_NORMAL_START_READONLY_V101
+    if sync_powerbi:
+        _, sync, _ = http_json(
+            "POST",
+            f"{base_url}/demo/powerbi-sync",
+            body={},
+            timeout=90,
+        )
+        if sync.get("status") != "PASS":
+            raise RuntimeError(f"POWERBI_SNAPSHOT_SYNC=FAIL payload={sync}")
 
-    try:
-        count = int(sync["ai_request_count"])
-    except Exception as exc:
-        raise RuntimeError(f"POWERBI_AI_REQUEST_COUNT_PARSE=FAIL payload={sync}") from exc
+        try:
+            count = int(sync["ai_request_count"])
+        except Exception as exc:
+            raise RuntimeError(f"POWERBI_AI_REQUEST_COUNT_PARSE=FAIL payload={sync}") from exc
 
-    emit("POWERBI_SNAPSHOT_SYNC", "PASS")
-    emit("AI_REQUESTS_CURRENT", count)
+        emit("POWERBI_SNAPSHOT_SYNC", "PASS")
+        emit("AI_REQUESTS_CURRENT", count)
+    else:
+        count = None
+        emit("POWERBI_SNAPSHOT_SYNC", "SKIPPED_READONLY_NORMAL_START")
+        emit("AI_REQUESTS_CURRENT", "NOT_QUERIED_NORMAL_START")
 
     teams_report_path = ROOT / "results/latest/p3b-teams-live-e2e.json"
     teams_report = json.loads(teams_report_path.read_text(encoding="utf-8-sig"))
@@ -359,7 +365,7 @@ def command_all(args: argparse.Namespace) -> int:
 
     prior = verify_prior_evidence()
     tracked = verify_tracked_secret_paths()
-    state = get_runtime_state(args.base_url)
+    state = get_runtime_state(args.base_url, sync_powerbi=args.live_regression)
     live = None
 
     if args.live_regression:

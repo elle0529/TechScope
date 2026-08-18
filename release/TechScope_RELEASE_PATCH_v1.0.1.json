@@ -1,0 +1,9 @@
+{
+    "release_version":  "1.0.1",
+    "release_tag":  "techscope-portfolio-v1.0.1",
+    "completion_tag":  "techscope-portfolio-complete-v1.0.1",
+    "base_completion_commit":  "55b79d6e751c96dd3a73667beb526802e7f57c21",
+    "patch":  "Power BI DirectQuery to Snapshot CSV Import",
+    "manual_powerbi_desktop_validation":  "PASS",
+    "release_ready":  true
+}

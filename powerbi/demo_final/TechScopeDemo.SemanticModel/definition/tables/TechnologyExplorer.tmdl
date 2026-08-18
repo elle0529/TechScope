@@ -58,23 +58,17 @@ table TechnologyExplorer
 		mode: import
 		source =
 			let
-				Source = Csv.Document(
-					File.Contents("C:\TechScope\powerbi\demo_snapshot\data\TechnologyExplorer.csv"),
-					[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]
-				),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\TechnologyExplorer.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				Types = Table.TransformColumnTypes(
-					Headers,
-					{
-						{"TechnologyKey", Int64.Type},
-						{"TechnologyId", type text},
-						{"TechnologyName", type text},
-						{"CategoryName", type text},
-						{"ArchitectureLayer", type text},
-						{"LayerOrder", Int64.Type},
-						{"EvidenceType", type text},
-						{"SourceId", type text}
-					}
-				)
+				Typed = Table.TransformColumnTypes(Headers, {
+					{"TechnologyKey", Int64.Type},
+					{"TechnologyId", type text},
+					{"TechnologyName", type text},
+					{"CategoryName", type text},
+					{"ArchitectureLayer", type text},
+					{"LayerOrder", Int64.Type},
+					{"EvidenceType", type text},
+					{"SourceId", type text}
+				})
 			in
-				Types
+				Typed
