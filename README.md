@@ -1,5 +1,7 @@
 # TechScope
 
+## architecture diagram
+
 <img width="2816" height="1536" alt="Gemini_Generated_Image_89785y89785y8978" src="https://github.com/user-attachments/assets/6b6dc759-12d7-416c-a01c-a550bb751069" />
 
 
