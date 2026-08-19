@@ -1,0 +1,68 @@
+name: Dynamic Architecture Export
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/status.md'
+      - 'docs/architecture.md'
+      - 'docs/evidence.md'
+      - 'docs/adr/**'
+      - 'docs/ADR/**'
+      - 'docs/decisions/**'
+      - 'tools/export_dynamic_architecture_portfolio.py'
+      - 'tools/verify_dynamic_architecture_export.py'
+      - 'RUN_DYNAMIC_ARCHITECTURE_EXPORT.ps1'
+      - '.github/workflows/dynamic-architecture-export.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export-and-verify:
+    name: Export and verify Dynamic Architecture portfolio
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Export portfolio
+        run: |
+          python tools/export_dynamic_architecture_portfolio.py             --repo-root "$GITHUB_WORKSPACE"
+
+      - name: Verify portfolio
+        run: |
+          python tools/verify_dynamic_architecture_export.py             --repo-root "$GITHUB_WORKSPACE"
+
+      - name: Verify machine-readable result
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          p = Path("results/latest/dynamic-architecture-export.json")
+          data = json.loads(p.read_text(encoding="utf-8-sig"))
+
+          assert data.get("status") == "PASS", data
+          assert data.get("frozen_baseline_unchanged") is True, data
+
+          print("GITHUB_DYNAMIC_ARCHITECTURE_RESULT=PASS")
+          print("GITHUB_FROZEN_BASELINE_UNCHANGED=PASS")
+
+      - name: Upload generated portfolio artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: dynamic-architecture-portfolio-${{ github.run_number }}
+          path: |
+            docs/portfolio/**
+            results/latest/dynamic-architecture-export.json
+          if-no-files-found: error
+          retention-days: 30

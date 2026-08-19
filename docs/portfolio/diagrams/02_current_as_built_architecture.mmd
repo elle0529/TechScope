@@ -1,0 +1,22 @@
+flowchart LR
+    PY["Python Extractor"]
+    ADF["Azure Data Factory"]
+    ADLS["ADLS Gen2"]
+    DBX["Azure Databricks"]
+    SQL["Azure SQL<br/>Serving / Data Mart"]
+    PBI["Power BI<br/>Analytics / AI Operations"]
+    SEARCH["Azure AI Search"]
+    AOAI["Azure OpenAI<br/>RAG / Grounding / Citation"]
+    API["FastAPI<br/>/ask"]
+    TEAMS["Microsoft Teams"]
+    FACT["FactAIRequest<br/>Status · Latency · Citation · Grounding"]
+    PY --> ADF
+    ADF --> ADLS
+    ADLS --> DBX
+    DBX --> SQL
+    SQL --> PBI
+    DBX --> SEARCH
+    SEARCH --> AOAI
+    AOAI --> API
+    TEAMS --> API
+    API --> FACT

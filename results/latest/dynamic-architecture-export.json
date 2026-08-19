@@ -1,0 +1,24 @@
+{
+  "schema": "techscope.dynamic-architecture-export.v1",
+  "timestamp_utc": "2026-08-19T05:55:41.814237+00:00",
+  "status": "PASS",
+  "repository_root": "C:\\TechScope",
+  "output": "docs/portfolio/TechScope_Dynamic_Architecture_Portfolio.md",
+  "diagram_dir": "docs/portfolio/diagrams",
+  "parsed_component_status_rows": 37,
+  "source_architecture_mermaid_blocks": 4,
+  "evidence_occurrences": {
+    "SOURCE": 19,
+    "EXECUTION": 18,
+    "OUTPUT": 15
+  },
+  "frozen_baseline_files_checked": 1,
+  "frozen_baseline_unchanged": true,
+  "strict_failures": [],
+  "generated_files": [
+    "docs/portfolio/TechScope_Dynamic_Architecture_Portfolio.md",
+    "docs/portfolio/diagrams/01_dynamic_architecture_3layer.mmd",
+    "docs/portfolio/diagrams/02_current_as_built_architecture.mmd",
+    "docs/portfolio/diagrams/03_ai_operations_feedback_loop.mmd"
+  ]
+}

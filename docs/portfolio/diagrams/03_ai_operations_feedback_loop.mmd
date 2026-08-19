@@ -1,0 +1,9 @@
+flowchart LR
+    U["User Question"] --> UI["Web UI / Teams"]
+    UI --> API["FastAPI /ask"]
+    API --> RAG["Azure AI Search + Azure OpenAI<br/>RAG"]
+    RAG --> ANS["Grounded Answer + Citation"]
+    API --> FACT["FactAIRequest<br/>Status · Latency · Citation · Grounding"]
+    FACT --> SYNC["Runtime Snapshot AutoSync"]
+    SYNC --> PBI["Power BI Import<br/>Manual Refresh"]
+    PBI --> OPS["AI Operations Analytics"]

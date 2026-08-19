@@ -1,0 +1,7 @@
+flowchart BT
+    L0["L0 · Actual Implementation<br/>Code · Infra · Data · Runtime"]
+    L1["L1 · Current / Target Architecture Model<br/>Current · Target · Track · ADR"]
+    L2["L2 · Architecture Validation<br/>Status · Evidence · Lint · Integrity"]
+    L0 -->|"Reflect actual state"| L1
+    L1 -->|"Validate consistency"| L2
+    L2 -->|"PASS / FAIL feedback"| L0
