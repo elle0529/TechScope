@@ -4,7 +4,7 @@
 
 <img width="2816" height="1536" alt="Gemini_Generated_Image_89785y89785y8978" src="https://github.com/user-attachments/assets/6b6dc759-12d7-416c-a01c-a550bb751069" />
 
-
+## information
 
 Automation-first Data & AI Knowledge Ops PoC.
 
@@ -21,6 +21,7 @@ Domain source:
 source/rawdata.md
 
 <!-- TECHSCOPE_PORTFOLIO_COMPLETION:START -->
+
 ## Portfolio completion
 
 TechScope v1.0.0 is technically frozen and the portfolio project is complete.
