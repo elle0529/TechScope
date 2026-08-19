@@ -45,7 +45,7 @@ table AIRequestDetail
 		mode: import
 		source =
 			let
-				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\AIRequestDetail.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\runtime_data\AIRequestDetail.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				ToInt64 = (x as any) as nullable number => if x = null or Text.Trim(Text.From(x)) = "" then null else Int64.From(Number.FromText(Text.From(x))),
 				ToLogical = (x as any) as nullable logical => if x = null or Text.Trim(Text.From(x)) = "" then null else let t = Text.Lower(Text.Trim(Text.From(x))) in if t = "true" or t = "1" then true else if t = "false" or t = "0" then false else Logical.From(x),

@@ -1085,6 +1085,32 @@ Write-RuntimeState -Tunnel $tunnel -Agent $agent
 Run-InternalRuntime
 
 Write-Host "COLD_START_RECOVERY=PASS"
+
+# POWERBI_RUNTIME_AUTOSYNC_V102
+Write-Host "POWERBI_RUNTIME_AUTOSYNC=START"
+$__oldEap = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+& docker.exe --context desktop-linux exec -d --user vscode -w /workspaces/TechScope techscope-dev python backend/demo/powerbi_runtime_sync_daemon.py 2>&1 | Out-Null
+$__autosyncRc = $LASTEXITCODE
+$ErrorActionPreference = $__oldEap
+if ($__autosyncRc -ne 0) { throw "POWERBI_RUNTIME_AUTOSYNC_START=FAIL" }
+
+$__statePath = "C:\TechScope\powerbi\runtime_data\.sync-state.json"
+$__deadline = (Get-Date).AddSeconds(60)
+$__ready = $false
+while ((Get-Date) -lt $__deadline) {
+    if (Test-Path $__statePath) {
+        try {
+            $__state = Get-Content $__statePath -Raw | ConvertFrom-Json
+            if ($__state.status -eq "PASS") { $__ready = $true; break }
+        } catch {}
+    }
+    Start-Sleep -Seconds 1
+}
+if (-not $__ready) { throw "POWERBI_RUNTIME_AUTOSYNC_READY=FAIL" }
+Write-Host ("POWERBI_RUNTIME_AUTOSYNC_AI_REQUESTS=" + [string]$__state.ai_requests)
+Write-Host "POWERBI_RUNTIME_AUTOSYNC=PASS"
+
 Write-Host "RUN_TECHSCOPE=PASS"
 Write-Host "CANONICAL_USER_COMMAND=.\RUN_TECHSCOPE.ps1"
 Write-Host "CANONICAL_INTERNAL_COMMAND=python tools/techscope.py all --env dev"

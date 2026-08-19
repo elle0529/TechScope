@@ -1,21 +1,21 @@
 ﻿TechnologyId,TechnologyName,GroundedRequestCount
-T0056,Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend),15
-T0147,"Databricks (Spark, 데이터 처리, AI 모델 개발)",14
-T0262,Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계,13
-T0148,Databricks 공식 Partnership 기반 구축 경험,11
-T0260,Microsoft Specialization: Analytics on Azure 인증,11
+T0056,Azure SQL DB / Cosmos DB (AI·BI 서비스용 정형/비정형 Data Backend),17
+T0147,"Databricks (Spark, 데이터 처리, AI 모델 개발)",16
+T0262,Microsoft·Databricks·Snowflake 글로벌 Cloud/Data Platform Partnership 기반 기술지원 체계,15
+T0148,Databricks 공식 Partnership 기반 구축 경험,12
+T0260,Microsoft Specialization: Analytics on Azure 인증,12
 T0427,"기업 정형데이터 자연어 분석 (DRB동일·HL만도·성우하이텍·흥아·SJG세종·CTR 계열, 이마트24, LG전자 사례)",5
 T0081,CV Evaluation Metrics (이상 탐지 정확도 평가 필요),4
+T0116,DB 계층 역할 (AI/BI 서비스의 데이터 Backend 역할),4
 T0163,Embedded BI 권한 통제 (한국암웨이: 본인 실적과 하위 조직 실적만 조회),4
 T0267,Model Evaluation Metric (모델 최적화 판단에 필요),4
 T0282,"OpenAI LLM (Teams AI 챗봇, 사내 문서 Q\&A, 미국 주식 차트 분석)",4
 T0286,PVA (대화형 Bot),4
 T0005,"AI Model Development (머신러닝, 딥러닝, 데이터 엔지니어링)",3
-T0116,DB 계층 역할 (AI/BI 서비스의 데이터 Backend 역할),3
+T0146,"Databricks (Multi-Cloud Data Platform, 구축 경험)",3
 T0214,Incident Management (장애 대응 절차·상태·담당자 관리를 위한 체계와 밀접하나 구체 방식은 자료에 없음),3
 T0343,Root Cause Analysis (장애 원인 분석 및 재발 방지와 밀접하나 자료에 직접 명시되지 않음),3
 T0487,장애 대응 및 전담 기술지원 (Azure 및 Cloud 환경 실시간 대응 체계),3
-T0146,"Databricks (Multi-Cloud Data Platform, 구축 경험)",2
 T0039,"Azure Data Factory / ADF (Cloud 데이터 Integration, 다중 시스템 데이터 수집·이동 자동화, 정기 ETL/ELT; OCI·태림포장 사례)",1
 T0040,"Azure Data Factory / ADF (ERP·MES·CRM·POS·HR·Legacy DB 등 다중 원천 수집, 데이터 이동 자동화, 정기 ETL/ELT; OCI·태림포장 수동 수집 자동화 사례)",1
 T0042,Azure Data Factory/SSIS를 통한 시스템 간 데이터 수집·이동,1

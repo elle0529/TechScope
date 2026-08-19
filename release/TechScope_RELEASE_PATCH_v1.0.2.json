@@ -1,0 +1,9 @@
+{
+    "release_version":  "1.0.2",
+    "release_tag":  "techscope-portfolio-v1.0.2",
+    "completion_tag":  "techscope-portfolio-complete-v1.0.2",
+    "base_commit":  "4fe5669f56b8aab18673fb6d3b11b14be9f07861",
+    "patch":  "Automatic SQL to runtime Power BI snapshot projection",
+    "live_e2e":  "PASS",
+    "release_ready":  true
+}

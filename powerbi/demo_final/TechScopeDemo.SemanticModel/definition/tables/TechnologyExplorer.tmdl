@@ -58,7 +58,7 @@ table TechnologyExplorer
 		mode: import
 		source =
 			let
-				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\TechnologyExplorer.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\runtime_data\TechnologyExplorer.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				Typed = Table.TransformColumnTypes(Headers, {
 					{"TechnologyKey", Int64.Type},

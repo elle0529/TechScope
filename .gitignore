@@ -50,3 +50,5 @@ temp/
 *.zip
 *.7z
 *.rar
+
+powerbi/runtime_data/

@@ -1,0 +1,19 @@
+{
+    "status":  "PASS",
+    "patch_version":  "1.0.2",
+    "sync_mode":  "FACTAIREQUEST_POLL_ON_CHANGE",
+    "poll_seconds":  1,
+    "before_ai_requests":  29,
+    "after_ai_requests":  30,
+    "runtime_before":  29,
+    "runtime_after":  30,
+    "actual_delta":  1,
+    "manual_powerbi_sync_calls_during_e2e":  0,
+    "postcheck_role":  "VERIFY_ONLY",
+    "runtime_snapshot_path":  "C:\\TechScope\\powerbi\\runtime_data",
+    "powerbi_storage_mode":  "IMPORT",
+    "directquery_tables":  0,
+    "sql_direct_references":  0,
+    "validation_ai_requests_created":  1,
+    "validated_utc":  "2026-08-19T02:14:06.3931458Z"
+}

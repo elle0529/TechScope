@@ -84,7 +84,7 @@ table ExecutiveSummary
 		mode: import
 		source =
 			let
-				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\ExecutiveSummary.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\runtime_data\ExecutiveSummary.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				Typed = Table.TransformColumnTypes(Headers, {
 					{"TotalTechnologies", Int64.Type},

@@ -22,7 +22,7 @@ table GroundedTechnology
 		mode: import
 		source =
 			let
-				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\demo_final\data\GroundedTechnology.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Source = Csv.Document(File.Contents("C:\TechScope\powerbi\runtime_data\GroundedTechnology.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				Typed = Table.TransformColumnTypes(Headers, {
 					{"TechnologyId", type text},
